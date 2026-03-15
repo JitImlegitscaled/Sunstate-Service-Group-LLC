@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pre-Purchase Inspections | Sunstate Service Group LLC</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        navy: { 950: '#080820', 900: '#0f0f2e', 800: '#161641', 700: '#1e1e52', 600: '#252563' },
+        gold: { 300: '#fde68a', 400: '#f5c842', 500: '#e8a800', 600: '#c98f00' },
+        azure: { 400: '#4a9dd4', 500: '#2b7cb8', 600: '#1a5c96' }
+      },
+      fontFamily: { sans: ['Urbanist', 'sans-serif'], display: ['Playfair Display', 'serif'] }
+    }
+  }
+}
+</script>
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  body { font-family: 'Urbanist', sans-serif; background: #080820; color: #fff; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; opacity: 0.35; }
+  nav { position: sticky; top: 0; z-index: 1000; }
+  .btn-gold { background: linear-gradient(135deg, #e8a800 0%, #f5c842 100%); color: #080820; font-weight: 700; letter-spacing: 0.05em; transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease; box-shadow: 0 4px 20px rgba(232, 168, 0, 0.35); }
+  .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(232, 168, 0, 0.5); }
+  .btn-gold:active { transform: translateY(0); }
+  .btn-gold:focus-visible { outline: 2px solid #f5c842; outline-offset: 3px; }
+  .btn-outline { border: 2px solid rgba(255,255,255,0.5); color: #fff; font-weight: 600; transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease; }
+  .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: #fff; transform: translateY(-1px); }
+  .btn-outline:active { transform: translateY(0); }
+  .btn-outline:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+  .nav-link { position: relative; color: rgba(255,255,255,0.85); font-weight: 600; transition: color 0.2s ease; }
+  .nav-link::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 2px; background: #f5c842; transform: scaleX(0); transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); transform-origin: center; }
+  .nav-link:hover { color: #fff; }
+  .nav-link:hover::after { transform: scaleX(1); }
+  .nav-link:focus-visible { outline: 2px solid #f5c842; outline-offset: 3px; border-radius: 2px; }
+  .footer-link { color: rgba(255,255,255,0.65); transition: color 0.2s ease; }
+  .footer-link:hover { color: #f5c842; }
+  .footer-link:focus-visible { outline: 2px solid #f5c842; outline-offset: 2px; border-radius: 2px; }
+  .section-divider { width: 60px; height: 4px; background: linear-gradient(90deg, #e8a800, #f5c842); border-radius: 2px; margin: 0 auto 1.5rem; }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #080820; }
+  ::-webkit-scrollbar-thumb { background: #e8a800; border-radius: 3px; }
+  .info-card { background: linear-gradient(145deg, #161641 0%, #1e1e52 100%); border: 1px solid rgba(232, 168, 0, 0.15); border-radius: 16px; padding: 28px 24px; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s ease; }
+  .info-card:hover { transform: translateY(-4px); border-color: rgba(232, 168, 0, 0.4); }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  .fade-up { animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+  .fade-up-1 { animation-delay: 0.1s; } .fade-up-2 { animation-delay: 0.22s; } .fade-up-3 { animation-delay: 0.34s; } .fade-up-4 { animation-delay: 0.46s; }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div style="background: linear-gradient(135deg, #e8a800 0%, #f5c842 100%); padding: 6px 0;">
+  <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 600; color: #080820;">
+    <span>&#128222; 813-406-3903</span>
+    <span>&#9993; sunstateservicegroup@gmail.com</span>
+    <button id="lang-toggle" onclick="toggleLanguage()" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(8,8,32,0.15); border: 1px solid rgba(8,8,32,0.25); border-radius: 100px; padding: 4px 14px 4px 8px; color: #080820; font-size: 12px; font-weight: 800; font-family: 'Urbanist', sans-serif; cursor: pointer; white-space: nowrap; transition: background 0.25s ease;" onmouseover="this.style.background='rgba(8,8,32,0.25)'" onmouseout="this.style.background='rgba(8,8,32,0.15)'">
+      <span id="lang-flag" style="font-size: 12px; font-weight: 900; background: rgba(8,8,32,0.2); border-radius: 4px; padding: 2px 5px; letter-spacing: 0.04em;">EN</span>
+      <span id="lang-label">Espa&#241;ol</span>
+    </button>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav style="background: linear-gradient(180deg, #0a0a28 0%, #0f0f2e 100%); border-bottom: 1px solid rgba(232,168,0,0.2); box-shadow: 0 4px 30px rgba(0,0,0,0.5);">
+  <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 80px; position: relative;">
+    <a href="index.html" style="display: flex; align-items: center; gap: 0px; text-decoration: none; position: relative; z-index: 50;" aria-label="Sunstate Service Group Home">
+      <div style="flex-shrink: 0; margin-right: -80px;"><img src="brand_assets/Untitled design.png" alt="Sunstate Service Group Logo" style="width: 300px; height: 300px; object-fit: contain;"></div>
+      <div>
+        <div style="font-family: 'Urbanist', sans-serif; font-weight: 900; font-size: 17px; letter-spacing: -0.02em; color: #fff; line-height: 1.1;">SUNSTATE</div>
+        <div style="font-size: 8.5px; font-weight: 600; letter-spacing: 0.14em; color: #C9A227; text-transform: uppercase; line-height: 1.2; display: flex; align-items: center; gap: 5px;"><span style="display: inline-block; width: 16px; height: 1px; background: #C9A227;"></span>SERVICE GROUP LLC<span style="display: inline-block; width: 16px; height: 1px; background: #C9A227;"></span></div>
+        <div style="font-size: 8px; font-style: italic; color: #7bc8f0; letter-spacing: 0.03em; line-height: 1.2; margin-top: 2px;">Certified Florida Home Inspector</div>
+      </div>
+    </a>
+    <div style="display: flex; align-items: center; gap: 32px;">
+      <a href="index.html#services" class="nav-link" style="text-decoration: none; font-size: 14px;" data-en="Services" data-es="Servicios">Services</a>
+      <a href="index.html#about" class="nav-link" style="text-decoration: none; font-size: 14px;" data-en="About" data-es="Nosotros">About</a>
+      <a href="index.html#featured" class="nav-link" style="text-decoration: none; font-size: 14px;" data-en="Wind Mitigation" data-es="Mitigaci&#243;n Viento">Wind Mitigation</a>
+      <a href="index.html#permits" class="nav-link" style="text-decoration: none; font-size: 14px;" data-en="Building Permits" data-es="Permisos">Building Permits</a>
+      <a href="index.html#contact" class="nav-link" style="text-decoration: none; font-size: 14px;" data-en="Contact" data-es="Contacto">Contact</a>
+    </div>
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <a href="tel:8134063903" class="btn-gold" style="padding: 10px 20px; border-radius: 6px; text-decoration: none; font-size: 13px; white-space: nowrap;">&#128222; 813-406-3903</a>
+      <a href="index.html#contact" class="btn-outline" style="padding: 10px 18px; border-radius: 6px; text-decoration: none; font-size: 13px; white-space: nowrap;" data-en="Book Now" data-es="Reservar">Book Now</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section style="position: relative; overflow: hidden; background: linear-gradient(135deg, #0f0f2e 55%, #1a1a50 100%); padding: 80px 0;">
+  <div style="position: absolute; width: 500px; height: 500px; background: rgba(232,168,0,0.06); border-radius: 50%; filter: blur(80px); top: -100px; left: -100px; pointer-events: none;"></div>
+  <div style="position: absolute; width: 400px; height: 400px; background: rgba(74,157,212,0.07); border-radius: 50%; filter: blur(80px); bottom: -50px; right: -50px; pointer-events: none;"></div>
+
+  <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; position: relative; z-index: 1;">
+    <div>
+      <a href="index.html#services" style="display: inline-flex; align-items: center; gap: 8px; color: #f5c842; font-size: 13px; font-weight: 700; text-decoration: none; margin-bottom: 20px; transition: opacity 0.2s ease;" class="fade-up fade-up-1" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
+        <span>&#8592;</span> <span data-en="Back to All Services" data-es="Volver a Todos los Servicios">Back to All Services</span>
+      </a>
+      <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(232,168,0,0.12); border: 1px solid rgba(232,168,0,0.3); border-radius: 100px; padding: 6px 16px; margin-bottom: 20px;" class="fade-up fade-up-1">
+        <span style="font-size: 20px;">&#128269;</span>
+        <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; color: #f5c842; text-transform: uppercase;" data-en="Before You Buy" data-es="Antes de Comprar">Before You Buy</span>
+      </div>
+      <h1 style="font-size: clamp(28px, 4vw, 46px); font-weight: 900; line-height: 1.15; letter-spacing: -0.03em; color: #fff; margin-bottom: 20px;" class="fade-up fade-up-2">
+        <span style="color: #f5c842;" data-en="Pre-Purchase" data-es="Inspecciones">Pre-Purchase</span> <span data-en="Inspections" data-es="Pre-Compra">Inspections</span>
+      </h1>
+      <p style="font-size: 17px; color: rgba(255,255,255,0.75); line-height: 1.8; margin-bottom: 32px;" class="fade-up fade-up-3" data-en="Know exactly what you're buying. Our comprehensive evaluation covers all visible and accessible components of the home, giving you the full picture before you sign on the dotted line." data-es="Sepa exactamente lo que está comprando. Nuestra evaluación integral cubre todos los componentes visibles y accesibles del hogar, brindándole el panorama completo antes de firmar.">
+        Know exactly what you're buying. Our comprehensive evaluation covers all visible and accessible components of the home, giving you the full picture before you sign on the dotted line.
+      </p>
+      <div style="display: flex; gap: 14px; flex-wrap: wrap;" class="fade-up fade-up-4">
+        <a href="index.html#contact" class="btn-gold" style="padding: 14px 32px; border-radius: 8px; text-decoration: none; font-size: 15px; display: inline-block;" data-en="Schedule Inspection" data-es="Programar Inspección">Schedule Inspection</a>
+        <a href="tel:8134063903" class="btn-outline" style="padding: 14px 28px; border-radius: 8px; text-decoration: none; font-size: 15px; display: inline-block;">&#128222; 813-406-3903</a>
+      </div>
+    </div>
+    <div style="position: relative;" class="fade-up fade-up-2">
+      <div style="border-radius: 16px; overflow: hidden; position: relative; box-shadow: 0 30px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(232,168,0,0.2);">
+        <img src="https://placehold.co/580x420/1e1e52/e8a800?text=Pre-Purchase+Inspection" alt="Pre-Purchase Inspection" style="width: 100%; height: 420px; object-fit: cover; display: block;">
+        <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 50%, rgba(8,8,32,0.8) 100%);"></div>
+        <div style="position: absolute; inset: 0; background: rgba(42,100,170,0.15); mix-blend-mode: multiply;"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S INCLUDED -->
+<section style="background: linear-gradient(180deg, #0d0d30 0%, #111135 100%); padding: 90px 0; position: relative; overflow: hidden;">
+  <div style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 600px; height: 300px; background: radial-gradient(ellipse, rgba(232,168,0,0.05) 0%, transparent 70%); pointer-events: none;"></div>
+
+  <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
+    <div style="text-align: center; margin-bottom: 56px;">
+      <div class="section-divider"></div>
+      <h2 style="font-size: clamp(22px, 3vw, 34px); font-weight: 900; letter-spacing: -0.02em; color: #fff; margin-bottom: 12px; text-transform: uppercase;">
+        <span data-en="What's Included in" data-es="Qué Incluye">What's Included in</span> <span style="color: #f5c842;" data-en="Your Inspection" data-es="Su Inspección">Your Inspection</span>
+      </h2>
+      <p style="color: rgba(255,255,255,0.6); font-size: 16px; max-width: 600px; margin: 0 auto; line-height: 1.7;" data-en="We examine every major system and component of the home to ensure you have complete knowledge of its condition." data-es="Examinamos cada sistema y componente principal del hogar para asegurar que tenga un conocimiento completo de su condición.">
+        We examine every major system and component of the home to ensure you have complete knowledge of its condition.
+      </p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+      <div class="info-card">
+        <div style="font-size: 28px; margin-bottom: 16px;">&#127968;</div>
+        <h3 style="font-size: 16px; font-weight: 800; color: #fff; margin-bottom: 10px;" data-en="Roof &amp; Exterior" data-es="Techo y Exterior">Roof &amp; Exterior</h3>
+        <p style="font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.7;" data-en="Roofing materials, gutters, downspouts, siding, trim, windows, doors, grading, and drainage around the foundation." data-es="Materiales del techo, canaletas, bajantes, revestimiento, molduras, ventanas, puertas, nivelación y drenaje alrededor de la cimentación.">Roofing materials, gutters, downspouts, siding, trim, windows, doors, grading, and drainage around the foundation.</p>
+      </div>
+      <div class="info-card">
+        <div style="font-size: 28px; margin-bottom: 16px;">&#9889;</div>
+        <h3 style="font-size: 16px; font-weight: 800; color: #fff; margin-bottom: 10px;" data-en="Electrical Systems" data-es="Sistemas Eléctricos">Electrical Systems</h3>
+        <p style="font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.7;" data-en="Main panel, sub-panels, wiring type, GFCI/AFCI protection, outlets, switches, and visible wiring condition throughout." data-es="Panel principal, sub-paneles, tipo de cableado, protección GFCI/AFCI, tomacorrientes, interruptores y condición visible del cableado.">Main panel, sub-panels, wiring type, GFCI/AFCI protection, outlets, switches, and visible wiring condition throughout.</p>
+      </div>
+      <div class="info-card">
+        <div style="font-size: 28px; margin-bottom: 16px;">&#128167;</div>
+        <h3 style="font-size: 16px; font-weight: 800; color: #fff; margin-bottom: 10px;" data-en="Plumbing" data-es="Plomería">Plumbing</h3>
+        <p style="font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.7;" data-en="Water supply lines, drain lines, water heater, fixtures, faucets, toilets, and visible pipe material and condition." data-es="Líneas de suministro de agua, líneas de drenaje, calentador de agua, accesorios, grifos, inodoros y material y condición visible de tuberías.">Water supply lines, drain lines, water heater, fixtures, faucets, toilets, and visible pipe material and condition.</p>
+      </div>
+      <div class="info-card">
+        <div style="font-size: 28px; margin-bottom: 16px;">&#10052;&#65039;</div>
+        <h3 style="font-size: 16px; font-weight: 800; color: #fff; margin-bottom: 10px;" data-en="HVAC &amp; Ventilation" data-es="HVAC y Ventilación">HVAC &amp; Ventilation</h3>
+        <p style="font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.7;" data-en="Heating and cooling equipment, ductwork, thermostats, air handler, condensate drains, and overall system performance." data-es="Equipo de calefacción y refrigeración, conductos, termostatos, manejadora de aire, drenajes de condensado y rendimiento general del sistema.">Heating and cooling equipment, ductwork, thermostats, air handler, condensate drains, and overall system performance.</p>
+      </div>
+      <div class="info-card">
+        <div style="font-size: 28px; margin-bottom: 16px;">&#128682;</div>
+        <h3 style="font-size: 16px; font-weight: 800; color: #fff; margin-bottom: 10px;" data-en="Structure &amp; Foundation" data-es="Estructura y Cimentación">Structure &amp; Foundation</h3>
+        <p style="font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.7;" data-en="Foundation type, visible cracks, settlement, framing, load-bearing walls, and structural integrity of the building." data-es="Tipo de cimentación, grietas visibles, asentamiento, estructura, paredes de carga e integridad estructural del edificio.">Foundation type, visible cracks, settlement, framing, load-bearing walls, and structural integrity of the building.</p>
+      </div>
+      <div class="info-card">
+        <div style="font-size: 28px; margin-bottom: 16px;">&#128209;</div>
+        <h3 style="font-size: 16px; font-weight: 800; color: #fff; margin-bottom: 10px;" data-en="Interior &amp; Insulation" data-es="Interior y Aislamiento">Interior &amp; Insulation</h3>
+        <p style="font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.7;" data-en="Walls, ceilings, floors, doors, windows, insulation in accessible areas, ventilation, and signs of moisture or damage." data-es="Paredes, techos, pisos, puertas, ventanas, aislamiento en áreas accesibles, ventilación y signos de humedad o daños.">Walls, ceilings, floors, doors, windows, insulation in accessible areas, ventilation, and signs of moisture or damage.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY IT MATTERS -->
+<section style="background: linear-gradient(135deg, #0a0a28 0%, #0f0f2e 100%); padding: 90px 0; position: relative; overflow: hidden;">
+  <div style="position: absolute; bottom: 0; right: 0; width: 500px; height: 400px; background: radial-gradient(ellipse at bottom right, rgba(74,157,212,0.06) 0%, transparent 70%); pointer-events: none;"></div>
+
+  <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
+      <div>
+        <div class="section-divider" style="margin: 0 0 20px;"></div>
+        <h2 style="font-size: clamp(22px, 3vw, 34px); font-weight: 900; letter-spacing: -0.02em; color: #fff; margin-bottom: 20px; text-transform: uppercase;">
+          <span data-en="Why a Pre-Purchase" data-es="Por Qué una Inspección">Why a Pre-Purchase</span><br><span style="color: #f5c842;" data-en="Inspection Matters" data-es="Pre-Compra es Importante">Inspection Matters</span>
+        </h2>
+        <p style="color: rgba(255,255,255,0.7); font-size: 16px; line-height: 1.8; margin-bottom: 24px;" data-en="A home is likely the biggest purchase you'll ever make. Our inspection gives you the information you need to negotiate repairs, adjust your offer, or walk away with confidence. Don't gamble with your investment." data-es="Una casa es probablemente la compra más grande que jamás hará. Nuestra inspección le brinda la información que necesita para negociar reparaciones, ajustar su oferta o retirarse con confianza. No arriesgue su inversión.">
+          A home is likely the biggest purchase you'll ever make. Our inspection gives you the information you need to negotiate repairs, adjust your offer, or walk away with confidence. Don't gamble with your investment.
+        </p>
+        <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 14px;">
+          <li style="display: flex; align-items: flex-start; gap: 12px; font-size: 15px; color: rgba(255,255,255,0.85);">
+            <span style="width: 24px; height: 24px; background: linear-gradient(135deg, #e8a800, #f5c842); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 900; color: #080820; flex-shrink: 0; margin-top: 2px;">&#10003;</span>
+            <span data-en="Identify hidden issues before closing — save thousands in surprise repairs" data-es="Identifique problemas ocultos antes del cierre — ahorre miles en reparaciones sorpresa">Identify hidden issues before closing — save thousands in surprise repairs</span>
+          </li>
+          <li style="display: flex; align-items: flex-start; gap: 12px; font-size: 15px; color: rgba(255,255,255,0.85);">
+            <span style="width: 24px; height: 24px; background: linear-gradient(135deg, #e8a800, #f5c842); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 900; color: #080820; flex-shrink: 0; margin-top: 2px;">&#10003;</span>
+            <span data-en="Use the report as a negotiation tool with the seller" data-es="Use el informe como herramienta de negociación con el vendedor">Use the report as a negotiation tool with the seller</span>
+          </li>
+          <li style="display: flex; align-items: flex-start; gap: 12px; font-size: 15px; color: rgba(255,255,255,0.85);">
+            <span style="width: 24px; height: 24px; background: linear-gradient(135deg, #e8a800, #f5c842); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 900; color: #080820; flex-shrink: 0; margin-top: 2px;">&#10003;</span>
+            <span data-en="Understand the true condition and maintenance needs of the property" data-es="Comprenda la verdadera condición y las necesidades de mantenimiento de la propiedad">Understand the true condition and maintenance needs of the property</span>
+          </li>
+          <li style="display: flex; align-items: flex-start; gap: 12px; font-size: 15px; color: rgba(255,255,255,0.85);">
+            <span style="width: 24px; height: 24px; background: linear-gradient(135deg, #e8a800, #f5c842); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 900; color: #080820; flex-shrink: 0; margin-top: 2px;">&#10003;</span>
+            <span data-en="Detailed photo report delivered same day for easy review" data-es="Informe detallado con fotos entregado el mismo día para fácil revisión">Detailed photo report delivered same day for easy review</span>
+          </li>
+        </ul>
+      </div>
+      <div style="position: relative;">
+        <div style="border-radius: 20px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.5); position: relative;">
+          <img src="https://placehold.co/540x400/161641/f5c842?text=Know+Before+You+Buy" alt="Pre-Purchase Home Inspection" style="width: 100%; height: 400px; object-fit: cover; display: block;">
+          <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(8,8,32,0.85) 0%, transparent 50%);"></div>
+          <div style="position: absolute; inset: 0; background: rgba(42,100,170,0.12); mix-blend-mode: multiply;"></div>
+        </div>
+        <div style="position: absolute; top: -16px; right: -16px; background: linear-gradient(145deg, #161641, #1e1e52); border: 1px solid rgba(232,168,0,0.3); border-radius: 14px; padding: 16px 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.5); text-align: center;">
+          <div style="font-size: 22px; font-weight: 900; color: #f5c842; line-height: 1;">500+</div>
+          <div style="font-size: 11px; color: rgba(255,255,255,0.6); font-weight: 600; margin-top: 4px;" data-en="Inspections Done" data-es="Inspecciones Realizadas">Inspections Done</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="background: linear-gradient(180deg, #111135 0%, #0d0d30 100%); padding: 80px 0; position: relative; overflow: hidden;">
+  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 700px; height: 400px; background: radial-gradient(ellipse, rgba(232,168,0,0.06) 0%, transparent 70%); pointer-events: none;"></div>
+  <div style="max-width: 700px; margin: 0 auto; padding: 0 24px; text-align: center; position: relative; z-index: 1;">
+    <div style="font-size: 36px; margin-bottom: 16px;">&#128269;</div>
+    <h2 style="font-size: clamp(22px, 3vw, 32px); font-weight: 900; letter-spacing: -0.02em; color: #fff; margin-bottom: 16px; text-transform: uppercase;">
+      <span data-en="Buying a Home in" data-es="¿Comprando una Casa en">Buying a Home in</span> <span style="color: #f5c842;" data-en="Florida?" data-es="Florida?">Florida?</span>
+    </h2>
+    <p style="color: rgba(255,255,255,0.6); font-size: 16px; line-height: 1.7; margin-bottom: 32px; max-width: 500px; margin-left: auto; margin-right: auto;" data-en="Get peace of mind with a comprehensive pre-purchase inspection. Same-day reports, bilingual service, competitive pricing." data-es="Obtenga tranquilidad con una inspección pre-compra completa. Informes el mismo día, servicio bilingüe, precios competitivos.">
+      Get peace of mind with a comprehensive pre-purchase inspection. Same-day reports, bilingual service, competitive pricing.
+    </p>
+    <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+      <a href="index.html#contact" class="btn-gold" style="padding: 16px 36px; border-radius: 8px; text-decoration: none; font-size: 16px; display: inline-block;" data-en="Book Your Inspection" data-es="Reserve Su Inspección">Book Your Inspection</a>
+      <a href="tel:8134063903" class="btn-outline" style="padding: 16px 28px; border-radius: 8px; text-decoration: none; font-size: 16px; display: inline-block;">&#128222; 813-406-3903</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="background: #050518; border-top: 1px solid rgba(232,168,0,0.15); padding: 60px 0 0;">
+  <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
+    <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px;">
+      <div>
+        <div style="display: flex; align-items: center; gap: 0px; margin-bottom: 20px;">
+          <div style="width: 300px; height: 300px; flex-shrink: 0; margin-right: -80px;"><img src="brand_assets/Untitled design.png" alt="Sunstate Service Group Logo" style="width: 100%; height: 100%; object-fit: contain;"></div>
+          <div>
+            <div style="font-weight: 900; font-size: 16px; color: #fff; letter-spacing: -0.01em; line-height: 1.1;">SUNSTATE</div>
+            <div style="font-size: 8.5px; font-weight: 600; letter-spacing: 0.14em; color: #C9A227; text-transform: uppercase; line-height: 1.3; display: flex; align-items: center; gap: 5px;"><span style="display: inline-block; width: 14px; height: 1px; background: #C9A227;"></span>SERVICE GROUP LLC<span style="display: inline-block; width: 14px; height: 1px; background: #C9A227;"></span></div>
+            <div style="font-size: 8px; font-style: italic; color: #7bc8f0; letter-spacing: 0.02em; margin-top: 1px;">Certified Florida Home Inspector</div>
+          </div>
+        </div>
+        <p style="font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.75; max-width: 300px; margin-bottom: 20px;">Certified Florida Home Inspector serving Tampa Bay and surrounding areas. Professional, thorough, bilingual.</p>
+        <div style="font-size: 13px; color: rgba(255,255,255,0.45); margin-bottom: 8px;">&#128222; 813-406-3903</div>
+        <div style="font-size: 13px; color: rgba(255,255,255,0.45);">&#9993; sunstateservicegroup@gmail.com</div>
+      </div>
+      <div>
+        <div style="font-size: 12px; font-weight: 800; color: #f5c842; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 20px;">Services</div>
+        <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 10px;">
+          <li><a href="4-point-inspections.html" class="footer-link" style="text-decoration: none; font-size: 14px;">4-Point Inspections</a></li>
+          <li><a href="wind-mitigation.html" class="footer-link" style="text-decoration: none; font-size: 14px;">Wind Mitigation</a></li>
+          <li><a href="pre-purchase-inspections.html" class="footer-link" style="text-decoration: none; font-size: 14px;">Pre-Purchase Inspections</a></li>
+          <li><a href="new-construction-inspections.html" class="footer-link" style="text-decoration: none; font-size: 14px;">New Construction</a></li>
+          <li><a href="11-month-warranty-inspections.html" class="footer-link" style="text-decoration: none; font-size: 14px;">11-Month Warranty</a></li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-size: 12px; font-weight: 800; color: #f5c842; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 20px;">Company</div>
+        <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 10px;">
+          <li><a href="index.html#about" class="footer-link" style="text-decoration: none; font-size: 14px;">About Us</a></li>
+          <li><a href="building-permits.html" class="footer-link" style="text-decoration: none; font-size: 14px;">Building Permits</a></li>
+          <li><a href="index.html#contact" class="footer-link" style="text-decoration: none; font-size: 14px;">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-size: 12px; font-weight: 800; color: #f5c842; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 20px;">Credentials</div>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 10px 14px;">
+            <div style="font-size: 11px; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 0.05em;">License # HI18594</div>
+            <div style="font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 2px;">State of Florida</div>
+          </div>
+          <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 10px 14px;">
+            <div style="font-size: 11px; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 0.05em;">Licensed &amp; Insured</div>
+            <div style="font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 2px;">Fully covered</div>
+          </div>
+          <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 10px 14px;">
+            <div style="font-size: 11px; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 0.05em;">English &bull; Espa&#241;ol</div>
+            <div style="font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 2px;">Bilingual service</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="border-top: 1px solid rgba(255,255,255,0.07); padding: 24px 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+      <div style="font-size: 13px; color: rgba(255,255,255,0.35);">&copy; 2026 Sunstate Service Group LLC. All rights reserved.</div>
+      <div style="display: flex; gap: 20px;">
+        <a href="privacy-policy.html" class="footer-link" style="text-decoration: none; font-size: 13px;">Privacy Policy</a>
+        <a href="terms-of-service.html" class="footer-link" style="text-decoration: none; font-size: 13px;">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+var currentLang = 'en';
+function toggleLanguage() {
+  currentLang = currentLang === 'en' ? 'es' : 'en';
+  document.querySelectorAll('[data-en][data-es]').forEach(function(el) {
+    var text = el.getAttribute('data-' + currentLang);
+    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') return;
+    var hasTranslatableChildren = el.querySelector('[data-en][data-es]');
+    if (!hasTranslatableChildren) { el.innerHTML = text; }
+  });
+  var label = document.getElementById('lang-label');
+  var flag = document.getElementById('lang-flag');
+  if (currentLang === 'es') { label.textContent = 'English'; flag.textContent = 'ES'; }
+  else { label.textContent = 'Espa\u00f1ol'; flag.textContent = 'EN'; }
+}
+</script>
+</body>
+</html>
