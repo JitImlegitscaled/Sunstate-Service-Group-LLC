@@ -1,335 +1,431 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>document.documentElement.style.fontSize=["14px","16px","18px","20px"][parseInt(localStorage.getItem("ssg-fontSize")||"1")];</script>
 <link rel="icon" type="image/png" href="brand_assets/favicon.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Wind Mitigation Inspections | Sunstate Service Group LLC</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <script>
 tailwind.config = {
   theme: {
     extend: {
       colors: {
-        navy: { 950: '#080820', 900: '#0f0f2e', 800: '#161641', 700: '#1e1e52', 600: '#252563' },
-        gold: { 300: '#fde68a', 400: '#f5c842', 500: '#e8a800', 600: '#c98f00' },
-        azure: { 400: '#4a9dd4', 500: '#2b7cb8', 600: '#1a5c96' }
+        brand: { 50:'#f0f4f8',100:'#dce4ed',500:'#1a3a5c',600:'#142e4a',700:'#0f2239' },
+        gold: { 400:'#f5c842',500:'#e8a800',600:'#c98f00' },
+        azure: { 400:'#4a9dd4',500:'#2b7cb8' }
       },
-      fontFamily: { sans: ['Urbanist', 'sans-serif'], display: ['Playfair Display', 'serif'] }
+      fontFamily: { sans:['IBM Plex Sans','sans-serif'], display:['Libre Baskerville','serif'] }
     }
   }
 }
 </script>
 <style>
-  * { box-sizing: border-box; margin: 0; }
-  body { font-family: 'Urbanist', sans-serif; background: #080820; color: #fff; overflow-x: hidden; }
-  body::before {
-    content: ''; position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none; z-index: 9999; opacity: 0.35;
+  :root { --navy-900:#0c1829; --navy-700:#162b47; --navy-600:#1c3a5e; --body:#445567; --muted:#6b7f94; --border:#e2e8f0; --surface:#f7f9fc; --gold:#d4920a; --gold-light:#f0b429; --azure:#3b91cc; --ease-out:cubic-bezier(0.16,1,0.3,1); --ease-spring:cubic-bezier(0.34,1.56,0.64,1); }
+  * { box-sizing:border-box; margin:0; }
+  html { overflow-x:hidden; scroll-behavior:smooth; }
+  body { font-family:'IBM Plex Sans',sans-serif; background:#fff; color:var(--body); overflow-x:hidden; max-width:100vw; -webkit-font-smoothing:antialiased; line-height:1.72; font-size:1rem; }
+  body::after { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E"); pointer-events:none; z-index:9999; opacity:0.3; }
+  nav { position:sticky; top:0; z-index:1000; }
+  .nav-scrolled { background:rgba(255,255,255,0.98)!important; box-shadow:0 1px 0 var(--border),0 4px 24px rgba(12,24,41,0.06)!important; backdrop-filter:blur(20px) saturate(1.2); }
+  .btn-primary { background:var(--navy-600); color:#fff; font-weight:600; font-size:14px; letter-spacing:0.025em; transition:transform 0.3s var(--ease-out),box-shadow 0.3s var(--ease-out),background 0.2s ease; box-shadow:0 1px 2px rgba(12,24,41,0.08),0 4px 16px rgba(28,58,94,0.16); border-radius:8px; }
+  .btn-primary:hover { background:var(--navy-700); transform:translateY(-2px); box-shadow:0 2px 6px rgba(12,24,41,0.1),0 10px 28px rgba(28,58,94,0.22); }
+  .btn-primary:active { transform:translateY(0); }
+  .btn-gold { background:var(--gold-light); color:var(--navy-900); font-weight:700; font-size:14px; letter-spacing:0.025em; transition:transform 0.3s var(--ease-out),box-shadow 0.3s var(--ease-out),background 0.2s ease; box-shadow:0 1px 2px rgba(212,146,10,0.12),0 4px 16px rgba(212,146,10,0.2); border-radius:8px; }
+  .btn-gold:hover { background:#e8a800; transform:translateY(-2px); box-shadow:0 2px 6px rgba(212,146,10,0.14),0 10px 28px rgba(212,146,10,0.28); }
+  .btn-gold:active { transform:translateY(0); }
+  .btn-gold:focus-visible { outline:2px solid var(--gold); outline-offset:3px; }
+  .btn-outline-light { border:1.5px solid rgba(255,255,255,0.3); color:rgba(255,255,255,0.9); font-weight:600; font-size:14px; background:transparent; transition:background 0.25s ease,border-color 0.25s ease,transform 0.3s var(--ease-out); border-radius:8px; }
+  .btn-outline-light:hover { background:rgba(255,255,255,0.08); border-color:rgba(255,255,255,0.6); transform:translateY(-2px); }
+  .btn-outline-light:active { transform:translateY(0); }
+  .nav-link { position:relative; color:var(--muted); font-weight:500; font-size:13.5px; letter-spacing:0.015em; transition:color 0.2s ease; }
+  .nav-link::after { content:''; position:absolute; bottom:-6px; left:0; right:0; height:2px; background:var(--gold-light); transform:scaleX(0); transition:transform 0.3s var(--ease-out); transform-origin:left; border-radius:2px; }
+  .nav-link:hover { color:var(--navy-900); }
+  .nav-link:hover::after { transform:scaleX(1); }
+  .section-tag { display:inline-flex; align-items:center; gap:10px; font-size:10.5px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:var(--navy-600); margin-bottom:16px; }
+  .section-tag::before { content:''; display:inline-block; width:28px; height:2px; background:var(--gold-light); border-radius:2px; flex-shrink:0; }
+  .info-card { background:#fff; border:1px solid var(--border); border-radius:12px; padding:28px 24px; transition:transform 0.4s var(--ease-out),box-shadow 0.4s var(--ease-out),border-color 0.3s ease; box-shadow:0 1px 3px rgba(12,24,41,0.04),0 4px 12px rgba(12,24,41,0.05); position:relative; overflow:hidden; }
+  .info-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:var(--navy-600); transform:scaleX(0); transform-origin:left; transition:transform 0.4s var(--ease-out); }
+  .info-card:hover { transform:translateY(-5px); border-color:rgba(28,58,94,0.15); box-shadow:0 4px 16px rgba(12,24,41,0.06),0 16px 40px rgba(12,24,41,0.1); }
+  .info-card:hover::before { transform:scaleX(1); }
+  .footer-link { color:rgba(255,255,255,0.45); transition:color 0.25s ease; font-size:14px; }
+  .footer-link:hover { color:var(--gold-light); }
+  ::-webkit-scrollbar { width:6px; }
+  ::-webkit-scrollbar-track { background:transparent; }
+  ::-webkit-scrollbar-thumb { background:rgba(184,197,211,0.6); border-radius:6px; }
+  .hamburger { display:none; background:none; border:none; cursor:pointer; padding:8px; }
+  .hamburger span { display:block; width:22px; height:1.5px; background:var(--navy-900); margin:5px 0; border-radius:2px; transition:transform 0.35s var(--ease-out),opacity 0.25s ease; }
+  .hamburger.active span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); }
+  .hamburger.active span:nth-child(2) { opacity:0; }
+  .hamburger.active span:nth-child(3) { transform:rotate(-45deg) translate(5px,-5px); }
+  .mobile-menu { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(255,255,255,0.98); z-index:999; flex-direction:column; align-items:center; justify-content:center; gap:32px; backdrop-filter:blur(24px); }
+  .mobile-menu.open { display:flex; }
+  .mobile-menu a { color:var(--navy-900); text-decoration:none; font-size:20px; font-weight:600; transition:color 0.25s ease; }
+  .mobile-menu a:hover { color:var(--gold); }
+  .mobile-menu .mobile-close { position:absolute; top:20px; right:24px; background:none; border:none; color:var(--navy-900); font-size:28px; cursor:pointer; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+  .fade-up { animation:fadeUp 0.75s cubic-bezier(0.16,1,0.3,1) both; }
+  .fade-up-1 { animation-delay:0.1s; } .fade-up-2 { animation-delay:0.22s; } .fade-up-3 { animation-delay:0.34s; } .fade-up-4 { animation-delay:0.46s; }
+  @media (max-width:768px) {
+    .hamburger { display:block; }
+    .desktop-nav, .desktop-cta { display:none!important; }
+    .hero-grid { grid-template-columns:1fr!important; gap:32px!important; }
+    .cards-grid { grid-template-columns:1fr!important; gap:14px!important; }
+    .two-col { grid-template-columns:1fr!important; gap:40px!important; }
+    .footer-grid { grid-template-columns:1fr!important; gap:32px!important; }
+    h1 { font-size:32px!important; }
+    .nav-logo-img { width:90px!important; height:90px!important; margin:-20px -10px -20px -10px!important; }
+    .nav-logo-img img { width:90px!important; height:90px!important; }
   }
-  nav { position: sticky; top: 0; z-index: 1000; }
-  .btn-gold { background: linear-gradient(135deg, #e8a800 0%, #f5c842 100%); color: #080820; font-weight: 700; letter-spacing: 0.05em; transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease; box-shadow: 0 4px 20px rgba(232, 168, 0, 0.35); }
-  .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(232, 168, 0, 0.5); }
-  .btn-gold:active { transform: translateY(0); }
-  .btn-gold:focus-visible { outline: 2px solid #f5c842; outline-offset: 3px; }
-  .btn-outline { border: 2px solid rgba(255,255,255,0.5); color: #fff; font-weight: 600; transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease; }
-  .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: #fff; transform: translateY(-1px); }
-  .btn-outline:active { transform: translateY(0); }
-  .btn-outline:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
-  .nav-link { position: relative; color: rgba(255,255,255,0.85); font-weight: 600; transition: color 0.2s ease; }
-  .nav-link::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 2px; background: #f5c842; transform: scaleX(0); transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); transform-origin: center; }
-  .nav-link:hover { color: #fff; }
-  .nav-link:hover::after { transform: scaleX(1); }
-  .nav-link:focus-visible { outline: 2px solid #f5c842; outline-offset: 3px; border-radius: 2px; }
-  .footer-link { color: rgba(255,255,255,0.65); transition: color 0.2s ease; }
-  .footer-link:hover { color: #f5c842; }
-  .footer-link:focus-visible { outline: 2px solid #f5c842; outline-offset: 2px; border-radius: 2px; }
-  .section-divider { width: 60px; height: 4px; background: linear-gradient(90deg, #e8a800, #f5c842); border-radius: 2px; margin: 0 auto 1.5rem; }
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: #080820; }
-  ::-webkit-scrollbar-thumb { background: #e8a800; border-radius: 3px; }
-  .info-card { background: linear-gradient(145deg, #161641 0%, #1e1e52 100%); border: 1px solid rgba(74, 157, 212, 0.2); border-radius: 16px; padding: 28px 24px; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s ease; }
-  .info-card:hover { transform: translateY(-4px); border-color: rgba(74, 157, 212, 0.5); }
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-  .fade-up { animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
-  .fade-up-1 { animation-delay: 0.1s; } .fade-up-2 { animation-delay: 0.22s; } .fade-up-3 { animation-delay: 0.34s; } .fade-up-4 { animation-delay: 0.46s; }
 </style>
 </head>
 <body>
 
 <!-- TOP BAR -->
-<div style="background: linear-gradient(135deg, #e8a800 0%, #f5c842 100%); padding: 6px 0;">
-  <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 600; color: #080820;">
-    <span>&#128222; 813-406-3903</span>
-    <span>&#9993; sunstateservicegroup@gmail.com</span>
-    <button id="lang-toggle" onclick="toggleLanguage()" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(8,8,32,0.15); border: 1px solid rgba(8,8,32,0.25); border-radius: 100px; padding: 4px 14px 4px 8px; color: #080820; font-size: 12px; font-weight: 800; font-family: 'Urbanist', sans-serif; cursor: pointer; white-space: nowrap; transition: background 0.25s ease;" onmouseover="this.style.background='rgba(8,8,32,0.25)'" onmouseout="this.style.background='rgba(8,8,32,0.15)'">
-      <span id="lang-flag" style="font-size: 12px; font-weight: 900; background: rgba(8,8,32,0.2); border-radius: 4px; padding: 2px 5px; letter-spacing: 0.04em;">EN</span>
+<div style="background:#0c1829; padding:9px 0; border-bottom:1px solid rgba(255,255,255,0.05);">
+  <div style="max-width:1140px; margin:0 auto; padding:0 32px; display:flex; justify-content:space-between; align-items:center; font-size:13px; color:rgba(255,255,255,0.65);">
+    <div style="display:flex; align-items:center; gap:24px;">
+      <a href="tel:8134063903" style="color:rgba(255,255,255,0.8); text-decoration:none; display:flex; align-items:center; gap:6px;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        813-406-3903
+      </a>
+      <a href="mailto:sunstateservicegroup@gmail.com" style="color:rgba(255,255,255,0.8); text-decoration:none; display:flex; align-items:center; gap:6px;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        sunstateservicegroup@gmail.com
+      </a>
+    </div>
+    <div style="display:flex; align-items:center; gap:8px;">
+      <div style="display:inline-flex; align-items:center; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.15); border-radius:100px; padding:3px 5px; gap:3px;">
+        <button onclick="changeFontSize(-1)" title="Decrease font size" style="width:26px; height:26px; display:inline-flex; align-items:center; justify-content:center; background:none; border:none; color:rgba(255,255,255,0.75); font-family:'IBM Plex Sans',sans-serif; font-size:12px; font-weight:700; cursor:pointer; border-radius:100px; line-height:1;" onmouseover="this.style.background='rgba(255,255,255,0.2)';this.style.color='#fff'" onmouseout="this.style.background='none';this.style.color='rgba(255,255,255,0.75)'">A</button>
+        <div style="width:1px; height:14px; background:rgba(255,255,255,0.2);"></div>
+        <button onclick="changeFontSize(1)" title="Increase font size" style="width:26px; height:26px; display:inline-flex; align-items:center; justify-content:center; background:none; border:none; color:rgba(255,255,255,0.75); font-family:'IBM Plex Sans',sans-serif; font-size:18px; font-weight:700; cursor:pointer; border-radius:100px; line-height:1;" onmouseover="this.style.background='rgba(255,255,255,0.2)';this.style.color='#fff'" onmouseout="this.style.background='none';this.style.color='rgba(255,255,255,0.75)'">A</button>
+      </div>
+      <button id="lang-toggle" onclick="toggleLanguage()" style="display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.15); border-radius:100px; padding:4px 14px 4px 8px; color:rgba(255,255,255,0.9); font-size:12px; font-weight:600; font-family:'IBM Plex Sans',sans-serif; cursor:pointer; transition:background 0.25s ease;" onmouseover="this.style.background='rgba(255,255,255,0.18)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">
+      <span id="lang-flag" style="font-size:11px; font-weight:700; background:rgba(255,255,255,0.15); border-radius:4px; padding:2px 5px; letter-spacing:0.04em;">EN</span>
       <span id="lang-label">Espa&#241;ol</span>
     </button>
+    </div>
   </div>
 </div>
 
 <!-- NAV -->
-<nav style="background: linear-gradient(180deg, #0a0a28 0%, #0f0f2e 100%); border-bottom: 1px solid rgba(232,168,0,0.2); box-shadow: 0 4px 30px rgba(0,0,0,0.5);">
-  <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 80px; position: relative;">
-    <a href="index.html" style="display: flex; align-items: center; gap: 0px; text-decoration: none; position: relative; z-index: 50;" aria-label="Sunstate Service Group Home">
-      <div style="flex-shrink: 0; margin-right: -80px;"><img src="brand_assets/Untitled design.png" alt="Sunstate Service Group Logo" style="width: 300px; height: 300px; object-fit: contain;"></div>
+<nav id="main-nav" style="background:#ffffff; border-bottom:1px solid var(--border); transition:background 0.4s ease,box-shadow 0.4s ease;">
+  <div style="max-width:1140px; margin:0 auto; padding:0 32px; display:flex; align-items:center; justify-content:space-between; height:68px; position:relative;">
+    <a href="index.html" style="display:flex; align-items:center; gap:12px; text-decoration:none; position:relative; z-index:50;">
+      <div class="nav-logo-img" style="width:280px; height:280px; flex-shrink:0; margin:-84px -120px -84px -40px;">
+        <img src="brand_assets/Untitled design.png" alt="Sunstate Service Group Logo" style="width:100%; height:100%; object-fit:contain;">
+      </div>
       <div>
-        <div style="font-family: 'Urbanist', sans-serif; font-weight: 900; font-size: 17px; letter-spacing: -0.02em; color: #fff; line-height: 1.1;">SUNSTATE</div>
-        <div style="font-size: 8.5px; font-weight: 600; letter-spacing: 0.14em; color: #C9A227; text-transform: uppercase; line-height: 1.2; display: flex; align-items: center; gap: 5px;"><span style="display: inline-block; width: 16px; height: 1px; background: #C9A227;"></span>SERVICE GROUP LLC<span style="display: inline-block; width: 16px; height: 1px; background: #C9A227;"></span></div>
-        <div style="font-size: 8px; font-style: italic; color: #7bc8f0; letter-spacing: 0.03em; line-height: 1.2; margin-top: 2px;">Certified Florida Home Inspector</div>
+        <div style="font-family:'Libre Baskerville',serif; font-size:18px; color:var(--navy-900); line-height:1.1;">Sunstate</div>
+        <div style="font-size:10px; font-weight:600; letter-spacing:0.08em; color:#6b7c8d; text-transform:uppercase; line-height:1.2;">Service Group LLC</div>
       </div>
     </a>
-    <div style="display: flex; align-items: center; gap: 32px;">
-      <a href="index.html#services" class="nav-link" style="text-decoration: none; font-size: 14px;" data-en="Services" data-es="Servicios">Services</a>
-      <a href="index.html#about" class="nav-link" style="text-decoration: none; font-size: 14px;" data-en="About" data-es="Nosotros">About</a>
-      <a href="index.html#featured" class="nav-link" style="text-decoration: none; font-size: 14px;" data-en="Wind Mitigation" data-es="Mitigaci&#243;n Viento">Wind Mitigation</a>
-      <a href="index.html#permits" class="nav-link" style="text-decoration: none; font-size: 14px;" data-en="Building Permits" data-es="Permisos">Building Permits</a>
-      <a href="index.html#contact" class="nav-link" style="text-decoration: none; font-size: 14px;" data-en="Contact" data-es="Contacto">Contact</a>
+    <div class="desktop-nav" style="display:flex; align-items:center; gap:32px;">
+      <a href="index.html#services" class="nav-link" style="text-decoration:none;" data-en="Services" data-es="Servicios">Services</a>
+      <a href="index.html#about" class="nav-link" style="text-decoration:none;" data-en="About" data-es="Nosotros">About</a>
+      <a href="wind-mitigation.html" class="nav-link" style="text-decoration:none; color:var(--navy-900)!important;" data-en="Wind Mitigation" data-es="Mitigaci&#243;n Viento">Wind Mitigation</a>
+      <a href="building-permits.html" class="nav-link" style="text-decoration:none;" data-en="Building Permits" data-es="Permisos">Building Permits</a>
+      <a href="index.html#contact" class="nav-link" style="text-decoration:none;" data-en="Contact" data-es="Contacto">Contact</a>
     </div>
-    <div style="display: flex; align-items: center; gap: 10px;">
-      <a href="tel:8134063903" class="btn-gold" style="padding: 10px 20px; border-radius: 6px; text-decoration: none; font-size: 13px; white-space: nowrap;">&#128222; 813-406-3903</a>
-      <a href="index.html#contact" class="btn-outline" style="padding: 10px 18px; border-radius: 6px; text-decoration: none; font-size: 13px; white-space: nowrap;" data-en="Book Now" data-es="Reservar">Book Now</a>
+    <div class="desktop-cta" style="display:flex; align-items:center; gap:10px;">
+      <a href="tel:8134063903" style="color:var(--navy-600); text-decoration:none; font-size:14px; font-weight:600; display:flex; align-items:center; gap:6px;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        813-406-3903
+      </a>
+      <a href="index.html#contact" class="btn-primary" style="padding:10px 24px; text-decoration:none; font-size:13px; white-space:nowrap;" data-en="Book Inspection" data-es="Reservar">Book Inspection</a>
     </div>
+    <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Open menu"><span></span><span></span><span></span></button>
   </div>
 </nav>
 
-<!-- HERO -->
-<section style="position: relative; overflow: hidden; background: linear-gradient(135deg, #0f0f2e 55%, #1a1a50 100%); padding: 80px 0;">
-  <div style="position: absolute; width: 500px; height: 500px; background: rgba(74,157,212,0.08); border-radius: 50%; filter: blur(80px); top: -100px; right: -100px; pointer-events: none;"></div>
-  <div style="position: absolute; width: 400px; height: 400px; background: rgba(232,168,0,0.05); border-radius: 50%; filter: blur(80px); bottom: -100px; left: -100px; pointer-events: none;"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="toggleMobileMenu()">&times;</button>
+  <a href="index.html#services" onclick="toggleMobileMenu()">Services</a>
+  <a href="index.html#about" onclick="toggleMobileMenu()">About</a>
+  <a href="wind-mitigation.html" onclick="toggleMobileMenu()">Wind Mitigation</a>
+  <a href="building-permits.html" onclick="toggleMobileMenu()">Building Permits</a>
+  <a href="index.html#contact" onclick="toggleMobileMenu()">Contact</a>
+  <a href="tel:8134063903" class="btn-primary" style="padding:14px 32px; font-size:16px; margin-top:12px; color:#fff; text-decoration:none;">813-406-3903</a>
+</div>
 
-  <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; position: relative; z-index: 1;">
-    <div>
-      <a href="index.html#services" style="display: inline-flex; align-items: center; gap: 8px; color: #f5c842; font-size: 13px; font-weight: 700; text-decoration: none; margin-bottom: 20px; transition: opacity 0.2s ease;" class="fade-up fade-up-1" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
-        <span>&#8592;</span> <span data-en="Back to All Services" data-es="Volver a Todos los Servicios">Back to All Services</span>
-      </a>
-      <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(74,157,212,0.12); border: 1px solid rgba(74,157,212,0.3); border-radius: 100px; padding: 6px 16px; margin-bottom: 20px;" class="fade-up fade-up-1">
-        <span style="font-size: 20px;">&#128168;</span>
-        <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; color: #4a9dd4; text-transform: uppercase;" data-en="Save on Insurance" data-es="Ahorre en Seguro">Save on Insurance</span>
+<!-- HERO -->
+<section style="background:linear-gradient(170deg,#0c1829 0%,#162b47 55%,#0c1829 100%); padding:96px 0 88px; position:relative; overflow:hidden;">
+  <div style="position:absolute; width:600px; height:500px; background:radial-gradient(ellipse,rgba(240,180,41,0.08) 0%,transparent 70%); top:-80px; right:-80px; pointer-events:none;"></div>
+  <div style="position:absolute; width:500px; height:400px; background:radial-gradient(ellipse,rgba(59,145,204,0.07) 0%,transparent 70%); bottom:-60px; left:-60px; pointer-events:none;"></div>
+  <div style="max-width:1140px; margin:0 auto; padding:0 32px; position:relative; z-index:1;">
+    <a href="index.html#services" class="fade-up fade-up-1" style="display:inline-flex; align-items:center; gap:8px; color:var(--gold-light); font-size:13px; font-weight:600; text-decoration:none; margin-bottom:24px; opacity:0.85; transition:opacity 0.2s ease;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      <span data-en="Back to All Services" data-es="Volver a Todos los Servicios">Back to All Services</span>
+    </a>
+    <div class="hero-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center;">
+      <div>
+        <div class="fade-up fade-up-1" style="display:inline-flex; align-items:center; gap:8px; background:rgba(59,145,204,0.12); border:1px solid rgba(59,145,204,0.28); border-radius:100px; padding:6px 16px; margin-bottom:20px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3b91cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>
+          <span style="font-size:11px; font-weight:700; letter-spacing:0.1em; color:#3b91cc; text-transform:uppercase;" data-en="Save on Insurance" data-es="Ahorre en Seguro">Save on Insurance</span>
+        </div>
+        <h1 class="fade-up fade-up-2" style="font-family:'Libre Baskerville',serif; font-size:clamp(32px,4vw,52px); color:#fff; line-height:1.12; letter-spacing:-0.02em; margin-bottom:20px;">
+          <span data-en="Wind Mitigation" data-es="Inspecciones de">Wind Mitigation</span><br><span style="color:var(--gold-light);" data-en="Inspections" data-es="Mitigación de Viento">Inspections</span>
+        </h1>
+        <p class="fade-up fade-up-3" style="font-size:17px; color:rgba(255,255,255,0.68); line-height:1.78; margin-bottom:32px; max-width:500px;" data-en="Potentially save hundreds on homeowners insurance. Our certified reports document your home's wind-resistant features and construction methods, accepted by all Florida insurers." data-es="Potencialmente ahorre cientos en seguro para propietarios. Nuestros informes certificados documentan las características resistentes al viento de su hogar, aceptados por todos los aseguradores de Florida.">
+          Potentially save hundreds on homeowners insurance. Our certified reports document your home's wind-resistant features and construction methods, accepted by all Florida insurers.
+        </p>
+        <div class="fade-up fade-up-4" style="display:flex; gap:12px; flex-wrap:wrap;">
+          <a href="index.html#contact" class="btn-gold" style="padding:14px 32px; text-decoration:none; font-size:15px; display:inline-block;" data-en="Schedule Inspection" data-es="Programar Inspección">Schedule Inspection</a>
+          <a href="tel:8134063903" class="btn-outline-light" style="padding:14px 24px; text-decoration:none; font-size:15px; display:inline-flex; align-items:center; gap:8px;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            813-406-3903
+          </a>
+        </div>
       </div>
-      <h1 style="font-size: clamp(28px, 4vw, 46px); font-weight: 900; line-height: 1.15; letter-spacing: -0.03em; color: #fff; margin-bottom: 20px;" class="fade-up fade-up-2">
-        <span style="color: #4a9dd4;" data-en="Wind Mitigation" data-es="Mitigación de">Wind Mitigation</span> <span data-en="Inspections" data-es="Viento">Inspections</span>
-      </h1>
-      <p style="font-size: 17px; color: rgba(255,255,255,0.75); line-height: 1.8; margin-bottom: 32px;" class="fade-up fade-up-3" data-en="Potentially save hundreds on homeowners insurance. Our certified reports document your home's wind-resistant features and construction methods, accepted by all Florida insurers." data-es="Ahorre potencialmente cientos en su seguro de hogar. Nuestros informes certificados documentan las características resistentes al viento de su hogar y los métodos de construcción, aceptados por todas las aseguradoras de Florida.">
-        Potentially save hundreds on homeowners insurance. Our certified reports document your home's wind-resistant features and construction methods, accepted by all Florida insurers.
-      </p>
-      <div style="display: flex; gap: 14px; flex-wrap: wrap;" class="fade-up fade-up-4">
-        <a href="index.html#contact" class="btn-gold" style="padding: 14px 32px; border-radius: 8px; text-decoration: none; font-size: 15px; display: inline-block;" data-en="Schedule Inspection" data-es="Programar Inspección">Schedule Inspection</a>
-        <a href="tel:8134063903" class="btn-outline" style="padding: 14px 28px; border-radius: 8px; text-decoration: none; font-size: 15px; display: inline-block;">&#128222; 813-406-3903</a>
-      </div>
-    </div>
-    <div style="position: relative;" class="fade-up fade-up-2">
-      <div style="border-radius: 16px; overflow: hidden; position: relative; box-shadow: 0 30px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(74,157,212,0.2);">
-        <img src="https://placehold.co/580x420/1e1e52/4a9dd4?text=Wind+Mitigation" alt="Wind Mitigation Inspection" style="width: 100%; height: 420px; object-fit: cover; display: block;">
-        <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 50%, rgba(8,8,32,0.8) 100%);"></div>
-        <div style="position: absolute; inset: 0; background: rgba(42,100,170,0.15); mix-blend-mode: multiply;"></div>
-      </div>
-      <div style="position: absolute; bottom: 20px; left: 20px; background: linear-gradient(135deg, #e8a800, #f5c842); color: #080820; padding: 10px 20px; border-radius: 10px; font-size: 14px; font-weight: 800;">
-        <span data-en="Save Hundreds/Year" data-es="Ahorre Cientos/Año">Save Hundreds/Year</span>
+      <div class="fade-up fade-up-2">
+        <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:40px; text-align:center;">
+          <div style="font-size:64px; font-weight:800; font-family:'Libre Baskerville',serif; color:var(--gold-light); line-height:1; letter-spacing:-0.03em; margin-bottom:8px;">45%</div>
+          <div style="font-size:14px; font-weight:600; color:rgba(255,255,255,0.6); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:28px;" data-en="Potential Premium Reduction" data-es="Reducción Potencial de Prima">Potential Premium Reduction</div>
+          <div style="display:flex; flex-direction:column; gap:12px; text-align:left;">
+            <div style="display:flex; align-items:center; gap:12px; padding:14px 16px; background:rgba(255,255,255,0.05); border-radius:10px;">
+              <span style="width:8px; height:8px; background:var(--gold-light); border-radius:50%; flex-shrink:0;"></span>
+              <span style="font-size:14px; color:rgba(255,255,255,0.8);" data-en="OIR-B1-1802 Form Completed" data-es="Formulario OIR-B1-1802 Completado">OIR-B1-1802 Form Completed</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:12px; padding:14px 16px; background:rgba(255,255,255,0.05); border-radius:10px;">
+              <span style="width:8px; height:8px; background:#3b91cc; border-radius:50%; flex-shrink:0;"></span>
+              <span style="font-size:14px; color:rgba(255,255,255,0.8);" data-en="Accepted by All FL Insurers" data-es="Aceptado por Todos los Aseguradores">Accepted by All FL Insurers</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:12px; padding:14px 16px; background:rgba(255,255,255,0.05); border-radius:10px;">
+              <span style="width:8px; height:8px; background:var(--gold-light); border-radius:50%; flex-shrink:0;"></span>
+              <span style="font-size:14px; color:rgba(255,255,255,0.8);" data-en="Valid for 5 Years" data-es="Válido por 5 Años">Valid for 5 Years</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- WHAT WE INSPECT -->
-<section style="background: linear-gradient(180deg, #0d0d30 0%, #111135 100%); padding: 90px 0; position: relative; overflow: hidden;">
-  <div style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 600px; height: 300px; background: radial-gradient(ellipse, rgba(74,157,212,0.05) 0%, transparent 70%); pointer-events: none;"></div>
-
-  <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
-    <div style="text-align: center; margin-bottom: 56px;">
-      <div class="section-divider"></div>
-      <h2 style="font-size: clamp(22px, 3vw, 34px); font-weight: 900; letter-spacing: -0.02em; color: #fff; margin-bottom: 12px; text-transform: uppercase;">
-        <span data-en="What We" data-es="Lo Que">What We</span> <span style="color: #4a9dd4;" data-en="Evaluate" data-es="Evaluamos">Evaluate</span>
+<!-- WHAT WE EVALUATE -->
+<section style="background:#f7f9fc; padding:100px 0; position:relative; overflow:hidden;">
+  <div style="position:absolute; top:-100px; left:-100px; width:500px; height:500px; background:radial-gradient(circle,rgba(28,58,94,0.04) 0%,transparent 70%); pointer-events:none;"></div>
+  <div style="max-width:1140px; margin:0 auto; padding:0 32px;">
+    <div style="text-align:center; margin-bottom:64px;">
+      <div class="section-tag" style="justify-content:center;" data-en="Inspection Scope" data-es="Alcance de Inspección">Inspection Scope</div>
+      <h2 style="font-family:'Libre Baskerville',serif; font-size:clamp(26px,3.2vw,40px); color:var(--navy-900); line-height:1.18; letter-spacing:-0.02em; margin-bottom:14px;">
+        <span data-en="What We" data-es="Qué">What We</span> <span style="color:var(--navy-600);" data-en="Evaluate" data-es="Evaluamos">Evaluate</span>
       </h2>
-      <p style="color: rgba(255,255,255,0.6); font-size: 16px; max-width: 600px; margin: 0 auto; line-height: 1.7;" data-en="Our wind mitigation inspection assesses key structural features that protect your home during hurricanes and severe storms." data-es="Nuestra inspección de mitigación de viento evalúa las características estructurales clave que protegen su hogar durante huracanes y tormentas severas.">
+      <p style="font-size:17px; color:var(--body); max-width:540px; margin:0 auto; line-height:1.72;" data-en="Our wind mitigation inspection assesses key structural features that protect your home during hurricanes and severe storms." data-es="Nuestra inspección de mitigación de viento evalúa las características estructurales clave que protegen su hogar durante huracanes y tormentas severas.">
         Our wind mitigation inspection assesses key structural features that protect your home during hurricanes and severe storms.
       </p>
     </div>
-
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+    <div class="cards-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px;">
       <div class="info-card">
-        <div style="font-size: 28px; margin-bottom: 16px;">&#127968;</div>
-        <h3 style="font-size: 16px; font-weight: 800; color: #fff; margin-bottom: 10px;" data-en="Roof Shape &amp; Geometry" data-es="Forma y Geometría del Techo">Roof Shape &amp; Geometry</h3>
-        <p style="font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.7;" data-en="Hip roofs offer better wind resistance than gable roofs. We document the exact geometry for maximum insurance credits." data-es="Los techos a cuatro aguas ofrecen mejor resistencia al viento que los de dos aguas. Documentamos la geometría exacta para máximos créditos de seguro.">Hip roofs offer better wind resistance than gable roofs. We document the exact geometry for maximum insurance credits.</p>
+        <div style="width:44px; height:44px; background:#eef2f8; border-radius:10px; display:flex; align-items:center; justify-content:center; margin-bottom:16px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1c3a5e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <h3 style="font-size:15px; font-weight:700; color:var(--navy-900); margin-bottom:8px;" data-en="Roof Shape &amp; Geometry" data-es="Forma y Geometría del Techo">Roof Shape &amp; Geometry</h3>
+        <p style="font-size:14px; color:var(--body); line-height:1.72;" data-en="Hip roofs offer better wind resistance than gable roofs. We document the exact geometry for maximum insurance credits." data-es="Los techos a cuatro aguas ofrecen mejor resistencia al viento que los techos a dos aguas. Documentamos la geometría exacta para máximos créditos de seguro.">Hip roofs offer better wind resistance than gable roofs. We document the exact geometry for maximum insurance credits.</p>
       </div>
       <div class="info-card">
-        <div style="font-size: 28px; margin-bottom: 16px;">&#128297;</div>
-        <h3 style="font-size: 16px; font-weight: 800; color: #fff; margin-bottom: 10px;" data-en="Roof-to-Wall Attachment" data-es="Conexión Techo-Pared">Roof-to-Wall Attachment</h3>
-        <p style="font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.7;" data-en="We verify how the roof is connected to the walls — clips, single wraps, or double wraps — which significantly impacts your discount." data-es="Verificamos cómo el techo está conectado a las paredes — clips, envolturas simples o dobles — lo que impacta significativamente su descuento.">We verify how the roof is connected to the walls — clips, single wraps, or double wraps — which significantly impacts your discount.</p>
+        <div style="width:44px; height:44px; background:#fdf6e3; border-radius:10px; display:flex; align-items:center; justify-content:center; margin-bottom:16px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c98f00" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <h3 style="font-size:15px; font-weight:700; color:var(--navy-900); margin-bottom:8px;" data-en="Roof-to-Wall Attachment" data-es="Unión Techo-Pared">Roof-to-Wall Attachment</h3>
+        <p style="font-size:14px; color:var(--body); line-height:1.72;" data-en="We verify how the roof is connected to the walls — clips, single wraps, or double wraps — which significantly impacts your discount." data-es="Verificamos cómo el techo está conectado a las paredes — clips, envoltura simple o doble — lo que impacta significativamente su descuento.">We verify how the roof is connected to the walls — clips, single wraps, or double wraps — which significantly impacts your discount.</p>
       </div>
       <div class="info-card">
-        <div style="font-size: 28px; margin-bottom: 16px;">&#128737;&#65039;</div>
-        <h3 style="font-size: 16px; font-weight: 800; color: #fff; margin-bottom: 10px;" data-en="Roof Deck Attachment" data-es="Fijación de Cubierta">Roof Deck Attachment</h3>
-        <p style="font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.7;" data-en="The method used to attach the roof deck (plywood/OSB) to the trusses — nail size, spacing, and type all affect your premium." data-es="El método utilizado para fijar la cubierta del techo (madera/OSB) a las cerchas — el tamaño, espaciado y tipo de clavos afectan su prima.">The method used to attach the roof deck (plywood/OSB) to the trusses — nail size, spacing, and type all affect your premium.</p>
+        <div style="width:44px; height:44px; background:#eaf3fb; border-radius:10px; display:flex; align-items:center; justify-content:center; margin-bottom:16px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2270aa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <h3 style="font-size:15px; font-weight:700; color:var(--navy-900); margin-bottom:8px;" data-en="Roof Deck Attachment" data-es="Unión de Cubierta de Techo">Roof Deck Attachment</h3>
+        <p style="font-size:14px; color:var(--body); line-height:1.72;" data-en="The method used to attach the roof deck (plywood/OSB) to the trusses — nail size, spacing, and type all affect your premium." data-es="El método para fijar la cubierta del techo a las vigas — tamaño de clavos, espaciado y tipo afectan su prima.">The method used to attach the roof deck (plywood/OSB) to the trusses — nail size, spacing, and type all affect your premium.</p>
       </div>
       <div class="info-card">
-        <div style="font-size: 28px; margin-bottom: 16px;">&#128167;</div>
-        <h3 style="font-size: 16px; font-weight: 800; color: #fff; margin-bottom: 10px;" data-en="Secondary Water Resistance" data-es="Resistencia Secundaria al Agua">Secondary Water Resistance</h3>
-        <p style="font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.7;" data-en="Sealed roof deck (SWR) provides a secondary barrier against water intrusion if shingles are blown off during a storm." data-es="La cubierta sellada (SWR) proporciona una barrera secundaria contra la infiltración de agua si las tejas son arrancadas durante una tormenta.">Sealed roof deck (SWR) provides a secondary barrier against water intrusion if shingles are blown off during a storm.</p>
+        <div style="width:44px; height:44px; background:#eef2f8; border-radius:10px; display:flex; align-items:center; justify-content:center; margin-bottom:16px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1c3a5e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+        </div>
+        <h3 style="font-size:15px; font-weight:700; color:var(--navy-900); margin-bottom:8px;" data-en="Secondary Water Resistance" data-es="Resistencia Secundaria al Agua">Secondary Water Resistance</h3>
+        <p style="font-size:14px; color:var(--body); line-height:1.72;" data-en="Sealed roof deck (SWR) provides a secondary barrier against water intrusion if shingles are blown off during a storm." data-es="La cubierta de techo sellada (SWR) proporciona una barrera secundaria contra la intrusión de agua si las tejas son arrancadas.">Sealed roof deck (SWR) provides a secondary barrier against water intrusion if shingles are blown off during a storm.</p>
       </div>
       <div class="info-card">
-        <div style="font-size: 28px; margin-bottom: 16px;">&#128311;</div>
-        <h3 style="font-size: 16px; font-weight: 800; color: #fff; margin-bottom: 10px;" data-en="Opening Protection" data-es="Protección de Aberturas">Opening Protection</h3>
-        <p style="font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.7;" data-en="Hurricane shutters, impact-rated windows, and door protection — all verified and documented for your insurer." data-es="Persianas para huracanes, ventanas de impacto y protección de puertas — todo verificado y documentado para su aseguradora.">Hurricane shutters, impact-rated windows, and door protection — all verified and documented for your insurer.</p>
+        <div style="width:44px; height:44px; background:#fdf6e3; border-radius:10px; display:flex; align-items:center; justify-content:center; margin-bottom:16px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c98f00" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3 style="font-size:15px; font-weight:700; color:var(--navy-900); margin-bottom:8px;" data-en="Opening Protection" data-es="Protección de Aberturas">Opening Protection</h3>
+        <p style="font-size:14px; color:var(--body); line-height:1.72;" data-en="Hurricane shutters, impact-rated windows, and door protection — all verified and documented for your insurer." data-es="Persianas contra huracanes, ventanas con clasificación de impacto y protección de puertas — todo verificado y documentado.">Hurricane shutters, impact-rated windows, and door protection — all verified and documented for your insurer.</p>
       </div>
       <div class="info-card">
-        <div style="font-size: 28px; margin-bottom: 16px;">&#128196;</div>
-        <h3 style="font-size: 16px; font-weight: 800; color: #fff; margin-bottom: 10px;" data-en="OIR-B1-1802 Form" data-es="Formulario OIR-B1-1802">OIR-B1-1802 Form</h3>
-        <p style="font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.7;" data-en="We complete the official Florida OIR-B1-1802 form accepted by all insurance carriers in the state. Submit directly to your agent." data-es="Completamos el formulario oficial OIR-B1-1802 de Florida aceptado por todas las aseguradoras del estado. Envíelo directamente a su agente.">We complete the official Florida OIR-B1-1802 form accepted by all insurance carriers in the state. Submit directly to your agent.</p>
+        <div style="width:44px; height:44px; background:#eaf3fb; border-radius:10px; display:flex; align-items:center; justify-content:center; margin-bottom:16px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2270aa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <h3 style="font-size:15px; font-weight:700; color:var(--navy-900); margin-bottom:8px;">OIR-B1-1802 Form</h3>
+        <p style="font-size:14px; color:var(--body); line-height:1.72;" data-en="We complete the official Florida OIR-B1-1802 form accepted by all insurance carriers in the state. Submit directly to your agent." data-es="Completamos el formulario oficial de Florida OIR-B1-1802 aceptado por todas las aseguradoras del estado. Envíelo directamente a su agente.">We complete the official Florida OIR-B1-1802 form accepted by all insurance carriers in the state. Submit directly to your agent.</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- HOW IT SAVES YOU MONEY -->
-<section style="background: linear-gradient(135deg, #0a0a28 0%, #0f0f2e 100%); padding: 90px 0; position: relative; overflow: hidden;">
-  <div style="position: absolute; bottom: 0; right: 0; width: 500px; height: 400px; background: radial-gradient(ellipse at bottom right, rgba(232,168,0,0.06) 0%, transparent 70%); pointer-events: none;"></div>
-
-  <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
-      <div style="position: relative;">
-        <div style="border-radius: 20px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.5); position: relative;">
-          <img src="https://placehold.co/540x400/161641/4a9dd4?text=Insurance+Savings" alt="Wind Mitigation Savings" style="width: 100%; height: 400px; object-fit: cover; display: block;">
-          <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(8,8,32,0.85) 0%, transparent 50%);"></div>
-          <div style="position: absolute; inset: 0; background: rgba(42,100,170,0.12); mix-blend-mode: multiply;"></div>
-          <div style="position: absolute; bottom: 24px; left: 24px;">
-            <div style="font-size: 32px; font-weight: 900; color: #f5c842; line-height: 1;" data-en="Up to 45%" data-es="Hasta 45%">Up to 45%</div>
-            <div style="font-size: 14px; color: rgba(255,255,255,0.7); font-weight: 600; margin-top: 4px;" data-en="Potential Premium Reduction" data-es="Reducción Potencial de Prima">Potential Premium Reduction</div>
+<section style="background:#ffffff; padding:100px 0; position:relative; overflow:hidden;">
+  <div style="position:absolute; bottom:0; left:0; width:500px; height:400px; background:radial-gradient(ellipse at bottom left,rgba(240,180,41,0.05) 0%,transparent 70%); pointer-events:none;"></div>
+  <div style="max-width:1140px; margin:0 auto; padding:0 32px;">
+    <div class="two-col" style="display:grid; grid-template-columns:1fr 1fr; gap:72px; align-items:center;">
+      <div style="position:relative;">
+        <div style="background:var(--navy-600); border-radius:20px; padding:48px 40px; color:#fff; position:relative; overflow:hidden;">
+          <div style="position:absolute; top:-40px; right:-40px; width:200px; height:200px; background:rgba(255,255,255,0.04); border-radius:50%;"></div>
+          <div style="position:absolute; bottom:-20px; left:-20px; width:150px; height:150px; background:rgba(240,180,41,0.08); border-radius:50%;"></div>
+          <div style="position:relative; z-index:1;">
+            <div style="font-size:48px; font-weight:800; font-family:'Libre Baskerville',serif; color:var(--gold-light); line-height:1; letter-spacing:-0.03em; margin-bottom:6px;" data-en="Hundreds" data-es="Cientos">Hundreds</div>
+            <div style="font-size:14px; font-weight:600; color:rgba(255,255,255,0.65); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:28px;" data-en="Saved Per Year on Average" data-es="Ahorrados por Año en Promedio">Saved Per Year on Average</div>
+            <ul style="list-style:none; padding:0; display:flex; flex-direction:column; gap:14px;">
+              <li style="display:flex; align-items:flex-start; gap:10px; font-size:15px; color:rgba(255,255,255,0.85);">
+                <span style="width:20px; height:20px; background:var(--gold-light); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:900; color:var(--navy-900); flex-shrink:0; margin-top:2px;">✓</span>
+                <span data-en="Hip roof credits can reduce premiums significantly" data-es="Los créditos por techo a cuatro aguas pueden reducir significativamente las primas">Hip roof credits can reduce premiums significantly</span>
+              </li>
+              <li style="display:flex; align-items:flex-start; gap:10px; font-size:15px; color:rgba(255,255,255,0.85);">
+                <span style="width:20px; height:20px; background:var(--gold-light); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:900; color:var(--navy-900); flex-shrink:0; margin-top:2px;">✓</span>
+                <span data-en="Impact-rated windows and shutters qualify for major discounts" data-es="Ventanas con clasificación de impacto y persianas califican para descuentos importantes">Impact-rated windows and shutters qualify for major discounts</span>
+              </li>
+              <li style="display:flex; align-items:flex-start; gap:10px; font-size:15px; color:rgba(255,255,255,0.85);">
+                <span style="width:20px; height:20px; background:var(--gold-light); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:900; color:var(--navy-900); flex-shrink:0; margin-top:2px;">✓</span>
+                <span data-en="Report is valid for 5 years — long-term savings" data-es="El informe es válido por 5 años — ahorros a largo plazo">Report is valid for 5 years — long-term savings</span>
+              </li>
+              <li style="display:flex; align-items:flex-start; gap:10px; font-size:15px; color:rgba(255,255,255,0.85);">
+                <span style="width:20px; height:20px; background:var(--gold-light); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:900; color:var(--navy-900); flex-shrink:0; margin-top:2px;">✓</span>
+                <span data-en="The inspection typically pays for itself within the first year" data-es="La inspección generalmente se paga sola dentro del primer año">The inspection typically pays for itself within the first year</span>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
-
       <div>
-        <div class="section-divider" style="margin: 0 0 20px;"></div>
-        <h2 style="font-size: clamp(22px, 3vw, 34px); font-weight: 900; letter-spacing: -0.02em; color: #fff; margin-bottom: 20px; text-transform: uppercase;">
-          <span data-en="How It" data-es="Cómo Le">How It</span> <span style="color: #f5c842;" data-en="Saves You Money" data-es="Ahorra Dinero">Saves You Money</span>
+        <div class="section-tag" data-en="Why Schedule" data-es="Por Qué Programar">Why Schedule</div>
+        <h2 style="font-family:'Libre Baskerville',serif; font-size:clamp(24px,3vw,38px); color:var(--navy-900); line-height:1.18; letter-spacing:-0.02em; margin-bottom:20px;">
+          <span data-en="How It Saves" data-es="Cómo Le">How It Saves</span><br><span style="color:var(--navy-600);" data-en="You Money" data-es="Ahorra Dinero">You Money</span>
         </h2>
-        <p style="color: rgba(255,255,255,0.7); font-size: 16px; line-height: 1.8; margin-bottom: 24px;" data-en="Florida law requires insurance companies to offer discounts for wind-resistant features. A single wind mitigation report can save you hundreds — sometimes thousands — per year on your homeowners insurance premium." data-es="La ley de Florida requiere que las compañías de seguros ofrezcan descuentos por características resistentes al viento. Un solo informe de mitigación de viento puede ahorrarle cientos — a veces miles — por año en su prima de seguro de hogar.">
+        <p style="font-size:16px; color:var(--body); line-height:1.8; margin-bottom:32px;" data-en="Florida law requires insurance companies to offer discounts for wind-resistant features. A single wind mitigation report can save you hundreds — sometimes thousands — per year on your homeowners insurance premium." data-es="La ley de Florida requiere que las compañías de seguros ofrezcan descuentos por características resistentes al viento. Un solo informe de mitigación de viento puede ahorrarle cientos — a veces miles — por año en su prima de seguro.">
           Florida law requires insurance companies to offer discounts for wind-resistant features. A single wind mitigation report can save you hundreds — sometimes thousands — per year on your homeowners insurance premium.
         </p>
-        <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 14px;">
-          <li style="display: flex; align-items: flex-start; gap: 12px; font-size: 15px; color: rgba(255,255,255,0.85);">
-            <span style="width: 24px; height: 24px; background: linear-gradient(135deg, #4a9dd4, #2b7cb8); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 900; color: #fff; flex-shrink: 0; margin-top: 2px;">&#10003;</span>
-            <span data-en="Hip roof credits can reduce premiums significantly" data-es="Los créditos por techo a cuatro aguas pueden reducir las primas significativamente">Hip roof credits can reduce premiums significantly</span>
-          </li>
-          <li style="display: flex; align-items: flex-start; gap: 12px; font-size: 15px; color: rgba(255,255,255,0.85);">
-            <span style="width: 24px; height: 24px; background: linear-gradient(135deg, #4a9dd4, #2b7cb8); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 900; color: #fff; flex-shrink: 0; margin-top: 2px;">&#10003;</span>
-            <span data-en="Impact-rated windows and shutters qualify for major discounts" data-es="Las ventanas y persianas de impacto califican para descuentos importantes">Impact-rated windows and shutters qualify for major discounts</span>
-          </li>
-          <li style="display: flex; align-items: flex-start; gap: 12px; font-size: 15px; color: rgba(255,255,255,0.85);">
-            <span style="width: 24px; height: 24px; background: linear-gradient(135deg, #4a9dd4, #2b7cb8); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 900; color: #fff; flex-shrink: 0; margin-top: 2px;">&#10003;</span>
-            <span data-en="Report is valid for 5 years — long-term savings" data-es="El informe es válido por 5 años — ahorros a largo plazo">Report is valid for 5 years — long-term savings</span>
-          </li>
-          <li style="display: flex; align-items: flex-start; gap: 12px; font-size: 15px; color: rgba(255,255,255,0.85);">
-            <span style="width: 24px; height: 24px; background: linear-gradient(135deg, #4a9dd4, #2b7cb8); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 900; color: #fff; flex-shrink: 0; margin-top: 2px;">&#10003;</span>
-            <span data-en="The inspection typically pays for itself within the first year" data-es="La inspección generalmente se paga sola dentro del primer año">The inspection typically pays for itself within the first year</span>
-          </li>
-        </ul>
+        <a href="index.html#contact" class="btn-primary" style="padding:14px 36px; text-decoration:none; font-size:15px; display:inline-block;" data-en="Get My Report" data-es="Obtener Mi Informe">Get My Report</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
-<section style="background: linear-gradient(180deg, #111135 0%, #0d0d30 100%); padding: 80px 0; position: relative; overflow: hidden;">
-  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 700px; height: 400px; background: radial-gradient(ellipse, rgba(74,157,212,0.06) 0%, transparent 70%); pointer-events: none;"></div>
-  <div style="max-width: 700px; margin: 0 auto; padding: 0 24px; text-align: center; position: relative; z-index: 1;">
-    <div style="font-size: 36px; margin-bottom: 16px;">&#128168;</div>
-    <h2 style="font-size: clamp(22px, 3vw, 32px); font-weight: 900; letter-spacing: -0.02em; color: #fff; margin-bottom: 16px; text-transform: uppercase;">
-      <span data-en="Start Saving on Your" data-es="Comience a Ahorrar en su">Start Saving on Your</span> <span style="color: #4a9dd4;" data-en="Insurance Today" data-es="Seguro Hoy">Insurance Today</span>
-    </h2>
-    <p style="color: rgba(255,255,255,0.6); font-size: 16px; line-height: 1.7; margin-bottom: 32px; max-width: 500px; margin-left: auto; margin-right: auto;" data-en="Contact us for a wind mitigation inspection. Most homeowners see significant savings on their very next insurance renewal." data-es="Contáctenos para una inspección de mitigación de viento. La mayoría de los propietarios ven ahorros significativos en su próxima renovación de seguro.">
+<!-- CTA BANNER -->
+<section style="background:linear-gradient(170deg,#0c1829 0%,#162b47 50%,#0c1829 100%); padding:88px 0; position:relative; overflow:hidden;">
+  <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:700px; height:400px; background:radial-gradient(ellipse,rgba(240,180,41,0.07) 0%,transparent 70%); pointer-events:none;"></div>
+  <div style="max-width:680px; margin:0 auto; padding:0 32px; text-align:center; position:relative; z-index:1;">
+    <div class="section-tag" style="justify-content:center; color:#f0b429;" data-en="Start Saving" data-es="Comience a Ahorrar">Start Saving</div>
+    <h2 style="font-family:'Libre Baskerville',serif; font-size:clamp(24px,3.5vw,40px); color:#fff; line-height:1.15; letter-spacing:-0.02em; margin-bottom:16px;" data-en="Start Saving on Your Insurance Today" data-es="Comience a Ahorrar en Su Seguro Hoy">Start Saving on Your Insurance Today</h2>
+    <p style="font-size:17px; color:rgba(255,255,255,0.6); line-height:1.72; margin-bottom:36px;" data-en="Contact us for a wind mitigation inspection. Most homeowners see significant savings on their very next insurance renewal." data-es="Contáctenos para una inspección de mitigación de viento. La mayoría de los propietarios ven ahorros significativos en su próxima renovación de seguro.">
       Contact us for a wind mitigation inspection. Most homeowners see significant savings on their very next insurance renewal.
     </p>
-    <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
-      <a href="index.html#contact" class="btn-gold" style="padding: 16px 36px; border-radius: 8px; text-decoration: none; font-size: 16px; display: inline-block;" data-en="Book Your Inspection" data-es="Reserve Su Inspección">Book Your Inspection</a>
-      <a href="tel:8134063903" class="btn-outline" style="padding: 16px 28px; border-radius: 8px; text-decoration: none; font-size: 16px; display: inline-block;">&#128222; 813-406-3903</a>
+    <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+      <a href="index.html#contact" class="btn-gold" style="padding:16px 40px; text-decoration:none; font-size:16px; display:inline-block;" data-en="Book Your Inspection" data-es="Reserve Su Inspección">Book Your Inspection</a>
+      <a href="tel:8134063903" class="btn-outline-light" style="padding:16px 28px; text-decoration:none; font-size:16px; display:inline-flex; align-items:center; gap:8px;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        813-406-3903
+      </a>
     </div>
   </div>
 </section>
 
 <!-- FOOTER -->
-<footer style="background: #050518; border-top: 1px solid rgba(232,168,0,0.15); padding: 60px 0 0;">
-  <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
-    <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px;">
+<footer style="background:#080f1c; padding:80px 0 0; border-top:1px solid rgba(255,255,255,0.06);">
+  <div style="max-width:1140px; margin:0 auto; padding:0 32px;">
+    <div class="footer-grid" style="display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:48px; margin-bottom:48px;">
       <div>
-        <div style="display: flex; align-items: center; gap: 0px; margin-bottom: 20px;">
-          <div style="width: 300px; height: 300px; flex-shrink: 0; margin-right: -80px;"><img src="brand_assets/Untitled design.png" alt="Sunstate Service Group Logo" style="width: 100%; height: 100%; object-fit: contain;"></div>
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
+          <div style="width:280px; height:280px; flex-shrink:0; margin:-84px -120px -84px -40px;">
+            <img src="brand_assets/Untitled design.png" alt="Sunstate Service Group Logo" style="width:100%; height:100%; object-fit:contain;">
+          </div>
           <div>
-            <div style="font-weight: 900; font-size: 16px; color: #fff; letter-spacing: -0.01em; line-height: 1.1;">SUNSTATE</div>
-            <div style="font-size: 8.5px; font-weight: 600; letter-spacing: 0.14em; color: #C9A227; text-transform: uppercase; line-height: 1.3; display: flex; align-items: center; gap: 5px;"><span style="display: inline-block; width: 14px; height: 1px; background: #C9A227;"></span>SERVICE GROUP LLC<span style="display: inline-block; width: 14px; height: 1px; background: #C9A227;"></span></div>
-            <div style="font-size: 8px; font-style: italic; color: #7bc8f0; letter-spacing: 0.02em; margin-top: 1px;" data-en="Certified Florida Home Inspector" data-es="Inspector de Viviendas Certificado en Florida">Certified Florida Home Inspector</div>
+            <div style="font-family:'Libre Baskerville',serif; font-size:18px; color:#fff; line-height:1.1;">Sunstate</div>
+            <div style="font-size:10px; font-weight:600; letter-spacing:0.08em; color:rgba(255,255,255,0.5); text-transform:uppercase; line-height:1.3;">Service Group LLC</div>
           </div>
         </div>
-        <p style="font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.75; max-width: 300px; margin-bottom: 20px;" data-en="Certified Florida Home Inspector serving Tampa Bay and surrounding areas. Professional, thorough, bilingual." data-es="Inspector de Viviendas Certificado en Florida sirviendo Tampa Bay y áreas circundantes. Profesional, exhaustivo, bilingüe.">Certified Florida Home Inspector serving Tampa Bay and surrounding areas. Professional, thorough, bilingual.</p>
-        <div style="font-size: 13px; color: rgba(255,255,255,0.45); margin-bottom: 8px;">&#128222; 813-406-3903</div>
-        <div style="font-size: 13px; color: rgba(255,255,255,0.45);">&#9993; sunstateservicegroup@gmail.com</div>
+        <p style="font-size:14px; color:rgba(255,255,255,0.45); line-height:1.75; max-width:300px; margin-bottom:20px;">Certified Florida Home Inspector serving Tampa Bay and surrounding areas. Professional, thorough, bilingual.</p>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <a href="tel:8134063903" style="font-size:13px; color:rgba(255,255,255,0.45); text-decoration:none; display:flex; align-items:center; gap:8px;" onmouseover="this.style.color='rgba(255,255,255,0.8)'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            813-406-3903
+          </a>
+          <a href="mailto:sunstateservicegroup@gmail.com" style="font-size:13px; color:rgba(255,255,255,0.45); text-decoration:none; display:flex; align-items:center; gap:8px;" onmouseover="this.style.color='rgba(255,255,255,0.8)'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            sunstateservicegroup@gmail.com
+          </a>
+        </div>
       </div>
       <div>
-        <div style="font-size: 12px; font-weight: 800; color: #f5c842; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 20px;" data-en="Services" data-es="Servicios">Services</div>
-        <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 10px;">
-          <li><a href="4-point-inspections.html" class="footer-link" style="text-decoration: none; font-size: 14px;" data-en="4-Point Inspections" data-es="Inspecciones de 4 Puntos">4-Point Inspections</a></li>
-          <li><a href="wind-mitigation.html" class="footer-link" style="text-decoration: none; font-size: 14px;" data-en="Wind Mitigation" data-es="Mitigación de Viento">Wind Mitigation</a></li>
-          <li><a href="pre-purchase-inspections.html" class="footer-link" style="text-decoration: none; font-size: 14px;" data-en="Pre-Purchase Inspections" data-es="Inspecciones Pre-Compra">Pre-Purchase Inspections</a></li>
-          <li><a href="new-construction-inspections.html" class="footer-link" style="text-decoration: none; font-size: 14px;" data-en="New Construction" data-es="Construcción Nueva">New Construction</a></li>
-          <li><a href="11-month-warranty-inspections.html" class="footer-link" style="text-decoration: none; font-size: 14px;" data-en="11-Month Warranty" data-es="Garantía de 11 Meses">11-Month Warranty</a></li>
+        <div style="font-size:12px; font-weight:700; color:var(--gold-light); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:20px;">Services</div>
+        <ul style="list-style:none; padding:0; display:flex; flex-direction:column; gap:10px;">
+          <li><a href="4-point-inspections.html" class="footer-link" style="text-decoration:none;">4-Point Inspections</a></li>
+          <li><a href="wind-mitigation.html" class="footer-link" style="text-decoration:none; color:rgba(255,255,255,0.75)!important;">Wind Mitigation</a></li>
+          <li><a href="pre-purchase-inspections.html" class="footer-link" style="text-decoration:none;">Pre-Purchase Inspections</a></li>
+          <li><a href="new-construction-inspections.html" class="footer-link" style="text-decoration:none;">New Construction</a></li>
+          <li><a href="11-month-warranty-inspections.html" class="footer-link" style="text-decoration:none;">11-Month Warranty</a></li>
         </ul>
       </div>
       <div>
-        <div style="font-size: 12px; font-weight: 800; color: #f5c842; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 20px;" data-en="Company" data-es="Empresa">Company</div>
-        <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 10px;">
-          <li><a href="index.html#about" class="footer-link" style="text-decoration: none; font-size: 14px;" data-en="About Us" data-es="Nosotros">About Us</a></li>
-          <li><a href="building-permits.html" class="footer-link" style="text-decoration: none; font-size: 14px;" data-en="Building Permits" data-es="Permisos de Construcción">Building Permits</a></li>
-          <li><a href="index.html#contact" class="footer-link" style="text-decoration: none; font-size: 14px;" data-en="Contact" data-es="Contacto">Contact</a></li>
+        <div style="font-size:12px; font-weight:700; color:var(--gold-light); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:20px;">Company</div>
+        <ul style="list-style:none; padding:0; display:flex; flex-direction:column; gap:10px;">
+          <li><a href="index.html#about" class="footer-link" style="text-decoration:none;">About Us</a></li>
+          <li><a href="building-permits.html" class="footer-link" style="text-decoration:none;">Building Permits</a></li>
+          <li><a href="index.html#contact" class="footer-link" style="text-decoration:none;">Contact</a></li>
         </ul>
       </div>
       <div>
-        <div style="font-size: 12px; font-weight: 800; color: #f5c842; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 20px;" data-en="Credentials" data-es="Credenciales">Credentials</div>
-        <div style="display: flex; flex-direction: column; gap: 12px;">
-          <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 10px 14px;">
-            <div style="font-size: 11px; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 0.05em;" data-en="License # HI18594" data-es="Licencia # HI18594">License # HI18594</div>
-            <div style="font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 2px;" data-en="State of Florida" data-es="Estado de Florida">State of Florida</div>
-          </div>
-          <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 10px 14px;">
-            <div style="font-size: 11px; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 0.05em;" data-en="Licensed &amp; Insured" data-es="Licenciado y Asegurado">Licensed &amp; Insured</div>
-            <div style="font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 2px;" data-en="Fully covered" data-es="Completamente cubierto">Fully covered</div>
-          </div>
-          <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 10px 14px;">
-            <div style="font-size: 11px; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 0.05em;">English &bull; Espa&#241;ol</div>
-            <div style="font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 2px;" data-en="Bilingual service" data-es="Servicio bilingüe">Bilingual service</div>
-          </div>
+        <div style="font-size:12px; font-weight:700; color:var(--gold-light); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:20px;">Credentials</div>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:10px 14px;"><div style="font-size:11px; font-weight:700; color:#fff; text-transform:uppercase; letter-spacing:0.05em;">License # HI18594</div><div style="font-size:11px; color:rgba(255,255,255,0.45); margin-top:2px;">State of Florida</div></div>
+          <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:10px 14px;"><div style="font-size:11px; font-weight:700; color:#fff; text-transform:uppercase; letter-spacing:0.05em;">Licensed &amp; Insured</div><div style="font-size:11px; color:rgba(255,255,255,0.45); margin-top:2px;">Fully covered</div></div>
+          <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:10px 14px;"><div style="font-size:11px; font-weight:700; color:#fff; text-transform:uppercase; letter-spacing:0.05em;">English &bull; Espa&#241;ol</div><div style="font-size:11px; color:rgba(255,255,255,0.45); margin-top:2px;">Bilingual service</div></div>
         </div>
       </div>
     </div>
-    <div style="border-top: 1px solid rgba(255,255,255,0.07); padding: 24px 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
-      <div style="font-size: 13px; color: rgba(255,255,255,0.35);">&copy; 2026 Sunstate Service Group LLC. All rights reserved.</div>
-      <div style="display: flex; gap: 20px;">
-        <a href="privacy-policy.html" class="footer-link" style="text-decoration: none; font-size: 13px;">Privacy Policy</a>
-        <a href="terms-of-service.html" class="footer-link" style="text-decoration: none; font-size: 13px;">Terms of Service</a>
+    <div style="border-top:1px solid rgba(255,255,255,0.07); padding:24px 0; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+      <div style="font-size:13px; color:rgba(255,255,255,0.35);">&copy; 2026 Sunstate Service Group LLC. All rights reserved.</div>
+      <div style="display:flex; gap:20px;">
+        <a href="privacy-policy.html" class="footer-link" style="text-decoration:none;">Privacy Policy</a>
+        <a href="terms-of-service.html" class="footer-link" style="text-decoration:none;">Terms of Service</a>
       </div>
     </div>
   </div>
 </footer>
 
 <script>
+var fontSizes=[14,16,18,20];
+var zoomLevels=[0.85,1,1.12,1.25];
+var fontSizeIdx=parseInt(localStorage.getItem('ssg-fontSize')||'1');
+(function(){document.documentElement.style.fontSize=fontSizes[fontSizeIdx]+'px';document.addEventListener('DOMContentLoaded',function(){document.body.style.zoom=zoomLevels[fontSizeIdx];});})();
+function changeFontSize(dir){fontSizeIdx=Math.min(3,Math.max(0,fontSizeIdx+dir));localStorage.setItem('ssg-fontSize',fontSizeIdx);document.documentElement.style.fontSize=fontSizes[fontSizeIdx]+'px';document.body.style.zoom=zoomLevels[fontSizeIdx];}
+
 var currentLang = 'en';
 function toggleLanguage() {
   currentLang = currentLang === 'en' ? 'es' : 'en';
   document.querySelectorAll('[data-en][data-es]').forEach(function(el) {
     var text = el.getAttribute('data-' + currentLang);
     if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') return;
-    var hasTranslatableChildren = el.querySelector('[data-en][data-es]');
-    if (!hasTranslatableChildren) { el.innerHTML = text; }
+    if (!el.querySelector('[data-en][data-es]')) { el.innerHTML = text; }
   });
   var label = document.getElementById('lang-label');
   var flag = document.getElementById('lang-flag');
   if (currentLang === 'es') { label.textContent = 'English'; flag.textContent = 'ES'; }
   else { label.textContent = 'Espa\u00f1ol'; flag.textContent = 'EN'; }
 }
+function toggleMobileMenu() {
+  var menu = document.getElementById('mobileMenu');
+  var ham = document.querySelector('.hamburger');
+  menu.classList.toggle('open');
+  ham.classList.toggle('active');
+  document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+}
+window.addEventListener('scroll', function() {
+  var nav = document.getElementById('main-nav');
+  if (window.scrollY > 10) nav.classList.add('nav-scrolled');
+  else nav.classList.remove('nav-scrolled');
+});
 </script>
 </body>
 </html>

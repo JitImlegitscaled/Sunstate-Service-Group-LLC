@@ -2,3 +2,5 @@ node_modules/
 temporary screenshots/
 *.msi
 es.goacusystem.com_.png
+
+.vercel

@@ -1,288 +1,505 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>document.documentElement.style.fontSize=["14px","16px","18px","20px"][parseInt(localStorage.getItem("ssg-fontSize")||"1")];</script>
 <link rel="icon" type="image/png" href="brand_assets/favicon.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Building Permit Information | Sunstate Service Group LLC</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <script>
 tailwind.config = {
   theme: {
     extend: {
       colors: {
-        navy: {
-          950: '#080820',
-          900: '#0f0f2e',
-          800: '#161641',
-          700: '#1e1e52',
-          600: '#252563',
-        },
-        gold: {
-          300: '#fde68a',
-          400: '#f5c842',
-          500: '#e8a800',
-          600: '#c98f00',
-        },
-        azure: {
-          400: '#4a9dd4',
-          500: '#2b7cb8',
-          600: '#1a5c96',
-        }
+        brand: { 50:'#f0f4f8',100:'#dce4ed',200:'#b8c9db',300:'#8ba6c1',400:'#5e83a7',500:'#1a3a5c',600:'#142e4a',700:'#0f2239',800:'#0a1628',900:'#060e1a' },
+        gold: { 300:'#fde68a',400:'#f5c842',500:'#e8a800',600:'#c98f00' },
+        azure: { 400:'#4a9dd4',500:'#2b7cb8',600:'#1a5c96' }
       },
-      fontFamily: {
-        sans: ['Urbanist', 'sans-serif'],
-        display: ['Playfair Display', 'serif'],
-      }
+      fontFamily: { sans:['IBM Plex Sans','sans-serif'], display:['Libre Baskerville','serif'] }
     }
   }
 }
 </script>
 <style>
-  * { box-sizing: border-box; margin: 0; }
-  body { font-family: 'Urbanist', sans-serif; background: #080820; color: #fff; overflow-x: hidden; }
+  :root {
+    --navy-900:#0c1829; --navy-800:#112036; --navy-700:#162b47; --navy-600:#1c3a5e; --navy-500:#2a5078;
+    --slate:#3d5470; --body:#445567; --muted:#6b7f94; --border:#e2e8f0; --surface:#f7f9fc;
+    --gold:#d4920a; --gold-light:#f0b429; --azure:#3b91cc; --azure-deep:#2270aa;
+    --ease-out:cubic-bezier(0.16,1,0.3,1); --ease-spring:cubic-bezier(0.34,1.56,0.64,1);
+  }
+  * { box-sizing:border-box; margin:0; }
+  html { overflow-x:hidden; scroll-behavior:smooth; }
+  body { font-family:'IBM Plex Sans',sans-serif; background:#fff; color:var(--body); overflow-x:hidden; max-width:100vw; -webkit-font-smoothing:antialiased; line-height:1.72; font-size:1rem; }
+  body::after { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E"); pointer-events:none; z-index:9999; opacity:0.3; }
 
-  .btn-gold {
-    background: linear-gradient(135deg, #e8a800 0%, #f5c842 100%);
-    color: #080820;
-    font-weight: 800;
-    letter-spacing: -0.01em;
-    box-shadow: 0 4px 20px rgba(232,168,0,0.25), 0 0 0 1px rgba(232,168,0,0.3);
-    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
-  }
-  .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(232,168,0,0.35), 0 0 0 1px rgba(232,168,0,0.5); }
-  .btn-gold:active { transform: translateY(0); }
-  .btn-gold:focus-visible { outline: 2px solid #f5c842; outline-offset: 3px; }
+  nav { position:sticky; top:0; z-index:1000; }
+  .nav-scrolled { background:rgba(255,255,255,0.98)!important; box-shadow:0 1px 0 var(--border),0 4px 24px rgba(12,24,41,0.06)!important; backdrop-filter:blur(20px) saturate(1.2); }
 
-  .btn-outline {
-    border: 1.5px solid rgba(255,255,255,0.25);
-    color: #fff;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.25s ease, background 0.25s ease;
-  }
-  .btn-outline:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.06); }
-  .btn-outline:active { transform: translateY(0); }
-  .btn-outline:focus-visible { outline: 2px solid #f5c842; outline-offset: 3px; }
+  .btn-primary { background:var(--navy-600); color:#fff; font-weight:600; font-size:14px; letter-spacing:0.025em; transition:transform 0.3s var(--ease-out),box-shadow 0.3s var(--ease-out),background 0.2s ease; box-shadow:0 1px 2px rgba(12,24,41,0.08),0 4px 16px rgba(28,58,94,0.16); border-radius:8px; }
+  .btn-primary:hover { background:var(--navy-700); transform:translateY(-2px); box-shadow:0 2px 6px rgba(12,24,41,0.1),0 10px 28px rgba(28,58,94,0.22); }
+  .btn-primary:active { transform:translateY(0); }
+  .btn-primary:focus-visible { outline:2px solid var(--navy-600); outline-offset:3px; }
 
-  .permit-card {
-    background: linear-gradient(145deg, #161641, #1e1e52);
-    border: 1px solid rgba(232,168,0,0.15);
-    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.25s ease, box-shadow 0.25s ease;
-  }
-  .permit-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(232,168,0,0.4);
-    box-shadow: 0 16px 48px rgba(0,0,0,0.4), 0 0 0 1px rgba(232,168,0,0.2);
-  }
+  .btn-gold { background:var(--gold-light); color:var(--navy-900); font-weight:700; font-size:14px; letter-spacing:0.025em; transition:transform 0.3s var(--ease-out),box-shadow 0.3s var(--ease-out),background 0.2s ease; box-shadow:0 1px 2px rgba(212,146,10,0.12),0 4px 16px rgba(212,146,10,0.2); border-radius:8px; }
+  .btn-gold:hover { background:#e8a800; transform:translateY(-2px); box-shadow:0 2px 6px rgba(212,146,10,0.14),0 10px 28px rgba(212,146,10,0.28); }
+  .btn-gold:active { transform:translateY(0); }
+  .btn-gold:focus-visible { outline:2px solid var(--gold); outline-offset:3px; }
 
-  .permit-link {
-    color: #4a9dd4;
-    text-decoration: none;
-    font-size: 14px;
-    word-break: break-all;
-    transition: color 0.2s ease;
-    display: inline-flex;
-    align-items: flex-start;
-    gap: 6px;
-  }
-  .permit-link:hover { color: #f5c842; }
-  .permit-link:focus-visible { outline: 2px solid #f5c842; outline-offset: 2px; }
+  .btn-outline-light { border:1.5px solid rgba(255,255,255,0.3); color:rgba(255,255,255,0.9); font-weight:600; font-size:14px; letter-spacing:0.025em; background:transparent; transition:background 0.25s ease,border-color 0.25s ease,transform 0.3s var(--ease-out); border-radius:8px; }
+  .btn-outline-light:hover { background:rgba(255,255,255,0.08); border-color:rgba(255,255,255,0.6); transform:translateY(-2px); }
+  .btn-outline-light:active { transform:translateY(0); }
+  .btn-outline-light:focus-visible { outline:2px solid #fff; outline-offset:3px; }
 
-  .footer-link {
-    color: rgba(255,255,255,0.45);
-    transition: color 0.2s ease;
+  .nav-link { position:relative; color:var(--slate); font-weight:500; font-size:13.5px; letter-spacing:0.015em; transition:color 0.2s ease; }
+  .nav-link::after { content:''; position:absolute; bottom:-6px; left:0; right:0; height:2px; background:var(--gold-light); transform:scaleX(0); transition:transform 0.3s var(--ease-out); transform-origin:left; border-radius:2px; }
+  .nav-link:hover { color:var(--navy-900); }
+  .nav-link:hover::after { transform:scaleX(1); }
+  .nav-link:focus-visible { outline:2px solid var(--navy-600); outline-offset:3px; border-radius:2px; }
+
+  .section-tag { display:inline-flex; align-items:center; gap:10px; font-size:10.5px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:var(--navy-600); margin-bottom:16px; }
+  .section-tag::before { content:''; display:inline-block; width:28px; height:2px; background:var(--gold-light); border-radius:2px; flex-shrink:0; }
+
+  .permit-card { background:#fff; border:1px solid var(--border); border-radius:14px; padding:28px 32px; transition:transform 0.4s var(--ease-out),box-shadow 0.4s var(--ease-out),border-color 0.3s ease; box-shadow:0 1px 3px rgba(12,24,41,0.04),0 4px 12px rgba(12,24,41,0.05); position:relative; overflow:hidden; }
+  .permit-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:var(--navy-600); transform:scaleX(0); transform-origin:left; transition:transform 0.4s var(--ease-out); }
+  .permit-card:hover { transform:translateY(-4px); border-color:rgba(28,58,94,0.15); box-shadow:0 4px 16px rgba(12,24,41,0.06),0 16px 40px rgba(12,24,41,0.1); }
+  .permit-card:hover::before { transform:scaleX(1); }
+  .permit-card.gold-accent::before { background:var(--gold-light); }
+
+  .permit-link { color:var(--azure); text-decoration:none; font-size:14px; word-break:break-all; display:inline-flex; align-items:flex-start; gap:7px; line-height:1.55; transition:color 0.2s ease; }
+  .permit-link:hover { color:var(--azure-deep); }
+  .permit-link:focus-visible { outline:2px solid var(--azure); outline-offset:2px; border-radius:2px; }
+
+  .footer-link { color:rgba(255,255,255,0.45); transition:color 0.25s ease; font-size:14px; }
+  .footer-link:hover { color:var(--gold-light); }
+  .footer-link:focus-visible { outline:2px solid var(--gold-light); outline-offset:2px; border-radius:2px; }
+
+  ::-webkit-scrollbar { width:6px; }
+  ::-webkit-scrollbar-track { background:transparent; }
+  ::-webkit-scrollbar-thumb { background:rgba(184,197,211,0.6); border-radius:6px; }
+  ::-webkit-scrollbar-thumb:hover { background:var(--navy-600); }
+
+  .hamburger { display:none; background:none; border:none; cursor:pointer; padding:8px; z-index:60; }
+  .hamburger span { display:block; width:22px; height:1.5px; background:var(--navy-900); margin:5px 0; border-radius:2px; transition:transform 0.35s var(--ease-out),opacity 0.25s ease; }
+  .hamburger.active span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); }
+  .hamburger.active span:nth-child(2) { opacity:0; }
+  .hamburger.active span:nth-child(3) { transform:rotate(-45deg) translate(5px,-5px); }
+  .mobile-menu { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(255,255,255,0.98); z-index:999; flex-direction:column; align-items:center; justify-content:center; gap:32px; backdrop-filter:blur(24px); }
+  .mobile-menu.open { display:flex; }
+  .mobile-menu a { color:var(--navy-900); text-decoration:none; font-size:20px; font-weight:600; transition:color 0.25s ease; }
+  .mobile-menu a:hover { color:var(--gold); }
+  .mobile-menu .mobile-close { position:absolute; top:20px; right:24px; background:none; border:none; color:var(--navy-900); font-size:28px; cursor:pointer; }
+
+  @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+  .fade-up { animation:fadeUp 0.75s cubic-bezier(0.16,1,0.3,1) both; }
+  .fade-up-1 { animation-delay:0.1s; } .fade-up-2 { animation-delay:0.22s; } .fade-up-3 { animation-delay:0.34s; } .fade-up-4 { animation-delay:0.46s; }
+
+  @media (max-width:768px) {
+    .hamburger { display:block; }
+    .desktop-nav, .desktop-cta { display:none!important; }
+    .cards-grid { grid-template-columns:1fr!important; gap:14px!important; }
+    .two-col { grid-template-columns:1fr!important; gap:40px!important; }
+    .footer-grid { grid-template-columns:1fr!important; gap:32px!important; }
+    h1 { font-size:32px!important; }
+    .hero-stats { flex-direction:column!important; gap:12px!important; }
+    .nav-logo-img { width:90px!important; height:90px!important; margin:-20px -10px -20px -10px!important; }
+    .nav-logo-img img { width:90px!important; height:90px!important; }
   }
-  .footer-link:hover { color: #f5c842; }
-  .footer-link:focus-visible { outline: 2px solid #f5c842; outline-offset: 2px; }
 </style>
 </head>
 <body>
 
-<!-- SIMPLE NAV -->
-<nav style="position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(8,8,32,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(232,168,0,0.12);">
-  <div style="max-width: 1200px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;">
-    <a href="index.html" style="display: flex; align-items: center; gap: 0px; text-decoration: none;">
-      <div style="width: 65px; height: 65px; flex-shrink: 0; margin-right: -14px;">
-        <img src="brand_assets/Untitled design.png" alt="Sunstate Service Group Logo" style="width: 100%; height: 100%; object-fit: contain;">
+<!-- TOP BAR -->
+<div style="background:#0c1829; padding:9px 0; border-bottom:1px solid rgba(255,255,255,0.05);">
+  <div style="max-width:1140px; margin:0 auto; padding:0 32px; display:flex; justify-content:space-between; align-items:center; font-size:13px; color:rgba(255,255,255,0.65);">
+    <div style="display:flex; align-items:center; gap:24px;">
+      <a href="tel:8134063903" style="color:rgba(255,255,255,0.8); text-decoration:none; display:flex; align-items:center; gap:6px;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        813-406-3903
+      </a>
+      <a href="mailto:sunstateservicegroup@gmail.com" style="color:rgba(255,255,255,0.8); text-decoration:none; display:flex; align-items:center; gap:6px;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        sunstateservicegroup@gmail.com
+      </a>
+    </div>
+    <div style="display:flex; align-items:center; gap:8px;">
+      <!-- Font Size Toggle -->
+      <div style="display:inline-flex; align-items:center; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.15); border-radius:100px; padding:3px 4px; gap:2px;">
+        <button onclick="changeFontSize(-1)" title="Decrease font size" style="width:24px; height:24px; display:inline-flex; align-items:center; justify-content:center; background:none; border:none; color:rgba(255,255,255,0.7); font-family:'IBM Plex Sans',sans-serif; font-size:13px; font-weight:700; cursor:pointer; border-radius:100px; transition:background 0.2s ease,color 0.2s ease; line-height:1;" onmouseover="this.style.background='rgba(255,255,255,0.15)';this.style.color='#fff'" onmouseout="this.style.background='none';this.style.color='rgba(255,255,255,0.7)'">A</button>
+        <div style="width:1px; height:14px; background:rgba(255,255,255,0.2);"></div>
+        <button onclick="changeFontSize(1)" title="Increase font size" style="width:24px; height:24px; display:inline-flex; align-items:center; justify-content:center; background:none; border:none; color:rgba(255,255,255,0.7); font-family:'IBM Plex Sans',sans-serif; font-size:17px; font-weight:700; cursor:pointer; border-radius:100px; transition:background 0.2s ease,color 0.2s ease; line-height:1;" onmouseover="this.style.background='rgba(255,255,255,0.15)';this.style.color='#fff'" onmouseout="this.style.background='none';this.style.color='rgba(255,255,255,0.7)'">A</button>
+      </div>
+      <!-- Language Toggle -->
+      <button id="lang-toggle" onclick="toggleLanguage()" style="display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.15); border-radius:100px; padding:4px 14px 4px 8px; color:rgba(255,255,255,0.9); font-size:12px; font-weight:600; font-family:'IBM Plex Sans',sans-serif; cursor:pointer; transition:background 0.25s ease;" onmouseover="this.style.background='rgba(255,255,255,0.18)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">
+        <span id="lang-flag" style="font-size:11px; font-weight:700; background:rgba(255,255,255,0.15); border-radius:4px; padding:2px 5px; letter-spacing:0.04em;">EN</span>
+        <span id="lang-label">Espa&#241;ol</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="main-nav" style="background:#ffffff; border-bottom:1px solid var(--border); transition:background 0.4s ease,box-shadow 0.4s ease;">
+  <div style="max-width:1140px; margin:0 auto; padding:0 32px; display:flex; align-items:center; justify-content:space-between; height:68px; position:relative;">
+    <a href="index.html" style="display:flex; align-items:center; gap:12px; text-decoration:none; position:relative; z-index:50;">
+      <div class="nav-logo-img" style="width:280px; height:280px; flex-shrink:0; margin:-84px -120px -84px -40px;">
+        <img src="brand_assets/Untitled design.png" alt="Sunstate Service Group Logo" style="width:100%; height:100%; object-fit:contain;">
       </div>
       <div>
-        <div style="font-weight: 900; font-size: 16px; color: #fff; letter-spacing: -0.01em; line-height: 1.1;">SUNSTATE</div>
-        <div style="font-size: 8.5px; font-weight: 600; letter-spacing: 0.14em; color: #C9A227; text-transform: uppercase; line-height: 1.3; display: flex; align-items: center; gap: 5px;">
-          <span style="display: inline-block; width: 14px; height: 1px; background: #C9A227;"></span>SERVICE GROUP LLC<span style="display: inline-block; width: 14px; height: 1px; background: #C9A227;"></span>
-        </div>
+        <div style="font-family:'Libre Baskerville',serif; font-size:18px; color:var(--navy-900); line-height:1.1;">Sunstate</div>
+        <div style="font-size:10px; font-weight:600; letter-spacing:0.08em; color:#6b7c8d; text-transform:uppercase; line-height:1.2;">Service Group LLC</div>
       </div>
     </a>
-    <a href="index.html" class="btn-outline" style="padding: 10px 18px; border-radius: 6px; text-decoration: none; font-size: 13px; white-space: nowrap;">&#8592; Back to Home</a>
+    <div class="desktop-nav" style="display:flex; align-items:center; gap:32px;">
+      <a href="index.html#services" class="nav-link" style="text-decoration:none;" data-en="Services" data-es="Servicios">Services</a>
+      <a href="index.html#about" class="nav-link" style="text-decoration:none;" data-en="About" data-es="Nosotros">About</a>
+      <a href="wind-mitigation.html" class="nav-link" style="text-decoration:none;" data-en="Wind Mitigation" data-es="Mitigaci&#243;n Viento">Wind Mitigation</a>
+      <a href="building-permits.html" class="nav-link" style="text-decoration:none; color:var(--navy-900)!important;" data-en="Building Permits" data-es="Permisos">Building Permits</a>
+      <a href="index.html#contact" class="nav-link" style="text-decoration:none;" data-en="Contact" data-es="Contacto">Contact</a>
+    </div>
+    <div class="desktop-cta" style="display:flex; align-items:center; gap:10px;">
+      <a href="tel:8134063903" style="color:var(--navy-600); text-decoration:none; font-size:14px; font-weight:600; display:flex; align-items:center; gap:6px;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        813-406-3903
+      </a>
+      <a href="index.html#contact" class="btn-primary" style="padding:10px 24px; text-decoration:none; font-size:13px; white-space:nowrap;" data-en="Book Inspection" data-es="Reservar">Book Inspection</a>
+    </div>
+    <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Open menu"><span></span><span></span><span></span></button>
   </div>
 </nav>
 
-<!-- HEADER -->
-<section style="padding: 140px 0 60px; position: relative; overflow: hidden; background: linear-gradient(135deg, #0f0f2e 55%, #1a1a50 100%);">
-  <div style="position: absolute; width: 500px; height: 500px; background: rgba(232,168,0,0.07); border-radius: 50%; filter: blur(80px); top: -100px; left: -100px; pointer-events: none;"></div>
-  <div style="position: absolute; width: 400px; height: 400px; background: rgba(74,157,212,0.09); border-radius: 50%; filter: blur(80px); top: 50px; right: 200px; pointer-events: none;"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="toggleMobileMenu()">&times;</button>
+  <a href="index.html#services" onclick="toggleMobileMenu()">Services</a>
+  <a href="index.html#about" onclick="toggleMobileMenu()">About</a>
+  <a href="wind-mitigation.html" onclick="toggleMobileMenu()">Wind Mitigation</a>
+  <a href="building-permits.html" onclick="toggleMobileMenu()">Building Permits</a>
+  <a href="index.html#contact" onclick="toggleMobileMenu()">Contact</a>
+  <a href="tel:8134063903" class="btn-primary" style="padding:14px 32px; font-size:16px; margin-top:12px; color:#fff; text-decoration:none;">813-406-3903</a>
+</div>
 
-  <div style="max-width: 900px; margin: 0 auto; padding: 0 24px; text-align: center; position: relative; z-index: 1;">
-    <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(232,168,0,0.12); border: 1px solid rgba(232,168,0,0.3); border-radius: 100px; padding: 6px 16px; margin-bottom: 24px;">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5c842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-      <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; color: #f5c842; text-transform: uppercase;">Resource Guide</span>
+<!-- HERO -->
+<section style="background:linear-gradient(170deg,#0c1829 0%,#162b47 55%,#0c1829 100%); padding:96px 0 88px; position:relative; overflow:hidden;">
+  <div style="position:absolute; width:600px; height:500px; background:radial-gradient(ellipse,rgba(240,180,41,0.08) 0%,transparent 70%); top:-80px; left:-80px; pointer-events:none;"></div>
+  <div style="position:absolute; width:500px; height:400px; background:radial-gradient(ellipse,rgba(59,145,204,0.07) 0%,transparent 70%); bottom:-60px; right:-60px; pointer-events:none;"></div>
+  <div style="max-width:1140px; margin:0 auto; padding:0 32px; position:relative; z-index:1;">
+    <a href="index.html" class="fade-up fade-up-1" style="display:inline-flex; align-items:center; gap:8px; color:var(--gold-light); font-size:13px; font-weight:600; text-decoration:none; margin-bottom:24px; opacity:0.85; transition:opacity 0.2s ease;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      <span data-en="Back to Home" data-es="Volver al Inicio">Back to Home</span>
+    </a>
+    <div style="max-width:720px;">
+      <div class="fade-up fade-up-1" style="display:inline-flex; align-items:center; gap:8px; background:rgba(240,180,41,0.12); border:1px solid rgba(240,180,41,0.28); border-radius:100px; padding:6px 16px; margin-bottom:20px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f0b429" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span style="font-size:11px; font-weight:700; letter-spacing:0.1em; color:var(--gold-light); text-transform:uppercase;" data-en="Resource Guide" data-es="Guía de Recursos">Resource Guide</span>
+      </div>
+      <h1 class="fade-up fade-up-2" style="font-family:'Libre Baskerville',serif; font-size:clamp(32px,4vw,54px); color:#fff; line-height:1.1; letter-spacing:-0.02em; margin-bottom:20px;">
+        <span data-en="Building Permit" data-es="Información de">Building Permit</span><br><span style="color:var(--gold-light);" data-en="Information" data-es="Permisos de Construcción">Information</span>
+      </h1>
+      <p class="fade-up fade-up-3" style="font-size:17px; color:rgba(255,255,255,0.68); line-height:1.78; margin-bottom:40px; max-width:560px;" data-en="Quick access to building permit portals for counties and cities across the Tampa Bay region. Click any link to go directly to the permit search portal for your area." data-es="Acceso rápido a los portales de permisos de construcción de los condados y ciudades del área de Tampa Bay. Haga clic en cualquier enlace para ir directamente al portal de búsqueda de su área.">
+        Quick access to building permit portals for counties and cities across the Tampa Bay region. Click any link to go directly to the permit search portal for your area.
+      </p>
+      <div class="fade-up fade-up-4 hero-stats" style="display:flex; gap:16px; flex-wrap:wrap;">
+        <div style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:20px 28px; text-align:center; min-width:130px;">
+          <div style="font-family:'Libre Baskerville',serif; font-size:36px; font-weight:700; color:var(--gold-light); line-height:1;">8</div>
+          <div style="font-size:12px; font-weight:600; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:0.1em; margin-top:4px;" data-en="Jurisdictions" data-es="Jurisdicciones">Jurisdictions</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:20px 28px; text-align:center; min-width:130px;">
+          <div style="font-family:'Libre Baskerville',serif; font-size:36px; font-weight:700; color:#fff; line-height:1;">10+</div>
+          <div style="font-size:12px; font-weight:600; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:0.1em; margin-top:4px;" data-en="Direct Links" data-es="Enlaces Directos">Direct Links</div>
+        </div>
+        <div style="background:rgba(59,145,204,0.12); border:1px solid rgba(59,145,204,0.22); border-radius:12px; padding:20px 28px; text-align:center; min-width:160px;">
+          <div style="font-size:13px; font-weight:700; color:#fff; line-height:1.3;" data-en="Tampa Bay Region" data-es="Región de Tampa Bay">Tampa Bay Region</div>
+          <div style="font-size:12px; font-weight:500; color:rgba(255,255,255,0.5); margin-top:4px;" data-en="All major counties" data-es="Todos los condados principales">All major counties</div>
+        </div>
+      </div>
     </div>
-    <h1 style="font-size: clamp(28px, 4vw, 48px); font-weight: 900; line-height: 1.15; letter-spacing: -0.03em; color: #fff; margin-bottom: 16px;">
-      Building Permit <span style="color: #f5c842;">Information Sheet</span>
-    </h1>
-    <p style="color: rgba(255,255,255,0.6); font-size: 17px; line-height: 1.7; max-width: 620px; margin: 0 auto;">
-      Quick access to building permit portals for counties and cities across the Tampa Bay region. Click any link to go directly to the permit search.
-    </p>
   </div>
 </section>
 
-<!-- PERMIT CARDS -->
-<section style="background: linear-gradient(180deg, #0d0d30 0%, #111135 100%); padding: 60px 0 90px; position: relative;">
-  <div style="max-width: 900px; margin: 0 auto; padding: 0 24px; display: flex; flex-direction: column; gap: 24px;">
-
-    <!-- Hillsborough County -->
-    <div class="permit-card" style="border-radius: 14px; padding: 28px 32px;">
-      <h3 style="font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 16px; display: flex; align-items: center; gap: 10px;">
-        <span style="width: 32px; height: 32px; background: linear-gradient(135deg, rgba(232,168,0,0.15), rgba(232,168,0,0.08)); border: 1px solid rgba(232,168,0,0.3); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0;">&#127963;</span>
-        Hillsborough County
-      </h3>
-      <div style="display: flex; flex-direction: column; gap: 10px; padding-left: 42px;">
-        <a href="https://gis.hcpafl.org/propertysearch/#/nav/Basic%20Search" target="_blank" rel="noopener noreferrer" class="permit-link">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:2px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          gis.hcpafl.org/propertysearch/#/nav/Basic%20Search
-        </a>
-        <a href="https://app.hillsboroughcounty.org/DevelopmentServices/PermitReports" target="_blank" rel="noopener noreferrer" class="permit-link">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:2px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          app.hillsboroughcounty.org/DevelopmentServices/PermitReports
-        </a>
-        <a href="https://aca-prod.accela.com/HCFL/Default.aspx" target="_blank" rel="noopener noreferrer" class="permit-link">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:2px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          aca-prod.accela.com/HCFL/Default.aspx
-        </a>
-      </div>
+<!-- PERMIT PORTALS -->
+<section id="permits" style="background:#f7f9fc; padding:100px 0; position:relative; overflow:hidden;">
+  <div style="position:absolute; top:-100px; right:-100px; width:500px; height:500px; background:radial-gradient(circle,rgba(28,58,94,0.04) 0%,transparent 70%); pointer-events:none;"></div>
+  <div style="max-width:900px; margin:0 auto; padding:0 32px;">
+    <div style="text-align:center; margin-bottom:64px;">
+      <div class="section-tag" style="justify-content:center;" data-en="Tampa Bay Region" data-es="Región de Tampa Bay">Tampa Bay Region</div>
+      <h2 style="font-family:'Libre Baskerville',serif; font-size:clamp(26px,3.2vw,40px); color:var(--navy-900); line-height:1.18; letter-spacing:-0.02em; margin-bottom:14px;">
+        <span data-en="Permit Portals &amp;" data-es="Portales de Permisos">Permit Portals &amp;</span> <span style="color:var(--navy-600);" data-en="Search Links" data-es="Búsqueda de Permisos">Search Links</span>
+      </h2>
+      <p style="font-size:17px; color:var(--body); max-width:520px; margin:0 auto; line-height:1.72;" data-en="Each card links directly to the official permit portal for that jurisdiction. Use these to verify permits, check permit status, or search open permits on a property." data-es="Cada tarjeta enlaza directamente al portal oficial de permisos de esa jurisdicción. Úselos para verificar permisos, consultar el estado o buscar permisos abiertos en una propiedad.">
+        Each card links directly to the official permit portal for that jurisdiction. Use these to verify permits, check permit status, or search open permits on a property.
+      </p>
     </div>
 
-    <!-- City of Tampa -->
-    <div class="permit-card" style="border-radius: 14px; padding: 28px 32px;">
-      <h3 style="font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 16px; display: flex; align-items: center; gap: 10px;">
-        <span style="width: 32px; height: 32px; background: linear-gradient(135deg, rgba(74,157,212,0.15), rgba(74,157,212,0.08)); border: 1px solid rgba(74,157,212,0.3); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0;">&#127963;</span>
-        City of Tampa
-      </h3>
-      <div style="display: flex; flex-direction: column; gap: 10px; padding-left: 42px;">
-        <a href="https://aca-prod.accela.com/TAMPA/Cap/CapHome.aspx?module=Building&TabName=Building" target="_blank" rel="noopener noreferrer" class="permit-link">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:2px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          aca-prod.accela.com/TAMPA/Cap/CapHome.aspx?module=Building&amp;TabName=Building
-        </a>
-      </div>
-    </div>
+    <div style="display:flex; flex-direction:column; gap:20px;">
 
-    <!-- City of St Petersburg -->
-    <div class="permit-card" style="border-radius: 14px; padding: 28px 32px;">
-      <h3 style="font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 16px; display: flex; align-items: center; gap: 10px;">
-        <span style="width: 32px; height: 32px; background: linear-gradient(135deg, rgba(232,168,0,0.15), rgba(232,168,0,0.08)); border: 1px solid rgba(232,168,0,0.3); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0;">&#127963;</span>
-        City of St Petersburg
-      </h3>
-      <div style="display: flex; flex-direction: column; gap: 10px; padding-left: 42px;">
-        <a href="https://stpe-egov.aspgov.com/Click2GovBP/selectpermit.html?OWASP_CSRFTOKEN=CUGT-D8NE-5JC0-28ATME0U-OW7M-8DV9-OR1T&initialSearchView=true" target="_blank" rel="noopener noreferrer" class="permit-link">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:2px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          stpe-egov.aspgov.com/Click2GovBP/selectpermit.html
-        </a>
+      <!-- Hillsborough County -->
+      <div class="permit-card">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:18px;">
+          <div style="width:40px; height:40px; background:#eef2f8; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1c3a5e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <h3 style="font-size:18px; font-weight:700; color:var(--navy-900);" data-en="Hillsborough County" data-es="Condado de Hillsborough">Hillsborough County</h3>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:10px; padding-left:52px;">
+          <a href="https://gis.hcpafl.org/propertysearch/#/nav/Basic%20Search" target="_blank" rel="noopener noreferrer" class="permit-link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:3px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            gis.hcpafl.org — Property Search
+          </a>
+          <a href="https://app.hillsboroughcounty.org/DevelopmentServices/PermitReports" target="_blank" rel="noopener noreferrer" class="permit-link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:3px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            hillsboroughcounty.org — Permit Reports
+          </a>
+          <a href="https://aca-prod.accela.com/HCFL/Default.aspx" target="_blank" rel="noopener noreferrer" class="permit-link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:3px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            aca-prod.accela.com/HCFL — Citizen Access
+          </a>
+        </div>
       </div>
-    </div>
 
-    <!-- Pasco County -->
-    <div class="permit-card" style="border-radius: 14px; padding: 28px 32px;">
-      <h3 style="font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 16px; display: flex; align-items: center; gap: 10px;">
-        <span style="width: 32px; height: 32px; background: linear-gradient(135deg, rgba(74,157,212,0.15), rgba(74,157,212,0.08)); border: 1px solid rgba(74,157,212,0.3); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0;">&#127963;</span>
-        Pasco County
-      </h3>
-      <div style="display: flex; flex-direction: column; gap: 10px; padding-left: 42px;">
-        <a href="https://aca-prod.accela.com/PASCO/Default.aspx" target="_blank" rel="noopener noreferrer" class="permit-link">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:2px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          aca-prod.accela.com/PASCO/Default.aspx
-        </a>
+      <!-- City of Tampa -->
+      <div class="permit-card gold-accent">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:18px;">
+          <div style="width:40px; height:40px; background:rgba(240,180,41,0.1); border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d4920a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+          </div>
+          <h3 style="font-size:18px; font-weight:700; color:var(--navy-900);" data-en="City of Tampa" data-es="Ciudad de Tampa">City of Tampa</h3>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:10px; padding-left:52px;">
+          <a href="https://aca-prod.accela.com/TAMPA/Cap/CapHome.aspx?module=Building&TabName=Building" target="_blank" rel="noopener noreferrer" class="permit-link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:3px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            aca-prod.accela.com/TAMPA — Building Permits
+          </a>
+        </div>
       </div>
-    </div>
 
-    <!-- Clearwater -->
-    <div class="permit-card" style="border-radius: 14px; padding: 28px 32px;">
-      <h3 style="font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 16px; display: flex; align-items: center; gap: 10px;">
-        <span style="width: 32px; height: 32px; background: linear-gradient(135deg, rgba(232,168,0,0.15), rgba(232,168,0,0.08)); border: 1px solid rgba(232,168,0,0.3); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0;">&#127963;</span>
-        Clearwater
-      </h3>
-      <div style="display: flex; flex-direction: column; gap: 10px; padding-left: 42px;">
-        <a href="https://epermit.myclearwater.com/CitizenAccess/Cap/CapHome.aspx?module=Building&TabName=Building" target="_blank" rel="noopener noreferrer" class="permit-link">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:2px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          epermit.myclearwater.com/CitizenAccess/Cap/CapHome.aspx?module=Building&amp;TabName=Building
-        </a>
+      <!-- City of St. Petersburg -->
+      <div class="permit-card">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:18px;">
+          <div style="width:40px; height:40px; background:#eef2f8; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1c3a5e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <h3 style="font-size:18px; font-weight:700; color:var(--navy-900);" data-en="City of St. Petersburg" data-es="Ciudad de San Petersburgo">City of St. Petersburg</h3>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:10px; padding-left:52px;">
+          <a href="https://stpe-egov.aspgov.com/Click2GovBP/selectpermit.html?OWASP_CSRFTOKEN=CUGT-D8NE-5JC0-28ATME0U-OW7M-8DV9-OR1T&initialSearchView=true" target="_blank" rel="noopener noreferrer" class="permit-link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:3px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            stpe-egov.aspgov.com — Click2Gov Building Permits
+          </a>
+        </div>
       </div>
-    </div>
 
-    <!-- City of Oldsmar -->
-    <div class="permit-card" style="border-radius: 14px; padding: 28px 32px;">
-      <h3 style="font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 16px; display: flex; align-items: center; gap: 10px;">
-        <span style="width: 32px; height: 32px; background: linear-gradient(135deg, rgba(74,157,212,0.15), rgba(74,157,212,0.08)); border: 1px solid rgba(74,157,212,0.3); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0;">&#127963;</span>
-        City of Oldsmar
-      </h3>
-      <div style="display: flex; flex-direction: column; gap: 10px; padding-left: 42px;">
-        <a href="https://myoldsmar.citizenlink.app/permits" target="_blank" rel="noopener noreferrer" class="permit-link">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:2px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          myoldsmar.citizenlink.app/permits
-        </a>
+      <!-- Pasco County -->
+      <div class="permit-card gold-accent">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:18px;">
+          <div style="width:40px; height:40px; background:rgba(240,180,41,0.1); border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d4920a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+          </div>
+          <h3 style="font-size:18px; font-weight:700; color:var(--navy-900);" data-en="Pasco County" data-es="Condado de Pasco">Pasco County</h3>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:10px; padding-left:52px;">
+          <a href="https://aca-prod.accela.com/PASCO/Default.aspx" target="_blank" rel="noopener noreferrer" class="permit-link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:3px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            aca-prod.accela.com/PASCO — Citizen Access
+          </a>
+        </div>
       </div>
-    </div>
 
-    <!-- Pinellas County -->
-    <div class="permit-card" style="border-radius: 14px; padding: 28px 32px;">
-      <h3 style="font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 16px; display: flex; align-items: center; gap: 10px;">
-        <span style="width: 32px; height: 32px; background: linear-gradient(135deg, rgba(232,168,0,0.15), rgba(232,168,0,0.08)); border: 1px solid rgba(232,168,0,0.3); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0;">&#127963;</span>
-        Pinellas County
-      </h3>
-      <div style="display: flex; flex-direction: column; gap: 10px; padding-left: 42px;">
-        <a href="https://aca-prod.accela.com/PINELLAS/Cap/CapHome.aspx?module=Building&TabName=Building" target="_blank" rel="noopener noreferrer" class="permit-link">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:2px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          aca-prod.accela.com/PINELLAS/Cap/CapHome.aspx?module=Building&amp;TabName=Building
-        </a>
+      <!-- Clearwater -->
+      <div class="permit-card">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:18px;">
+          <div style="width:40px; height:40px; background:#eef2f8; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1c3a5e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <h3 style="font-size:18px; font-weight:700; color:var(--navy-900);" data-en="Clearwater" data-es="Clearwater">Clearwater</h3>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:10px; padding-left:52px;">
+          <a href="https://epermit.myclearwater.com/CitizenAccess/Cap/CapHome.aspx?module=Building&TabName=Building" target="_blank" rel="noopener noreferrer" class="permit-link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:3px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            epermit.myclearwater.com — Building Permits
+          </a>
+        </div>
       </div>
-    </div>
 
-    <!-- Hernando County -->
-    <div class="permit-card" style="border-radius: 14px; padding: 28px 32px;">
-      <h3 style="font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 16px; display: flex; align-items: center; gap: 10px;">
-        <span style="width: 32px; height: 32px; background: linear-gradient(135deg, rgba(74,157,212,0.15), rgba(74,157,212,0.08)); border: 1px solid rgba(74,157,212,0.3); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0;">&#127963;</span>
-        Hernando County
-      </h3>
-      <div style="display: flex; flex-direction: column; gap: 10px; padding-left: 42px;">
-        <a href="https://pvweb.hernandopa-fl.us/PropertySearch" target="_blank" rel="noopener noreferrer" class="permit-link">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:2px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          pvweb.hernandopa-fl.us/PropertySearch
-        </a>
+      <!-- City of Oldsmar -->
+      <div class="permit-card gold-accent">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:18px;">
+          <div style="width:40px; height:40px; background:rgba(240,180,41,0.1); border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d4920a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+          </div>
+          <h3 style="font-size:18px; font-weight:700; color:var(--navy-900);" data-en="City of Oldsmar" data-es="Ciudad de Oldsmar">City of Oldsmar</h3>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:10px; padding-left:52px;">
+          <a href="https://myoldsmar.citizenlink.app/permits" target="_blank" rel="noopener noreferrer" class="permit-link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:3px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            myoldsmar.citizenlink.app — Permit Search
+          </a>
+        </div>
       </div>
-    </div>
 
-    <!-- Back button -->
-    <div style="text-align: center; margin-top: 24px;">
-      <a href="index.html" class="btn-outline" style="padding: 14px 36px; border-radius: 8px; text-decoration: none; font-size: 15px; display: inline-flex; align-items: center; gap: 8px;">
-        &#8592; Back to Home
+      <!-- Pinellas County -->
+      <div class="permit-card">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:18px;">
+          <div style="width:40px; height:40px; background:#eef2f8; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1c3a5e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <h3 style="font-size:18px; font-weight:700; color:var(--navy-900);" data-en="Pinellas County" data-es="Condado de Pinellas">Pinellas County</h3>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:10px; padding-left:52px;">
+          <a href="https://aca-prod.accela.com/PINELLAS/Cap/CapHome.aspx?module=Building&TabName=Building" target="_blank" rel="noopener noreferrer" class="permit-link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:3px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            aca-prod.accela.com/PINELLAS — Building Permits
+          </a>
+        </div>
+      </div>
+
+      <!-- Hernando County -->
+      <div class="permit-card gold-accent">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:18px;">
+          <div style="width:40px; height:40px; background:rgba(240,180,41,0.1); border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d4920a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+          </div>
+          <h3 style="font-size:18px; font-weight:700; color:var(--navy-900);" data-en="Hernando County" data-es="Condado de Hernando">Hernando County</h3>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:10px; padding-left:52px;">
+          <a href="https://pvweb.hernandopa-fl.us/PropertySearch" target="_blank" rel="noopener noreferrer" class="permit-link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:3px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            pvweb.hernandopa-fl.us — Property Search
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section style="background:linear-gradient(135deg,#0c1829 0%,#1c3a5e 100%); padding:80px 0; position:relative; overflow:hidden;">
+  <div style="position:absolute; width:700px; height:500px; background:radial-gradient(ellipse,rgba(240,180,41,0.06) 0%,transparent 65%); top:-100px; right:-100px; pointer-events:none;"></div>
+  <div style="max-width:1140px; margin:0 auto; padding:0 32px; text-align:center; position:relative; z-index:1;">
+    <div class="section-tag" style="justify-content:center; color:rgba(255,255,255,0.6);" data-en="Get Expert Help" data-es="Obtenga Ayuda Experta">Get Expert Help</div>
+    <h2 style="font-family:'Libre Baskerville',serif; font-size:clamp(26px,3.2vw,40px); color:#fff; line-height:1.18; letter-spacing:-0.02em; margin-bottom:16px;" data-en="Need Help With a Permit?" data-es="¿Necesita Ayuda Con un Permiso?">
+      Need Help With a Permit?
+    </h2>
+    <p style="font-size:17px; color:rgba(255,255,255,0.6); max-width:480px; margin:0 auto 36px; line-height:1.72;" data-en="Our team can guide you through the process from start to finish and answer any questions about permits and inspections." data-es="Nuestro equipo puede guiarle a través del proceso de principio a fin y responder cualquier pregunta sobre permisos e inspecciones.">
+      Our team can guide you through the process from start to finish and answer any questions about permits and inspections.
+    </p>
+    <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+      <a href="index.html#contact" class="btn-gold" style="padding:16px 40px; text-decoration:none; font-size:16px; display:inline-block;" data-en="Contact Us" data-es="Contáctenos">Contact Us</a>
+      <a href="tel:8134063903" class="btn-outline-light" style="padding:16px 28px; text-decoration:none; font-size:16px; display:inline-flex; align-items:center; gap:8px;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        813-406-3903
       </a>
     </div>
-
   </div>
 </section>
 
 <!-- FOOTER -->
-<footer style="background: #050518; border-top: 1px solid rgba(232,168,0,0.15); padding: 32px 0;">
-  <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
-    <div style="font-size: 13px; color: rgba(255,255,255,0.35);">&copy; 2026 Sunstate Service Group LLC. All rights reserved.</div>
-    <div style="display: flex; gap: 20px;">
-      <a href="index.html" class="footer-link" style="text-decoration: none; font-size: 13px;">Home</a>
-      <a href="privacy-policy.html" class="footer-link" style="text-decoration: none; font-size: 13px;">Privacy Policy</a>
-      <a href="terms-of-service.html" class="footer-link" style="text-decoration: none; font-size: 13px;">Terms of Service</a>
+<footer style="background:#080f1c; padding:80px 0 0; border-top:1px solid rgba(255,255,255,0.06);">
+  <div style="max-width:1140px; margin:0 auto; padding:0 32px;">
+    <div class="footer-grid" style="display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:48px; margin-bottom:48px;">
+      <div>
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
+          <div style="width:280px; height:280px; flex-shrink:0; margin:-84px -120px -84px -40px;">
+            <img src="brand_assets/Untitled design.png" alt="Sunstate Service Group Logo" style="width:100%; height:100%; object-fit:contain;">
+          </div>
+          <div>
+            <div style="font-family:'Libre Baskerville',serif; font-size:18px; color:#fff; line-height:1.1;">Sunstate</div>
+            <div style="font-size:10px; font-weight:600; letter-spacing:0.08em; color:rgba(255,255,255,0.5); text-transform:uppercase; line-height:1.3;">Service Group LLC</div>
+          </div>
+        </div>
+        <p style="font-size:14px; color:rgba(255,255,255,0.45); line-height:1.75; max-width:300px; margin-bottom:20px;">Certified Florida Home Inspector serving Tampa Bay and surrounding areas. Professional, thorough, bilingual.</p>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <a href="tel:8134063903" style="font-size:13px; color:rgba(255,255,255,0.45); text-decoration:none; display:flex; align-items:center; gap:8px;" onmouseover="this.style.color='rgba(255,255,255,0.8)'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            813-406-3903
+          </a>
+          <a href="mailto:sunstateservicegroup@gmail.com" style="font-size:13px; color:rgba(255,255,255,0.45); text-decoration:none; display:flex; align-items:center; gap:8px;" onmouseover="this.style.color='rgba(255,255,255,0.8)'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            sunstateservicegroup@gmail.com
+          </a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:12px; font-weight:700; color:var(--gold-light); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:20px;">Services</div>
+        <ul style="list-style:none; padding:0; display:flex; flex-direction:column; gap:10px;">
+          <li><a href="4-point-inspections.html" class="footer-link" style="text-decoration:none;">4-Point Inspections</a></li>
+          <li><a href="wind-mitigation.html" class="footer-link" style="text-decoration:none;">Wind Mitigation</a></li>
+          <li><a href="pre-purchase-inspections.html" class="footer-link" style="text-decoration:none;">Pre-Purchase Inspections</a></li>
+          <li><a href="new-construction-inspections.html" class="footer-link" style="text-decoration:none;">New Construction</a></li>
+          <li><a href="11-month-warranty-inspections.html" class="footer-link" style="text-decoration:none;">11-Month Warranty</a></li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-size:12px; font-weight:700; color:var(--gold-light); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:20px;">Company</div>
+        <ul style="list-style:none; padding:0; display:flex; flex-direction:column; gap:10px;">
+          <li><a href="index.html#about" class="footer-link" style="text-decoration:none;">About Us</a></li>
+          <li><a href="building-permits.html" class="footer-link" style="text-decoration:none; color:rgba(255,255,255,0.75)!important;">Building Permits</a></li>
+          <li><a href="index.html#contact" class="footer-link" style="text-decoration:none;">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-size:12px; font-weight:700; color:var(--gold-light); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:20px;">Credentials</div>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:10px 14px;">
+            <div style="font-size:11px; font-weight:700; color:#fff; text-transform:uppercase; letter-spacing:0.05em;">License # HI18594</div>
+            <div style="font-size:11px; color:rgba(255,255,255,0.45); margin-top:2px;">State of Florida</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:10px 14px;">
+            <div style="font-size:11px; font-weight:700; color:#fff; text-transform:uppercase; letter-spacing:0.05em;">Licensed &amp; Insured</div>
+            <div style="font-size:11px; color:rgba(255,255,255,0.45); margin-top:2px;">Fully covered</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:10px 14px;">
+            <div style="font-size:11px; font-weight:700; color:#fff; text-transform:uppercase; letter-spacing:0.05em;">English &bull; Espa&#241;ol</div>
+            <div style="font-size:11px; color:rgba(255,255,255,0.45); margin-top:2px;">Bilingual service</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,0.07); padding:24px 0; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+      <div style="font-size:13px; color:rgba(255,255,255,0.35);">&copy; 2026 Sunstate Service Group LLC. All rights reserved.</div>
+      <div style="display:flex; gap:20px;">
+        <a href="privacy-policy.html" class="footer-link" style="text-decoration:none;">Privacy Policy</a>
+        <a href="terms-of-service.html" class="footer-link" style="text-decoration:none;">Terms of Service</a>
+      </div>
     </div>
   </div>
 </footer>
 
+<script>
+var fontSizes=[14,16,18,20];
+var zoomLevels=[0.85,1,1.12,1.25];
+var fontSizeIdx=parseInt(localStorage.getItem('ssg-fontSize')||'1');
+(function(){document.documentElement.style.fontSize=fontSizes[fontSizeIdx]+'px';document.addEventListener('DOMContentLoaded',function(){document.body.style.zoom=zoomLevels[fontSizeIdx];});})();
+function changeFontSize(dir){fontSizeIdx=Math.min(3,Math.max(0,fontSizeIdx+dir));localStorage.setItem('ssg-fontSize',fontSizeIdx);document.documentElement.style.fontSize=fontSizes[fontSizeIdx]+'px';document.body.style.zoom=zoomLevels[fontSizeIdx];}
+
+var currentLang = 'en';
+function toggleLanguage() {
+  currentLang = currentLang === 'en' ? 'es' : 'en';
+  document.querySelectorAll('[data-en][data-es]').forEach(function(el) {
+    var text = el.getAttribute('data-' + currentLang);
+    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') return;
+    if (!el.querySelector('[data-en][data-es]')) { el.innerHTML = text; }
+  });
+  var label = document.getElementById('lang-label');
+  var flag = document.getElementById('lang-flag');
+  if (currentLang === 'es') { label.textContent = 'English'; flag.textContent = 'ES'; }
+  else { label.textContent = 'Espa\u00f1ol'; flag.textContent = 'EN'; }
+}
+function toggleMobileMenu() {
+  var menu = document.getElementById('mobileMenu');
+  var ham = document.querySelector('.hamburger');
+  menu.classList.toggle('open');
+  ham.classList.toggle('active');
+  document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+}
+window.addEventListener('scroll', function() {
+  var nav = document.getElementById('main-nav');
+  if (window.scrollY > 10) nav.classList.add('nav-scrolled');
+  else nav.classList.remove('nav-scrolled');
+});
+</script>
 </body>
 </html>

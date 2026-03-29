@@ -1,284 +1,454 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>document.documentElement.style.fontSize=["14px","16px","18px","20px"][parseInt(localStorage.getItem("ssg-fontSize")||"1")];</script>
 <link rel="icon" type="image/png" href="brand_assets/favicon.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Privacy Policy | Sunstate Service Group LLC</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <script>
 tailwind.config = {
   theme: {
     extend: {
       colors: {
-        navy: {
-          950: '#080820',
-          900: '#0f0f2e',
-          800: '#161641',
-          700: '#1e1e52',
-          600: '#252563',
-        },
-        gold: {
-          300: '#fde68a',
-          400: '#f5c842',
-          500: '#e8a800',
-          600: '#c98f00',
-        },
-        azure: {
-          400: '#4a9dd4',
-          500: '#2b7cb8',
-          600: '#1a5c96',
-        }
+        brand: { 50:'#f0f4f8',100:'#dce4ed',200:'#b8c9db',300:'#8ba6c1',400:'#5e83a7',500:'#1a3a5c',600:'#142e4a',700:'#0f2239',800:'#0a1628',900:'#060e1a' },
+        gold: { 300:'#fde68a',400:'#f5c842',500:'#e8a800',600:'#c98f00' },
+        azure: { 400:'#4a9dd4',500:'#2b7cb8',600:'#1a5c96' }
       },
-      fontFamily: {
-        sans: ['Urbanist', 'sans-serif'],
-        display: ['Playfair Display', 'serif'],
-      }
+      fontFamily: { sans:['IBM Plex Sans','sans-serif'], display:['Libre Baskerville','serif'] }
     }
   }
 }
 </script>
 <style>
-  * { box-sizing: border-box; margin: 0; }
-  body { font-family: 'Urbanist', sans-serif; background: #080820; color: #fff; overflow-x: hidden; }
-
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 9999;
-    opacity: 0.35;
+  :root {
+    --navy-900:#0c1829; --navy-800:#112036; --navy-700:#162b47; --navy-600:#1c3a5e; --navy-500:#2a5078;
+    --slate:#3d5470; --body:#445567; --muted:#6b7f94; --border:#e2e8f0; --surface:#f7f9fc;
+    --gold:#d4920a; --gold-light:#f0b429; --azure:#3b91cc; --azure-deep:#2270aa;
+    --ease-out:cubic-bezier(0.16,1,0.3,1); --ease-spring:cubic-bezier(0.34,1.56,0.64,1);
   }
+  * { box-sizing:border-box; margin:0; }
+  html { overflow-x:hidden; scroll-behavior:smooth; }
+  body { font-family:'IBM Plex Sans',sans-serif; background:#fff; color:var(--body); overflow-x:hidden; max-width:100vw; -webkit-font-smoothing:antialiased; line-height:1.72; font-size:1rem; }
+  body::after { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E"); pointer-events:none; z-index:9999; opacity:0.3; }
 
-  .footer-link {
-    color: rgba(255,255,255,0.5);
-    transition: color 0.2s ease;
-  }
-  .footer-link:hover { color: #f5c842; }
-  .footer-link:focus-visible { outline: 2px solid #f5c842; outline-offset: 3px; }
+  nav { position:sticky; top:0; z-index:1000; }
+  .nav-scrolled { background:rgba(255,255,255,0.98)!important; box-shadow:0 1px 0 var(--border),0 4px 24px rgba(12,24,41,0.06)!important; backdrop-filter:blur(20px) saturate(1.2); }
+
+  .btn-primary { background:var(--navy-600); color:#fff; font-weight:600; font-size:14px; letter-spacing:0.025em; transition:transform 0.3s var(--ease-out),box-shadow 0.3s var(--ease-out),background 0.2s ease; box-shadow:0 1px 2px rgba(12,24,41,0.08),0 4px 16px rgba(28,58,94,0.16); border-radius:8px; }
+  .btn-primary:hover { background:var(--navy-700); transform:translateY(-2px); box-shadow:0 2px 6px rgba(12,24,41,0.1),0 10px 28px rgba(28,58,94,0.22); }
+  .btn-primary:active { transform:translateY(0); }
+  .btn-primary:focus-visible { outline:2px solid var(--navy-600); outline-offset:3px; }
+
+  .btn-gold { background:var(--gold-light); color:var(--navy-900); font-weight:700; font-size:14px; letter-spacing:0.025em; transition:transform 0.3s var(--ease-out),box-shadow 0.3s var(--ease-out),background 0.2s ease; box-shadow:0 1px 2px rgba(212,146,10,0.12),0 4px 16px rgba(212,146,10,0.2); border-radius:8px; }
+  .btn-gold:hover { background:#e8a800; transform:translateY(-2px); box-shadow:0 2px 6px rgba(212,146,10,0.14),0 10px 28px rgba(212,146,10,0.28); }
+  .btn-gold:active { transform:translateY(0); }
+  .btn-gold:focus-visible { outline:2px solid var(--gold); outline-offset:3px; }
+
+  .nav-link { position:relative; color:var(--slate); font-weight:500; font-size:13.5px; letter-spacing:0.015em; transition:color 0.2s ease; }
+  .nav-link::after { content:''; position:absolute; bottom:-6px; left:0; right:0; height:2px; background:var(--gold-light); transform:scaleX(0); transition:transform 0.3s var(--ease-out); transform-origin:left; border-radius:2px; }
+  .nav-link:hover { color:var(--navy-900); }
+  .nav-link:hover::after { transform:scaleX(1); }
+  .nav-link:focus-visible { outline:2px solid var(--navy-600); outline-offset:3px; border-radius:2px; }
+
+  .section-tag { display:inline-flex; align-items:center; gap:10px; font-size:10.5px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:var(--navy-600); margin-bottom:16px; }
+  .section-tag::before { content:''; display:inline-block; width:28px; height:2px; background:var(--gold-light); border-radius:2px; flex-shrink:0; }
+
+  .footer-link { color:rgba(255,255,255,0.45); transition:color 0.25s ease; font-size:14px; }
+  .footer-link:hover { color:var(--gold-light); }
+  .footer-link:focus-visible { outline:2px solid var(--gold-light); outline-offset:2px; border-radius:2px; }
+
+  ::-webkit-scrollbar { width:6px; }
+  ::-webkit-scrollbar-track { background:transparent; }
+  ::-webkit-scrollbar-thumb { background:rgba(184,197,211,0.6); border-radius:6px; }
+  ::-webkit-scrollbar-thumb:hover { background:var(--navy-600); }
+
+  .hamburger { display:none; background:none; border:none; cursor:pointer; padding:8px; z-index:60; }
+  .hamburger span { display:block; width:22px; height:1.5px; background:var(--navy-900); margin:5px 0; border-radius:2px; transition:transform 0.35s var(--ease-out),opacity 0.25s ease; }
+  .hamburger.active span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); }
+  .hamburger.active span:nth-child(2) { opacity:0; }
+  .hamburger.active span:nth-child(3) { transform:rotate(-45deg) translate(5px,-5px); }
+  .mobile-menu { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(255,255,255,0.98); z-index:999; flex-direction:column; align-items:center; justify-content:center; gap:32px; backdrop-filter:blur(24px); }
+  .mobile-menu.open { display:flex; }
+  .mobile-menu a { color:var(--navy-900); text-decoration:none; font-size:20px; font-weight:600; transition:color 0.25s ease; }
+  .mobile-menu a:hover { color:var(--gold); }
+  .mobile-menu .mobile-close { position:absolute; top:20px; right:24px; background:none; border:none; color:var(--navy-900); font-size:28px; cursor:pointer; }
 
   .policy-content h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #f5c842;
-    margin-top: 2.5rem;
-    margin-bottom: 1rem;
-    letter-spacing: -0.02em;
+    font-family:'Libre Baskerville',serif;
+    font-size:1.35rem;
+    font-weight:700;
+    color:var(--navy-900);
+    margin-top:2.5rem;
+    margin-bottom:0.85rem;
+    letter-spacing:-0.02em;
+    line-height:1.3;
+    padding-bottom:10px;
+    border-bottom:1px solid var(--border);
   }
-
   .policy-content h3 {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: rgba(255,255,255,0.9);
-    margin-top: 1.75rem;
-    margin-bottom: 0.75rem;
+    font-size:1rem;
+    font-weight:700;
+    color:var(--navy-700);
+    margin-top:1.5rem;
+    margin-bottom:0.6rem;
   }
-
   .policy-content p {
-    color: rgba(255,255,255,0.7);
-    line-height: 1.8;
-    margin-bottom: 1rem;
-    font-size: 0.95rem;
+    color:var(--body);
+    line-height:1.8;
+    margin-bottom:1rem;
+    font-size:0.95rem;
   }
-
   .policy-content ul {
-    list-style: none;
-    padding-left: 0;
-    margin-bottom: 1rem;
+    list-style:none;
+    padding-left:0;
+    margin-bottom:1rem;
   }
-
   .policy-content ul li {
-    color: rgba(255,255,255,0.7);
-    line-height: 1.8;
-    font-size: 0.95rem;
-    padding-left: 1.5rem;
-    position: relative;
-    margin-bottom: 0.35rem;
+    color:var(--body);
+    line-height:1.8;
+    font-size:0.95rem;
+    padding-left:1.4rem;
+    position:relative;
+    margin-bottom:0.35rem;
   }
-
   .policy-content ul li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.7em;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #e8a800, #f5c842);
+    content:'';
+    position:absolute;
+    left:0;
+    top:0.72em;
+    width:5px;
+    height:5px;
+    border-radius:50%;
+    background:var(--gold-light);
   }
+  .policy-content strong { color:var(--navy-800); font-weight:700; }
+  .policy-content a { color:var(--navy-600); text-decoration:underline; text-underline-offset:3px; }
+  .policy-content a:hover { color:var(--gold); }
 
-  .back-link {
-    color: #f5c842;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.95rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transition: opacity 0.2s ease, transform 0.2s ease;
+  @media (max-width:768px) {
+    .hamburger { display:block; }
+    .desktop-nav, .desktop-cta { display:none!important; }
+    .footer-grid { grid-template-columns:1fr!important; gap:32px!important; }
+    .nav-logo-img { width:90px!important; height:90px!important; margin:-20px -10px -20px -10px!important; }
+    .nav-logo-img img { width:90px!important; height:90px!important; }
   }
-  .back-link:hover { opacity: 0.8; transform: translateX(-3px); }
-  .back-link:focus-visible { outline: 2px solid #f5c842; outline-offset: 3px; }
 </style>
 </head>
 <body>
 
-<!-- Header Bar -->
-<div style="background: linear-gradient(90deg, #e8a800 0%, #f5c842 100%); padding: 10px 0;">
-  <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
-    <div style="display: flex; gap: 24px; align-items: center;">
-      <a href="tel:8134063903" style="color: #080820; text-decoration: none; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px;">
-        <svg width="14" height="14" fill="none" stroke="#080820" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h2.1a1 1 0 0 1 .95.68l.8 2.4a1 1 0 0 1-.45 1.12l-.9.54a8 8 0 0 0 3.26 3.26l.54-.9a1 1 0 0 1 1.12-.45l2.4.8a1 1 0 0 1 .68.95v2.1a1.5 1.5 0 0 1-1.5 1.5A11.5 11.5 0 0 1 1 2.5z"/></svg>
-        (813) 406-3903
+<!-- TOP BAR -->
+<div style="background:#0c1829; padding:9px 0; border-bottom:1px solid rgba(255,255,255,0.05);">
+  <div style="max-width:1140px; margin:0 auto; padding:0 32px; display:flex; justify-content:space-between; align-items:center; font-size:13px; color:rgba(255,255,255,0.65);">
+    <div style="display:flex; align-items:center; gap:24px;">
+      <a href="tel:8134063903" style="color:rgba(255,255,255,0.8); text-decoration:none; display:flex; align-items:center; gap:6px;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        813-406-3903
       </a>
-      <a href="mailto:sunstateservicegroup@gmail.com" style="color: #080820; text-decoration: none; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px;">
-        <svg width="14" height="14" fill="none" stroke="#080820" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="12" height="9" rx="1"/><path d="M1 3l6 5 6-5"/></svg>
+      <button onclick="copyEmail(this)" style="color:rgba(255,255,255,0.8); text-decoration:none; display:flex; align-items:center; gap:6px; background:none; border:none; cursor:pointer; font-size:13px; font-family:inherit; padding:0;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         sunstateservicegroup@gmail.com
-      </a>
+      </button>
+    </div>
+    <div style="display:flex; align-items:center; gap:8px;">
+      <div style="display:inline-flex; align-items:center; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.15); border-radius:100px; padding:3px 5px; gap:3px;">
+        <button onclick="changeFontSize(-1)" title="Decrease font size" style="width:26px; height:26px; display:inline-flex; align-items:center; justify-content:center; background:none; border:none; color:rgba(255,255,255,0.75); font-family:'IBM Plex Sans',sans-serif; font-size:12px; font-weight:700; cursor:pointer; border-radius:100px; line-height:1;" onmouseover="this.style.background='rgba(255,255,255,0.2)';this.style.color='#fff'" onmouseout="this.style.background='none';this.style.color='rgba(255,255,255,0.75)'">A</button>
+        <div style="width:1px; height:14px; background:rgba(255,255,255,0.2);"></div>
+        <button onclick="changeFontSize(1)" title="Increase font size" style="width:26px; height:26px; display:inline-flex; align-items:center; justify-content:center; background:none; border:none; color:rgba(255,255,255,0.75); font-family:'IBM Plex Sans',sans-serif; font-size:18px; font-weight:700; cursor:pointer; border-radius:100px; line-height:1;" onmouseover="this.style.background='rgba(255,255,255,0.2)';this.style.color='#fff'" onmouseout="this.style.background='none';this.style.color='rgba(255,255,255,0.75)'">A</button>
+      </div>
+      <button id="lang-toggle" onclick="toggleLanguage()" style="display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.15); border-radius:100px; padding:4px 14px 4px 8px; color:rgba(255,255,255,0.9); font-size:12px; font-weight:600; font-family:'IBM Plex Sans',sans-serif; cursor:pointer; white-space:nowrap; transition:background 0.25s ease;" onmouseover="this.style.background='rgba(255,255,255,0.18)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">
+        <span id="lang-flag" style="font-size:11px; font-weight:700; background:rgba(255,255,255,0.15); border-radius:4px; padding:2px 5px; letter-spacing:0.04em;">EN</span>
+        <span id="lang-label">Espa&#241;ol</span>
+      </button>
     </div>
   </div>
 </div>
 
-<!-- Simple Nav -->
-<nav style="background: rgba(15,15,46,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(232,168,0,0.1); padding: 16px 0;">
-  <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center;">
-    <a href="index.html" style="text-decoration: none; display: flex; align-items: center; gap: 10px;">
-      <div style="width: 36px; height: 36px; background: linear-gradient(135deg, #e8a800, #f5c842); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#080820" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+<!-- NAV -->
+<nav id="main-nav" style="background:#ffffff; border-bottom:1px solid var(--border); transition:background 0.4s ease,box-shadow 0.4s ease;">
+  <div style="max-width:1140px; margin:0 auto; padding:0 32px; display:flex; align-items:center; justify-content:space-between; height:68px; position:relative;">
+    <a href="index.html" style="display:flex; align-items:center; gap:12px; text-decoration:none; position:relative; z-index:50;">
+      <div class="nav-logo-img" style="width:280px; height:280px; flex-shrink:0; margin:-84px -120px -84px -40px;">
+        <img src="brand_assets/Untitled design.png" alt="Sunstate Service Group Logo" style="width:100%; height:100%; object-fit:contain;">
       </div>
       <div>
-        <div style="font-weight: 800; font-size: 15px; color: #fff; letter-spacing: 0.03em;">SUNSTATE</div>
-        <div style="font-size: 10px; color: rgba(255,255,255,0.5); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;">Service Group</div>
+        <div style="font-family:'Libre Baskerville',serif; font-size:18px; color:var(--navy-900); line-height:1.1;">Sunstate</div>
+        <div style="font-size:10px; font-weight:600; letter-spacing:0.08em; color:#6b7c8d; text-transform:uppercase; line-height:1.2;">Service Group LLC</div>
       </div>
     </a>
-    <a href="index.html" class="back-link">
-      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12L6 8l4-4"/></svg>
-      Back to Home
-    </a>
+    <div class="desktop-nav" style="display:flex; align-items:center; gap:32px;">
+      <a href="index.html#services" class="nav-link" style="text-decoration:none;">Services</a>
+      <a href="index.html#about" class="nav-link" style="text-decoration:none;">About</a>
+      <a href="wind-mitigation.html" class="nav-link" style="text-decoration:none;">Wind Mitigation</a>
+      <a href="building-permits.html" class="nav-link" style="text-decoration:none;">Building Permits</a>
+      <a href="index.html#contact" class="nav-link" style="text-decoration:none;">Contact</a>
+    </div>
+    <div class="desktop-cta" style="display:flex; align-items:center; gap:10px;">
+      <a href="tel:8134063903" style="color:var(--navy-600); text-decoration:none; font-size:14px; font-weight:600; display:flex; align-items:center; gap:6px;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        813-406-3903
+      </a>
+      <a href="index.html#contact" class="btn-primary" style="padding:10px 24px; text-decoration:none; font-size:13px; white-space:nowrap;">Book Inspection</a>
+    </div>
+    <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Open menu"><span></span><span></span><span></span></button>
   </div>
 </nav>
 
-<!-- Main Content -->
-<main style="max-width: 800px; margin: 0 auto; padding: 60px 24px 80px;">
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="toggleMobileMenu()">&times;</button>
+  <a href="index.html#services" onclick="toggleMobileMenu()">Services</a>
+  <a href="index.html#about" onclick="toggleMobileMenu()">About</a>
+  <a href="wind-mitigation.html" onclick="toggleMobileMenu()">Wind Mitigation</a>
+  <a href="building-permits.html" onclick="toggleMobileMenu()">Building Permits</a>
+  <a href="index.html#contact" onclick="toggleMobileMenu()">Contact</a>
+  <a href="tel:8134063903" class="btn-primary" style="padding:14px 32px; font-size:16px; margin-top:12px; color:#fff; text-decoration:none;">813-406-3903</a>
+</div>
 
-  <div style="margin-bottom: 48px;">
-    <div style="width: 60px; height: 4px; background: linear-gradient(90deg, #e8a800, #f5c842); border-radius: 2px; margin-bottom: 24px;"></div>
-    <h1 style="font-family: 'Playfair Display', serif; font-size: 2.75rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 12px;">Privacy Policy</h1>
-    <p style="color: rgba(255,255,255,0.45); font-size: 0.9rem;">Last updated: March 15, 2026</p>
+<!-- PAGE HERO -->
+<section style="background:linear-gradient(170deg,#0c1829 0%,#162b47 55%,#0c1829 100%); padding:72px 0 64px; position:relative; overflow:hidden;">
+  <div style="position:absolute; width:600px; height:500px; background:radial-gradient(ellipse,rgba(240,180,41,0.08) 0%,transparent 70%); top:-80px; left:-80px; pointer-events:none;"></div>
+  <div style="position:absolute; width:500px; height:400px; background:radial-gradient(ellipse,rgba(59,145,204,0.07) 0%,transparent 70%); bottom:-60px; right:-60px; pointer-events:none;"></div>
+  <div style="max-width:1140px; margin:0 auto; padding:0 32px; position:relative; z-index:1;">
+    <a href="index.html" style="display:flex; width:fit-content; align-items:center; gap:8px; color:var(--gold-light); font-size:13px; font-weight:600; text-decoration:none; margin-bottom:28px; opacity:0.85; transition:opacity 0.2s ease;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      <span data-en="Back to Home" data-es="Volver al Inicio">Back to Home</span>
+    </a>
+    <div class="section-tag" style="color:rgba(240,180,41,0.9);" data-en="Legal" data-es="Legal">Legal</div>
+    <h1 style="font-family:'Libre Baskerville',serif; font-size:clamp(28px,3.5vw,46px); color:#fff; line-height:1.14; letter-spacing:-0.02em; margin-bottom:14px;" data-en="Privacy Policy" data-es="Política de Privacidad">Privacy Policy</h1>
+    <p style="font-size:14px; color:rgba(255,255,255,0.45);" data-en="Last updated: March 15, 2026" data-es="Última actualización: 15 de marzo de 2026">Last updated: March 15, 2026</p>
   </div>
+</section>
 
-  <div class="policy-content" style="background: linear-gradient(145deg, #161641 0%, #1e1e52 100%); border: 1px solid rgba(232,168,0,0.1); border-radius: 16px; padding: 40px 36px; box-shadow: 0 8px 40px rgba(0,0,0,0.3), 0 0 80px rgba(232,168,0,0.03);">
+<!-- MAIN CONTENT -->
+<main style="background:#fff; padding:72px 0 96px;">
+  <div style="max-width:760px; margin:0 auto; padding:0 32px;">
+    <div class="policy-content">
 
-    <p>Sunstate Service Group LLC ("we," "us," or "our") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our home inspection services.</p>
+      <p data-en='Sunstate Service Group LLC ("we," "us," or "our") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our home inspection services.' data-es='Sunstate Service Group LLC ("nosotros") está comprometido con la protección de su privacidad. Esta Política de Privacidad explica cómo recopilamos, usamos, divulgamos y protegemos su información cuando visita nuestro sitio web o utiliza nuestros servicios de inspección de viviendas.'>Sunstate Service Group LLC ("we," "us," or "our") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our home inspection services.</p>
 
-    <h2>1. Information We Collect</h2>
-    <h3>Personal Information</h3>
-    <p>We may collect personal information that you voluntarily provide when you:</p>
-    <ul>
-      <li>Schedule an inspection through our website or by phone</li>
-      <li>Fill out our contact form</li>
-      <li>Communicate with us via email or phone</li>
-      <li>Request a quote or information about our services</li>
-    </ul>
-    <p>This information may include:</p>
-    <ul>
-      <li>Full name</li>
-      <li>Email address</li>
-      <li>Phone number</li>
-      <li>Property address to be inspected</li>
-      <li>Payment information (processed securely through third-party payment processors)</li>
-    </ul>
+      <h2 data-en="1. Information We Collect" data-es="1. Información que Recopilamos">1. Information We Collect</h2>
+      <h3 data-en="Personal Information" data-es="Información Personal">Personal Information</h3>
+      <p data-en="We may collect personal information that you voluntarily provide when you:" data-es="Podemos recopilar información personal que usted proporciona voluntariamente cuando:">We may collect personal information that you voluntarily provide when you:</p>
+      <ul>
+        <li data-en="Schedule an inspection through our website or by phone" data-es="Programa una inspección a través de nuestro sitio web o por teléfono">Schedule an inspection through our website or by phone</li>
+        <li data-en="Fill out our contact form" data-es="Completa nuestro formulario de contacto">Fill out our contact form</li>
+        <li data-en="Communicate with us via email or phone" data-es="Se comunica con nosotros por correo electrónico o teléfono">Communicate with us via email or phone</li>
+        <li data-en="Request a quote or information about our services" data-es="Solicita una cotización o información sobre nuestros servicios">Request a quote or information about our services</li>
+      </ul>
+      <p data-en="This information may include:" data-es="Esta información puede incluir:">This information may include:</p>
+      <ul>
+        <li data-en="Full name" data-es="Nombre completo">Full name</li>
+        <li data-en="Email address" data-es="Dirección de correo electrónico">Email address</li>
+        <li data-en="Phone number" data-es="Número de teléfono">Phone number</li>
+        <li data-en="Property address to be inspected" data-es="Dirección de la propiedad a inspeccionar">Property address to be inspected</li>
+        <li data-en="Payment information (processed securely through third-party payment processors)" data-es="Información de pago (procesada de forma segura a través de procesadores de pago de terceros)">Payment information (processed securely through third-party payment processors)</li>
+      </ul>
 
-    <h3>Automatically Collected Information</h3>
-    <p>When you visit our website, we may automatically collect certain information about your device and browsing activity, including:</p>
-    <ul>
-      <li>IP address and approximate location</li>
-      <li>Browser type and version</li>
-      <li>Pages visited and time spent on each page</li>
-      <li>Referring website or search terms</li>
-      <li>Device type and operating system</li>
-    </ul>
+      <h3 data-en="Automatically Collected Information" data-es="Información Recopilada Automáticamente">Automatically Collected Information</h3>
+      <p data-en="When you visit our website, we may automatically collect certain information about your device and browsing activity, including:" data-es="Cuando visita nuestro sitio web, podemos recopilar automáticamente cierta información sobre su dispositivo y actividad de navegación, incluyendo:">When you visit our website, we may automatically collect certain information about your device and browsing activity, including:</p>
+      <ul>
+        <li data-en="IP address and approximate location" data-es="Dirección IP y ubicación aproximada">IP address and approximate location</li>
+        <li data-en="Browser type and version" data-es="Tipo y versión del navegador">Browser type and version</li>
+        <li data-en="Pages visited and time spent on each page" data-es="Páginas visitadas y tiempo en cada página">Pages visited and time spent on each page</li>
+        <li data-en="Referring website or search terms" data-es="Sitio web de referencia o términos de búsqueda">Referring website or search terms</li>
+        <li data-en="Device type and operating system" data-es="Tipo de dispositivo y sistema operativo">Device type and operating system</li>
+      </ul>
 
-    <h2>2. How We Use Your Information</h2>
-    <p>We use the information we collect to:</p>
-    <ul>
-      <li>Schedule and perform home inspection services</li>
-      <li>Deliver inspection reports to you</li>
-      <li>Communicate with you about your inspection, including confirmations and follow-ups</li>
-      <li>Process payments for our services</li>
-      <li>Respond to your inquiries and provide customer support</li>
-      <li>Improve our website and services</li>
-      <li>Comply with legal obligations and professional licensing requirements</li>
-    </ul>
+      <h2 data-en="2. How We Use Your Information" data-es="2. Cómo Usamos Su Información">2. How We Use Your Information</h2>
+      <p data-en="We use the information we collect to:" data-es="Usamos la información que recopilamos para:">We use the information we collect to:</p>
+      <ul>
+        <li data-en="Schedule and perform home inspection services" data-es="Programar y realizar servicios de inspección de viviendas">Schedule and perform home inspection services</li>
+        <li data-en="Deliver inspection reports to you" data-es="Entregar informes de inspección">Deliver inspection reports to you</li>
+        <li data-en="Communicate with you about your inspection, including confirmations and follow-ups" data-es="Comunicarnos con usted sobre su inspección, incluyendo confirmaciones y seguimientos">Communicate with you about your inspection, including confirmations and follow-ups</li>
+        <li data-en="Process payments for our services" data-es="Procesar pagos por nuestros servicios">Process payments for our services</li>
+        <li data-en="Respond to your inquiries and provide customer support" data-es="Responder a sus consultas y brindar atención al cliente">Respond to your inquiries and provide customer support</li>
+        <li data-en="Improve our website and services" data-es="Mejorar nuestro sitio web y servicios">Improve our website and services</li>
+        <li data-en="Comply with legal obligations and professional licensing requirements" data-es="Cumplir con obligaciones legales y requisitos de licencia profesional">Comply with legal obligations and professional licensing requirements</li>
+      </ul>
 
-    <h2>3. How We Share Your Information</h2>
-    <p>We do not sell, trade, or rent your personal information to third parties. We may share your information only in the following circumstances:</p>
-    <ul>
-      <li><strong style="color: rgba(255,255,255,0.9);">Service Providers:</strong> With trusted third-party vendors who assist us in operating our website, processing payments, or delivering services (e.g., payment processors, email service providers)</li>
-      <li><strong style="color: rgba(255,255,255,0.9);">Legal Requirements:</strong> When required by law, regulation, or legal process</li>
-      <li><strong style="color: rgba(255,255,255,0.9);">Professional Obligations:</strong> As required by Florida home inspection licensing regulations</li>
-      <li><strong style="color: rgba(255,255,255,0.9);">With Your Consent:</strong> When you have given explicit permission to share your information</li>
-    </ul>
+      <h2 data-en="3. How We Share Your Information" data-es="3. Cómo Compartimos Su Información">3. How We Share Your Information</h2>
+      <p data-en="We do not sell, trade, or rent your personal information to third parties. We may share your information only in the following circumstances:" data-es="No vendemos, intercambiamos ni alquilamos su información personal a terceros. Podemos compartir su información solo en las siguientes circunstancias:">We do not sell, trade, or rent your personal information to third parties. We may share your information only in the following circumstances:</p>
+      <ul>
+        <li data-en="&lt;strong&gt;Service Providers:&lt;/strong&gt; With trusted third-party vendors who assist us in operating our website, processing payments, or delivering services (e.g., payment processors, email service providers)" data-es="&lt;strong&gt;Proveedores de Servicios:&lt;/strong&gt; Con proveedores externos de confianza que nos ayudan a operar nuestro sitio web, procesar pagos o brindar servicios"><strong>Service Providers:</strong> With trusted third-party vendors who assist us in operating our website, processing payments, or delivering services (e.g., payment processors, email service providers)</li>
+        <li data-en="&lt;strong&gt;Legal Requirements:&lt;/strong&gt; When required by law, regulation, or legal process" data-es="&lt;strong&gt;Requisitos Legales:&lt;/strong&gt; Cuando lo exija la ley, regulación o proceso legal"><strong>Legal Requirements:</strong> When required by law, regulation, or legal process</li>
+        <li data-en="&lt;strong&gt;Professional Obligations:&lt;/strong&gt; As required by Florida home inspection licensing regulations" data-es="&lt;strong&gt;Obligaciones Profesionales:&lt;/strong&gt; Según lo requieran las regulaciones de licencia de inspección de viviendas de Florida"><strong>Professional Obligations:</strong> As required by Florida home inspection licensing regulations</li>
+        <li data-en="&lt;strong&gt;With Your Consent:&lt;/strong&gt; When you have given explicit permission to share your information" data-es="&lt;strong&gt;Con Su Consentimiento:&lt;/strong&gt; Cuando usted haya dado permiso explícito para compartir su información"><strong>With Your Consent:</strong> When you have given explicit permission to share your information</li>
+      </ul>
 
-    <h2>4. Data Security</h2>
-    <p>We implement reasonable administrative, technical, and physical safeguards to protect your personal information from unauthorized access, use, or disclosure. However, no method of transmission over the Internet or electronic storage is 100% secure, and we cannot guarantee absolute security.</p>
+      <h2 data-en="4. Data Security" data-es="4. Seguridad de Datos">4. Data Security</h2>
+      <p data-en="We implement reasonable administrative, technical, and physical safeguards to protect your personal information from unauthorized access, use, or disclosure. However, no method of transmission over the Internet or electronic storage is 100% secure, and we cannot guarantee absolute security." data-es="Implementamos salvaguardas administrativas, técnicas y físicas razonables para proteger su información personal de acceso, uso o divulgación no autorizados. Sin embargo, ningún método de transmisión por Internet o almacenamiento electrónico es 100% seguro.">We implement reasonable administrative, technical, and physical safeguards to protect your personal information from unauthorized access, use, or disclosure. However, no method of transmission over the Internet or electronic storage is 100% secure, and we cannot guarantee absolute security.</p>
 
-    <h2>5. Inspection Reports &amp; Confidentiality</h2>
-    <p>Inspection reports are prepared for the exclusive use of the client who contracted the inspection. We maintain the confidentiality of all inspection reports and will not share them with third parties without your written authorization, except as required by law.</p>
+      <h2 data-en="5. Inspection Reports &amp; Confidentiality" data-es="5. Informes de Inspección y Confidencialidad">5. Inspection Reports &amp; Confidentiality</h2>
+      <p data-en="Inspection reports are prepared for the exclusive use of the client who contracted the inspection. We maintain the confidentiality of all inspection reports and will not share them with third parties without your written authorization, except as required by law." data-es="Los informes de inspección se preparan para uso exclusivo del cliente que contrató la inspección. Mantenemos la confidencialidad de todos los informes y no los compartiremos con terceros sin su autorización escrita, excepto cuando la ley lo requiera.">Inspection reports are prepared for the exclusive use of the client who contracted the inspection. We maintain the confidentiality of all inspection reports and will not share them with third parties without your written authorization, except as required by law.</p>
 
-    <h2>6. Cookies &amp; Tracking Technologies</h2>
-    <p>Our website may use cookies and similar tracking technologies to enhance your browsing experience. You can control cookie preferences through your browser settings. Disabling cookies may affect certain features of our website.</p>
+      <h2 data-en="6. Cookies &amp; Tracking Technologies" data-es="6. Cookies y Tecnologías de Seguimiento">6. Cookies &amp; Tracking Technologies</h2>
+      <p data-en="Our website may use cookies and similar tracking technologies to enhance your browsing experience. You can control cookie preferences through your browser settings. Disabling cookies may affect certain features of our website." data-es="Nuestro sitio web puede usar cookies y tecnologías similares para mejorar su experiencia de navegación. Puede controlar las preferencias de cookies a través de la configuración de su navegador. Deshabilitar las cookies puede afectar ciertas funciones del sitio.">Our website may use cookies and similar tracking technologies to enhance your browsing experience. You can control cookie preferences through your browser settings. Disabling cookies may affect certain features of our website.</p>
 
-    <h2>7. Third-Party Links</h2>
-    <p>Our website may contain links to third-party websites or services. We are not responsible for the privacy practices or content of these external sites. We encourage you to review the privacy policies of any third-party sites you visit.</p>
+      <h2 data-en="7. Third-Party Links" data-es="7. Enlaces a Terceros">7. Third-Party Links</h2>
+      <p data-en="Our website may contain links to third-party websites or services. We are not responsible for the privacy practices or content of these external sites. We encourage you to review the privacy policies of any third-party sites you visit." data-es="Nuestro sitio web puede contener enlaces a sitios web o servicios de terceros. No somos responsables de las prácticas de privacidad ni del contenido de esos sitios externos. Le recomendamos revisar sus políticas de privacidad.">Our website may contain links to third-party websites or services. We are not responsible for the privacy practices or content of these external sites. We encourage you to review the privacy policies of any third-party sites you visit.</p>
 
-    <h2>8. Children's Privacy</h2>
-    <p>Our services are not directed to individuals under the age of 18. We do not knowingly collect personal information from children. If we become aware that we have collected information from a minor, we will take steps to delete it promptly.</p>
+      <h2 data-en="8. Children's Privacy" data-es="8. Privacidad de Menores">8. Children's Privacy</h2>
+      <p data-en="Our services are not directed to individuals under the age of 18. We do not knowingly collect personal information from children. If we become aware that we have collected information from a minor, we will take steps to delete it promptly." data-es="Nuestros servicios no están dirigidos a personas menores de 18 años. No recopilamos intencionalmente información personal de menores. Si tomamos conocimiento de ello, tomaremos medidas para eliminar dicha información.">Our services are not directed to individuals under the age of 18. We do not knowingly collect personal information from children. If we become aware that we have collected information from a minor, we will take steps to delete it promptly.</p>
 
-    <h2>9. Your Rights</h2>
-    <p>Depending on your location, you may have certain rights regarding your personal information:</p>
-    <ul>
-      <li><strong style="color: rgba(255,255,255,0.9);">Access:</strong> Request a copy of the personal information we hold about you</li>
-      <li><strong style="color: rgba(255,255,255,0.9);">Correction:</strong> Request that we correct inaccurate or incomplete information</li>
-      <li><strong style="color: rgba(255,255,255,0.9);">Deletion:</strong> Request that we delete your personal information, subject to legal and professional retention requirements</li>
-      <li><strong style="color: rgba(255,255,255,0.9);">Opt-Out:</strong> Unsubscribe from marketing communications at any time</li>
-    </ul>
-    <p>To exercise any of these rights, please contact us using the information provided below.</p>
+      <h2 data-en="9. Your Rights" data-es="9. Sus Derechos">9. Your Rights</h2>
+      <p data-en="Depending on your location, you may have certain rights regarding your personal information:" data-es="Dependiendo de su ubicación, puede tener ciertos derechos respecto a su información personal:">Depending on your location, you may have certain rights regarding your personal information:</p>
+      <ul>
+        <li data-en="&lt;strong&gt;Access:&lt;/strong&gt; Request a copy of the personal information we hold about you" data-es="&lt;strong&gt;Acceso:&lt;/strong&gt; Solicitar una copia de la información personal que tenemos sobre usted"><strong>Access:</strong> Request a copy of the personal information we hold about you</li>
+        <li data-en="&lt;strong&gt;Correction:&lt;/strong&gt; Request that we correct inaccurate or incomplete information" data-es="&lt;strong&gt;Corrección:&lt;/strong&gt; Solicitar que corrijamos información inexacta o incompleta"><strong>Correction:</strong> Request that we correct inaccurate or incomplete information</li>
+        <li data-en="&lt;strong&gt;Deletion:&lt;/strong&gt; Request that we delete your personal information, subject to legal and professional retention requirements" data-es="&lt;strong&gt;Eliminación:&lt;/strong&gt; Solicitar que eliminemos su información personal, sujeto a requisitos legales de retención"><strong>Deletion:</strong> Request that we delete your personal information, subject to legal and professional retention requirements</li>
+        <li data-en="&lt;strong&gt;Opt-Out:&lt;/strong&gt; Unsubscribe from marketing communications at any time" data-es="&lt;strong&gt;Cancelar suscripción:&lt;/strong&gt; Darse de baja de comunicaciones de marketing en cualquier momento"><strong>Opt-Out:</strong> Unsubscribe from marketing communications at any time</li>
+      </ul>
+      <p data-en="To exercise any of these rights, please contact us using the information provided below." data-es="Para ejercer cualquiera de estos derechos, contáctenos usando la información proporcionada a continuación.">To exercise any of these rights, please contact us using the information provided below.</p>
 
-    <h2>10. Data Retention</h2>
-    <p>We retain your personal information for as long as necessary to fulfill the purposes outlined in this policy, comply with legal obligations, and resolve disputes. Inspection records are retained in accordance with Florida state requirements for licensed home inspectors.</p>
+      <h2 data-en="10. Data Retention" data-es="10. Retención de Datos">10. Data Retention</h2>
+      <p data-en="We retain your personal information for as long as necessary to fulfill the purposes outlined in this policy, comply with legal obligations, and resolve disputes. Inspection records are retained in accordance with Florida state requirements for licensed home inspectors." data-es="Conservamos su información personal durante el tiempo necesario para cumplir los fines descritos en esta política, cumplir con obligaciones legales y resolver disputas. Los registros de inspección se conservan de acuerdo con los requisitos del estado de Florida.">We retain your personal information for as long as necessary to fulfill the purposes outlined in this policy, comply with legal obligations, and resolve disputes. Inspection records are retained in accordance with Florida state requirements for licensed home inspectors.</p>
 
-    <h2>11. Changes to This Policy</h2>
-    <p>We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated revision date. Your continued use of our website or services after any changes constitutes acceptance of the revised policy.</p>
+      <h2 data-en="11. Changes to This Policy" data-es="11. Cambios a Esta Política">11. Changes to This Policy</h2>
+      <p data-en="We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated revision date. Your continued use of our website or services after any changes constitutes acceptance of the revised policy." data-es="Podemos actualizar esta Política de Privacidad periódicamente. Los cambios se publicarán en esta página con una fecha de revisión actualizada. El uso continuo de nuestro sitio web o servicios después de los cambios constituye aceptación de la política revisada.">We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated revision date. Your continued use of our website or services after any changes constitutes acceptance of the revised policy.</p>
 
-    <h2>12. Contact Us</h2>
-    <p>If you have questions or concerns about this Privacy Policy or how we handle your personal information, please contact us:</p>
-    <ul>
-      <li><strong style="color: rgba(255,255,255,0.9);">Phone:</strong> (813) 406-3903</li>
-      <li><strong style="color: rgba(255,255,255,0.9);">Email:</strong> sunstateservicegroup@gmail.com</li>
-      <li><strong style="color: rgba(255,255,255,0.9);">Licensed Inspector:</strong> Yamir Diaz — HI18594</li>
-    </ul>
+      <h2 data-en="12. Contact Us" data-es="12. Contáctenos">12. Contact Us</h2>
+      <p data-en="If you have questions or concerns about this Privacy Policy or how we handle your personal information, please contact us:" data-es="Si tiene preguntas o inquietudes sobre esta Política de Privacidad o cómo manejamos su información personal, contáctenos:">If you have questions or concerns about this Privacy Policy or how we handle your personal information, please contact us:</p>
+      <ul>
+        <li data-en="&lt;strong&gt;Phone:&lt;/strong&gt; (813) 406-3903" data-es="&lt;strong&gt;Teléfono:&lt;/strong&gt; (813) 406-3903"><strong>Phone:</strong> (813) 406-3903</li>
+        <li data-en="&lt;strong&gt;Email:&lt;/strong&gt; sunstateservicegroup@gmail.com" data-es="&lt;strong&gt;Correo:&lt;/strong&gt; sunstateservicegroup@gmail.com"><strong>Email:</strong> sunstateservicegroup@gmail.com</li>
+        <li data-en="&lt;strong&gt;Licensed Inspector:&lt;/strong&gt; Yamir Diaz — HI18594" data-es="&lt;strong&gt;Inspector Licenciado:&lt;/strong&gt; Yamir Diaz — HI18594"><strong>Licensed Inspector:</strong> Yamir Diaz — HI18594</li>
+      </ul>
 
+    </div>
   </div>
 </main>
 
-<!-- Footer -->
-<footer style="background: linear-gradient(180deg, #0a0a28 0%, #080820 100%); border-top: 1px solid rgba(232,168,0,0.08); padding: 32px 0;">
-  <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
-    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
-      <div style="font-size: 13px; color: rgba(255,255,255,0.35);">&copy; 2026 Sunstate Service Group LLC. All rights reserved.</div>
-      <div style="display: flex; gap: 20px;">
-        <a href="privacy-policy.html" class="footer-link" style="text-decoration: none; font-size: 13px;">Privacy Policy</a>
-        <a href="terms-of-service.html" class="footer-link" style="text-decoration: none; font-size: 13px;">Terms of Service</a>
+<!-- FOOTER -->
+<footer style="background:#080f1c; padding:80px 0 0; border-top:1px solid rgba(255,255,255,0.06);">
+  <div style="max-width:1140px; margin:0 auto; padding:0 32px;">
+    <div class="footer-grid" style="display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:48px; margin-bottom:48px;">
+      <div>
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
+          <div style="width:280px; height:280px; flex-shrink:0; margin:-84px -120px -84px -40px;">
+            <img src="brand_assets/Untitled design.png" alt="Sunstate Service Group Logo" style="width:100%; height:100%; object-fit:contain;">
+          </div>
+          <div>
+            <div style="font-family:'Libre Baskerville',serif; font-size:18px; color:#fff; line-height:1.1;">Sunstate</div>
+            <div style="font-size:10px; font-weight:600; letter-spacing:0.08em; color:rgba(255,255,255,0.5); text-transform:uppercase; line-height:1.3;">Service Group LLC</div>
+          </div>
+        </div>
+        <p style="font-size:14px; color:rgba(255,255,255,0.45); line-height:1.75; max-width:300px; margin-bottom:20px;" data-en="Certified Florida Home Inspector serving Tampa Bay and surrounding areas. Professional, thorough, bilingual." data-es="Inspector de Viviendas Certificado de Florida que sirve a Tampa Bay y áreas circundantes. Profesional, minucioso, bilingüe.">Certified Florida Home Inspector serving Tampa Bay and surrounding areas. Professional, thorough, bilingual.</p>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <a href="tel:8134063903" style="font-size:13px; color:rgba(255,255,255,0.45); text-decoration:none; display:flex; align-items:center; gap:8px;" onmouseover="this.style.color='rgba(255,255,255,0.8)'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            813-406-3903
+          </a>
+          <button onclick="copyEmail(this)" style="font-size:13px; color:rgba(255,255,255,0.45); text-decoration:none; display:flex; align-items:center; gap:8px; background:none; border:none; cursor:pointer; font-family:inherit; padding:0;" onmouseover="this.style.color='rgba(255,255,255,0.8)'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            sunstateservicegroup@gmail.com
+          </button>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:12px; font-weight:700; color:var(--gold-light); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:20px;">Services</div>
+        <ul style="list-style:none; padding:0; display:flex; flex-direction:column; gap:10px;">
+          <li><a href="4-point-inspections.html" class="footer-link" style="text-decoration:none;">4-Point Inspections</a></li>
+          <li><a href="wind-mitigation.html" class="footer-link" style="text-decoration:none;">Wind Mitigation</a></li>
+          <li><a href="pre-purchase-inspections.html" class="footer-link" style="text-decoration:none;">Pre-Purchase Inspections</a></li>
+          <li><a href="new-construction-inspections.html" class="footer-link" style="text-decoration:none;">New Construction</a></li>
+          <li><a href="11-month-warranty-inspections.html" class="footer-link" style="text-decoration:none;">11-Month Warranty</a></li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-size:12px; font-weight:700; color:var(--gold-light); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:20px;">Company</div>
+        <ul style="list-style:none; padding:0; display:flex; flex-direction:column; gap:10px;">
+          <li><a href="index.html#about" class="footer-link" style="text-decoration:none;">About Us</a></li>
+          <li><a href="building-permits.html" class="footer-link" style="text-decoration:none;">Building Permits</a></li>
+          <li><a href="index.html#contact" class="footer-link" style="text-decoration:none;">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-size:12px; font-weight:700; color:var(--gold-light); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:20px;">Credentials</div>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:10px 14px;">
+            <div style="font-size:11px; font-weight:700; color:#fff; text-transform:uppercase; letter-spacing:0.05em;">License # HI18594</div>
+            <div style="font-size:11px; color:rgba(255,255,255,0.45); margin-top:2px;">State of Florida</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:10px 14px;">
+            <div style="font-size:11px; font-weight:700; color:#fff; text-transform:uppercase; letter-spacing:0.05em;">Licensed &amp; Insured</div>
+            <div style="font-size:11px; color:rgba(255,255,255,0.45); margin-top:2px;">Fully covered</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:10px 14px;">
+            <div style="font-size:11px; font-weight:700; color:#fff; text-transform:uppercase; letter-spacing:0.05em;">English &bull; Espa&#241;ol</div>
+            <div style="font-size:11px; color:rgba(255,255,255,0.45); margin-top:2px;">Bilingual service</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,0.07); padding:24px 0; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+      <div style="font-size:13px; color:rgba(255,255,255,0.35);">&copy; 2026 Sunstate Service Group LLC. All rights reserved.</div>
+      <div style="display:flex; gap:20px;">
+        <a href="privacy-policy.html" class="footer-link" style="text-decoration:none; color:rgba(255,255,255,0.75)!important;">Privacy Policy</a>
+        <a href="terms-of-service.html" class="footer-link" style="text-decoration:none;">Terms of Service</a>
       </div>
     </div>
   </div>
 </footer>
 
+<script>
+var fontSizes=[14,16,18,20];
+var zoomLevels=[0.85,1,1.12,1.25];
+var fontSizeIdx=parseInt(localStorage.getItem('ssg-fontSize')||'1');
+(function(){document.documentElement.style.fontSize=fontSizes[fontSizeIdx]+'px';document.addEventListener('DOMContentLoaded',function(){document.body.style.zoom=zoomLevels[fontSizeIdx];});})();
+function changeFontSize(dir){fontSizeIdx=Math.min(3,Math.max(0,fontSizeIdx+dir));localStorage.setItem('ssg-fontSize',fontSizeIdx);document.documentElement.style.fontSize=fontSizes[fontSizeIdx]+'px';document.body.style.zoom=zoomLevels[fontSizeIdx];}
+
+function toggleMobileMenu(){
+  var menu=document.getElementById('mobileMenu');
+  var hamburger=document.querySelector('.hamburger');
+  menu.classList.toggle('open');
+  hamburger.classList.toggle('active');
+  document.body.style.overflow=menu.classList.contains('open')?'hidden':'';
+}
+
+window.addEventListener('scroll',function(){
+  var nav=document.getElementById('main-nav');
+  if(window.scrollY>20){nav.classList.add('nav-scrolled');}else{nav.classList.remove('nav-scrolled');}
+});
+
+var currentLang = 'en';
+function toggleLanguage() {
+  currentLang = currentLang === 'en' ? 'es' : 'en';
+  document.querySelectorAll('[data-en][data-es]').forEach(function(el) {
+    var text = el.getAttribute('data-' + currentLang);
+    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') return;
+    var hasTranslatableChildren = el.querySelector('[data-en][data-es]');
+    if (!hasTranslatableChildren) {
+      var svgs = el.querySelectorAll('svg');
+      if (svgs.length > 0) {
+        var svgHtml = ''; svgs.forEach(function(s){svgHtml+=s.outerHTML;}); el.innerHTML = svgHtml + '\n      ' + text;
+      } else { el.innerHTML = text; }
+    }
+  });
+  var label = document.getElementById('lang-label');
+  var flag = document.getElementById('lang-flag');
+  if (currentLang === 'es') { label.textContent = 'English'; flag.textContent = 'ES'; }
+  else { label.textContent = 'Espa\u00f1ol'; flag.textContent = 'EN'; }
+}
+
+function copyEmail(el) {
+  navigator.clipboard.writeText('sunstateservicegroup@gmail.com').then(function() {
+    var toast = document.getElementById('email-copy-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'email-copy-toast';
+      toast.style.cssText = 'position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(20px);background:#1a2e45;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-family:inherit;z-index:9999;opacity:0;transition:opacity 0.3s ease,transform 0.3s ease;pointer-events:none;border:1px solid rgba(74,157,212,0.4);';
+      toast.textContent = 'Email copied to clipboard!';
+      document.body.appendChild(toast);
+    }
+    toast.style.opacity = '1'; toast.style.transform = 'translateX(-50%) translateY(0)';
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(function(){ toast.style.opacity='0'; toast.style.transform='translateX(-50%) translateY(20px)'; }, 2500);
+  });
+}
+</script>
 </body>
 </html>
