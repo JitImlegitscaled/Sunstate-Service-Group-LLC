@@ -1,24 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>document.documentElement.style.fontSize=["14px","16px","18px","20px"][parseInt(localStorage.getItem("ssg-fontSize")||"1")];</script>
 <link rel="icon" type="image/png" href="brand_assets/favicon.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sunstate Service Group LLC | Certified Florida Home Inspector</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <script>
 tailwind.config = {
   theme: {
     extend: {
       colors: {
-        navy: {
-          950: '#080820',
-          900: '#0f0f2e',
-          800: '#161641',
-          700: '#1e1e52',
-          600: '#252563',
+        brand: {
+          50: '#f0f4f8',
+          100: '#dce4ed',
+          200: '#b8c9db',
+          300: '#8ba6c1',
+          400: '#5e83a7',
+          500: '#1a3a5c',
+          600: '#142e4a',
+          700: '#0f2239',
+          800: '#0a1628',
+          900: '#060e1a',
         },
         gold: {
           300: '#fde68a',
@@ -33,183 +40,325 @@ tailwind.config = {
         }
       },
       fontFamily: {
-        sans: ['Urbanist', 'sans-serif'],
-        display: ['Playfair Display', 'serif'],
+        sans: ['IBM Plex Sans', 'sans-serif'],
+        display: ['Libre Baskerville', 'serif'],
       }
     }
   }
 }
 </script>
 <style>
+  :root {
+    --navy-900: #0c1829;
+    --navy-800: #112036;
+    --navy-700: #162b47;
+    --navy-600: #1c3a5e;
+    --navy-500: #2a5078;
+    --slate: #3d5470;
+    --body: #445567;
+    --muted: #6b7f94;
+    --border: #e2e8f0;
+    --surface: #f7f9fc;
+    --gold: #d4920a;
+    --gold-light: #f0b429;
+    --azure: #3b91cc;
+    --azure-deep: #2270aa;
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
   * { box-sizing: border-box; margin: 0; }
-  html { overflow-x: hidden; }
-  body { font-family: 'Urbanist', sans-serif; background: #080820; color: #fff; overflow-x: hidden; max-width: 100vw; }
-
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 9999;
-    opacity: 0.35;
+  html { overflow-x: hidden; scroll-behavior: smooth; }
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: #ffffff;
+    color: var(--body);
+    overflow-x: hidden;
+    max-width: 100vw;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    line-height: 1.72;
+    font-size: 16px;
+    letter-spacing: 0.003em;
   }
 
+  /* Scroll-triggered animations — softer, more natural */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+    will-change: opacity, transform;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.08s; }
+  .reveal-delay-2 { transition-delay: 0.16s; }
+  .reveal-delay-3 { transition-delay: 0.24s; }
+  .reveal-delay-4 { transition-delay: 0.32s; }
+  .reveal-delay-5 { transition-delay: 0.4s; }
+
+  /* Nav */
   nav { position: sticky; top: 0; z-index: 1000; }
-
-  .service-card {
-    background: linear-gradient(145deg, #161641 0%, #1e1e52 100%);
-    border: 1px solid rgba(232, 168, 0, 0.15);
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, border-color 0.3s ease;
-  }
-  .service-card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(232, 168, 0, 0.5);
-    box-shadow: 0 20px 60px rgba(232, 168, 0, 0.15), 0 4px 20px rgba(0,0,0,0.4);
+  .nav-scrolled {
+    background: rgba(255,255,255,0.98) !important;
+    box-shadow: 0 1px 0 var(--border), 0 4px 24px rgba(12,24,41,0.06) !important;
+    backdrop-filter: blur(20px) saturate(1.2);
+    -webkit-backdrop-filter: blur(20px) saturate(1.2);
   }
 
-  .btn-gold {
-    background: linear-gradient(135deg, #e8a800 0%, #f5c842 100%);
-    color: #080820;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
-    box-shadow: 0 4px 20px rgba(232, 168, 0, 0.35);
-  }
-  .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(232, 168, 0, 0.5); }
-  .btn-gold:active { transform: translateY(0); }
-  .btn-gold:focus-visible { outline: 2px solid #f5c842; outline-offset: 3px; }
-
-  .btn-outline {
-    border: 2px solid rgba(255,255,255,0.5);
+  /* Buttons — modern, clean professional */
+  .btn-primary {
+    background: var(--navy-600);
     color: #fff;
     font-weight: 600;
-    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    font-size: 14px;
+    letter-spacing: 0.025em;
+    transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out), background 0.2s ease;
+    box-shadow: 0 1px 2px rgba(12,24,41,0.08), 0 4px 16px rgba(28,58,94,0.16);
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
   }
-  .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: #fff; transform: translateY(-1px); }
-  .btn-outline:active { transform: translateY(0); }
-  .btn-outline:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+  .btn-primary:hover {
+    background: var(--navy-700);
+    transform: translateY(-2px);
+    box-shadow: 0 2px 6px rgba(12,24,41,0.1), 0 10px 28px rgba(28,58,94,0.22);
+  }
+  .btn-primary:active { transform: translateY(0); box-shadow: 0 1px 2px rgba(12,24,41,0.1); }
+  .btn-primary:focus-visible { outline: 2px solid var(--navy-600); outline-offset: 3px; }
 
+  .btn-gold {
+    background: var(--gold-light);
+    color: var(--navy-900);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.025em;
+    transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out), background 0.2s ease;
+    box-shadow: 0 1px 2px rgba(212,146,10,0.12), 0 4px 16px rgba(212,146,10,0.2);
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+  }
+  .btn-gold:hover {
+    background: #e8a800;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 6px rgba(212,146,10,0.14), 0 10px 28px rgba(212,146,10,0.28);
+  }
+  .btn-gold:active { transform: translateY(0); }
+  .btn-gold:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+  .btn-outline {
+    border: 1.5px solid var(--navy-600);
+    color: var(--navy-600);
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.025em;
+    background: transparent;
+    transition: background 0.25s ease, color 0.25s ease, transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+    border-radius: 8px;
+  }
+  .btn-outline:hover { background: var(--navy-600); color: #fff; transform: translateY(-2px); box-shadow: 0 4px 16px rgba(28,58,94,0.16); }
+  .btn-outline:active { transform: translateY(0); }
+  .btn-outline:focus-visible { outline: 2px solid var(--navy-600); outline-offset: 3px; }
+
+  .btn-outline-light {
+    border: 1.5px solid rgba(255,255,255,0.3);
+    color: rgba(255,255,255,0.9);
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.025em;
+    background: transparent;
+    transition: background 0.25s ease, border-color 0.25s ease, transform 0.3s var(--ease-out);
+    border-radius: 8px;
+  }
+  .btn-outline-light:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.6); transform: translateY(-2px); }
+  .btn-outline-light:active { transform: translateY(0); }
+  .btn-outline-light:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+  /* Nav links */
   .nav-link {
     position: relative;
-    color: rgba(255,255,255,0.85);
-    font-weight: 600;
+    color: var(--slate);
+    font-weight: 500;
+    font-size: 13.5px;
+    letter-spacing: 0.015em;
     transition: color 0.2s ease;
   }
   .nav-link::after {
     content: '';
     position: absolute;
-    bottom: -4px; left: 0; right: 0;
+    bottom: -6px; left: 0; right: 0;
     height: 2px;
-    background: #f5c842;
+    background: var(--gold-light);
     transform: scaleX(0);
-    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-    transform-origin: center;
-  }
-  .nav-link:hover { color: #fff; }
-  .nav-link:hover::after { transform: scaleX(1); }
-  .nav-link:focus-visible { outline: 2px solid #f5c842; outline-offset: 3px; border-radius: 2px; }
-
-  .section-divider {
-    width: 60px; height: 4px;
-    background: linear-gradient(90deg, #e8a800, #f5c842);
+    transition: transform 0.3s var(--ease-out);
+    transform-origin: left;
     border-radius: 2px;
-    margin: 0 auto 1.5rem;
+  }
+  .nav-link:hover { color: var(--navy-900); }
+  .nav-link:hover::after { transform: scaleX(1); }
+  .nav-link:focus-visible { outline: 2px solid var(--navy-600); outline-offset: 3px; border-radius: 2px; }
+
+  /* Service cards — clean elevated */
+  .service-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out), border-color 0.3s ease;
+    box-shadow: 0 1px 3px rgba(12,24,41,0.04), 0 4px 12px rgba(12,24,41,0.05);
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--navy-600);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s var(--ease-out);
+  }
+  .service-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(28,58,94,0.15);
+    box-shadow: 0 4px 16px rgba(12,24,41,0.06), 0 16px 40px rgba(12,24,41,0.1);
+  }
+  .service-card:hover::before {
+    transform: scaleX(1);
+  }
+  .service-card .card-arrow {
+    transition: transform 0.3s var(--ease-out);
+  }
+  .service-card:hover .card-arrow {
+    transform: translateX(4px);
+  }
+  .service-card .learn-more {
+    transition: color 0.25s ease;
+  }
+  .service-card:hover .learn-more {
+    color: var(--navy-600) !important;
   }
 
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
+  /* Section tag */
+  .section-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--navy-600);
+    margin-bottom: 16px;
+    opacity: 1;
   }
-  .fade-up { animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
-  .fade-up-1 { animation-delay: 0.1s; }
-  .fade-up-2 { animation-delay: 0.22s; }
-  .fade-up-3 { animation-delay: 0.34s; }
-  .fade-up-4 { animation-delay: 0.46s; }
-
-  .featured-card {
-    background: linear-gradient(145deg, #161641 0%, #1e1e52 100%);
-    border: 1px solid rgba(74, 157, 212, 0.3);
-    box-shadow: 0 8px 40px rgba(74, 157, 212, 0.1), 0 2px 12px rgba(0,0,0,0.4);
+  .section-tag::before {
+    content: '';
+    display: inline-block;
+    width: 28px;
+    height: 2px;
+    background: var(--gold-light);
+    border-radius: 2px;
+    flex-shrink: 0;
   }
 
-  .footer-link { color: rgba(255,255,255,0.65); transition: color 0.2s ease; }
-  .footer-link:hover { color: #f5c842; }
-  .footer-link:focus-visible { outline: 2px solid #f5c842; outline-offset: 2px; border-radius: 2px; }
+  /* Footer */
+  .footer-link {
+    color: rgba(255,255,255,0.45);
+    transition: color 0.25s ease;
+    font-size: 14px;
+  }
+  .footer-link:hover { color: var(--gold-light); }
+  .footer-link:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 2px; border-radius: 2px; }
 
+  /* Scrollbar */
   ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: #080820; }
-  ::-webkit-scrollbar-thumb { background: #e8a800; border-radius: 3px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(184,197,211,0.6); border-radius: 6px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--navy-600); }
 
-  .stars { color: #f5c842; letter-spacing: 2px; }
-
-  input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.3); }
-  input, textarea, select { color-scheme: dark; }
-
-  /* BackgroundPaths SVG */
-  .hero-paths-svg { color: #e8a800; }
+  /* Form fields (contact section - dark bg) */
+  .dark-form input::placeholder, .dark-form textarea::placeholder { color: rgba(255,255,255,0.3); }
+  .dark-form input, .dark-form textarea, .dark-form select { color-scheme: dark; }
 
   /* Mobile hamburger */
   .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; z-index: 60; }
-  .hamburger span { display: block; width: 24px; height: 2px; background: #fff; margin: 5px 0; border-radius: 2px; transition: transform 0.3s ease, opacity 0.3s ease; }
+  .hamburger span {
+    display: block; width: 22px; height: 1.5px; background: var(--navy-900);
+    margin: 5px 0; border-radius: 2px;
+    transition: transform 0.35s var(--ease-out), opacity 0.25s ease;
+  }
   .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
   .hamburger.active span:nth-child(2) { opacity: 0; }
   .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
-  .mobile-menu { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(8,8,32,0.98); z-index: 999; flex-direction: column; align-items: center; justify-content: center; gap: 28px; }
+  .mobile-menu {
+    display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(255,255,255,0.98); z-index: 999;
+    flex-direction: column; align-items: center; justify-content: center; gap: 32px;
+    backdrop-filter: blur(24px) saturate(1.2);
+    -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  }
   .mobile-menu.open { display: flex; }
-  .mobile-menu a { color: #fff; text-decoration: none; font-size: 20px; font-weight: 700; letter-spacing: -0.01em; }
-  .mobile-menu a:hover { color: #f5c842; }
-  .mobile-menu .mobile-close { position: absolute; top: 20px; right: 24px; background: none; border: none; color: #fff; font-size: 32px; cursor: pointer; }
+  .mobile-menu a { color: var(--navy-900); text-decoration: none; font-size: 20px; font-weight: 600; letter-spacing: -0.01em; transition: color 0.25s ease; }
+  .mobile-menu a:hover { color: var(--gold); }
+  .mobile-menu .mobile-close { position: absolute; top: 20px; right: 24px; background: none; border: none; color: var(--navy-900); font-size: 28px; cursor: pointer; transition: opacity 0.2s ease; }
+  .mobile-menu .mobile-close:hover { opacity: 0.6; }
+
+  /* Subtle grain overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.3;
+  }
+
+  /* Section divider accent */
+  .section-divider {
+    width: 48px;
+    height: 2px;
+    background: var(--gold-light);
+    border-radius: 2px;
+    margin: 0 auto 48px;
+  }
 
   @media (max-width: 768px) {
     .hamburger { display: block; }
     .desktop-nav, .desktop-cta { display: none !important; }
-
-    /* Top bar */
     .top-bar-inner { font-size: 11px !important; gap: 8px; flex-wrap: wrap; justify-content: center !important; }
     .top-bar-email { display: none !important; }
-
-    /* Nav logo - shrink the oversized logo */
-    .nav-logo-img { width: 120px !important; height: 120px !important; margin-right: -40px !important; }
-    .nav-logo-img img { width: 120px !important; height: 120px !important; }
-    .nav-logo-text-main { font-size: 14px !important; }
-    .nav-logo-text-sub { font-size: 7px !important; }
-
-    /* Hero */
-    .hero-grid { grid-template-columns: 1fr !important; gap: 32px !important; padding: 40px 16px !important; }
-    .hero-image-wrap { display: none !important; }
-    .hero-diagonal { display: none !important; }
-
-    /* Services */
-    .services-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
-
-    /* About */
-    .about-grid { grid-template-columns: 1fr !important; gap: 40px !important; padding: 0 16px !important; }
+    .nav-logo-img { width: 90px !important; height: 90px !important; margin: -20px -10px -20px -10px !important; }
+    .nav-logo-img img { width: 90px !important; height: 90px !important; }
+    .hero-section { min-height: auto !important; padding-top: 72px !important; padding-bottom: 56px !important; }
+    .hero-grid { gap: 32px !important; }
+    .hero-checklist { grid-template-columns: 1fr !important; }
+    .services-grid { grid-template-columns: 1fr !important; gap: 14px !important; }
+    .about-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
     .about-image-wrap { order: -1; }
-    .about-image-wrap img { height: 300px !important; }
-
-    /* Featured / Wind Mitigation */
+    .about-image-wrap img { height: 280px !important; }
     .featured-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
     .featured-card img { height: 240px !important; }
-
-    /* Contact */
+    .trust-grid { grid-template-columns: 1fr 1fr !important; gap: 14px !important; }
+    .process-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
+    .contact-layout-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
     .contact-cards-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
     .contact-form-grid { grid-template-columns: 1fr !important; }
-    .contact-form-box { padding: 20px !important; }
-
-    /* Footer */
+    .contact-form-box { padding: 24px !important; }
     .footer-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
-    .footer-logo-img { width: 120px !important; height: 120px !important; margin-right: -40px !important; }
-    .footer-logo-img img { width: 120px !important; height: 120px !important; }
+    .footer-logo-img { width: 90px !important; height: 90px !important; margin: -20px -10px -20px -10px !important; }
+    .footer-logo-img img { width: 90px !important; height: 90px !important; }
     .footer-bottom { flex-direction: column; text-align: center; gap: 8px; }
-
-    /* Sections padding */
-    section { padding: 60px 0 !important; }
-
-    /* Prevent any overflow */
+    section { padding: 64px 0 !important; }
     section, footer, nav, div { max-width: 100vw; }
+    h1 { font-size: 36px !important; }
+    .btn-gold, .btn-primary, .btn-outline, .btn-outline-light { font-size: 15px !important; }
   }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -218,31 +367,43 @@ tailwind.config = {
 <body>
 
 <!-- TOP BAR -->
-<div style="background: linear-gradient(135deg, #e8a800 0%, #f5c842 100%); padding: 6px 0;">
-  <div class="top-bar-inner" style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 600; color: #080820;">
-    <span>&#128222; 813-406-3903</span>
-    <span class="top-bar-email">&#9993; sunstateservicegroup@gmail.com</span>
-    <button id="lang-toggle" onclick="toggleLanguage()" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(8,8,32,0.15); border: 1px solid rgba(8,8,32,0.25); border-radius: 100px; padding: 4px 14px 4px 8px; color: #080820; font-size: 12px; font-weight: 800; font-family: 'Urbanist', sans-serif; cursor: pointer; white-space: nowrap; transition: background 0.25s ease;" onmouseover="this.style.background='rgba(8,8,32,0.25)'" onmouseout="this.style.background='rgba(8,8,32,0.15)'">
-      <span id="lang-flag" style="font-size: 12px; font-weight: 900; background: rgba(8,8,32,0.2); border-radius: 4px; padding: 2px 5px; letter-spacing: 0.04em;">EN</span>
+<div style="background: #0c1829; padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+  <div class="top-bar-inner" style="max-width: 1140px; margin: 0 auto; padding: 0 32px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 400; color: rgba(255,255,255,0.65);">
+    <div style="display: flex; align-items: center; gap: 24px;">
+      <a href="tel:8134063903" style="color: rgba(255,255,255,0.8); text-decoration: none; display: flex; align-items: center; gap: 6px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        813-406-3903
+      </a>
+      <button onclick="copyEmail(this)" class="top-bar-email" style="color: rgba(255,255,255,0.8); text-decoration: none; display: flex; align-items: center; gap: 6px; background: none; border: none; cursor: pointer; font-size: 13px; font-family: inherit; padding: 0;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        sunstateservicegroup@gmail.com
+      </button>
+    </div>
+    <div style="display:flex; align-items:center; gap:8px;">
+      <div style="display:inline-flex; align-items:center; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.15); border-radius:100px; padding:3px 5px; gap:3px;">
+        <button onclick="changeFontSize(-1)" title="Decrease font size" style="width:26px; height:26px; display:inline-flex; align-items:center; justify-content:center; background:none; border:none; color:rgba(255,255,255,0.75); font-family:'IBM Plex Sans',sans-serif; font-size:12px; font-weight:700; cursor:pointer; border-radius:100px; line-height:1;" onmouseover="this.style.background='rgba(255,255,255,0.2)';this.style.color='#fff'" onmouseout="this.style.background='none';this.style.color='rgba(255,255,255,0.75)'">A</button>
+        <div style="width:1px; height:14px; background:rgba(255,255,255,0.2);"></div>
+        <button onclick="changeFontSize(1)" title="Increase font size" style="width:26px; height:26px; display:inline-flex; align-items:center; justify-content:center; background:none; border:none; color:rgba(255,255,255,0.75); font-family:'IBM Plex Sans',sans-serif; font-size:18px; font-weight:700; cursor:pointer; border-radius:100px; line-height:1;" onmouseover="this.style.background='rgba(255,255,255,0.2)';this.style.color='#fff'" onmouseout="this.style.background='none';this.style.color='rgba(255,255,255,0.75)'">A</button>
+      </div>
+      <button id="lang-toggle" onclick="toggleLanguage()" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); border-radius: 100px; padding: 4px 14px 4px 8px; color: rgba(255,255,255,0.9); font-size: 12px; font-weight: 600; font-family: 'IBM Plex Sans', sans-serif; cursor: pointer; white-space: nowrap; transition: background 0.25s ease;" onmouseover="this.style.background='rgba(255,255,255,0.18)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">
+      <span id="lang-flag" style="font-size: 11px; font-weight: 700; background: rgba(255,255,255,0.15); border-radius: 4px; padding: 2px 5px; letter-spacing: 0.04em;">EN</span>
       <span id="lang-label">Espa&#241;ol</span>
     </button>
+    </div>
   </div>
 </div>
 
 <!-- NAV -->
-<nav style="background: linear-gradient(180deg, #0a0a28 0%, #0f0f2e 100%); border-bottom: 1px solid rgba(232,168,0,0.2); box-shadow: 0 4px 30px rgba(0,0,0,0.5);">
-  <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 80px; position: relative;">
+<nav id="main-nav" style="background: #ffffff; border-bottom: 1px solid var(--border); transition: background 0.4s ease, box-shadow 0.4s ease;">
+  <div style="max-width: 1140px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; height: 68px; position: relative;">
     <!-- Logo -->
-    <a href="#" style="display: flex; align-items: center; gap: 0px; text-decoration: none; position: relative; z-index: 50;" aria-label="Sunstate Service Group Home">
-      <div class="nav-logo-img" style="flex-shrink: 0; margin-right: -80px;">
-        <img src="brand_assets/Untitled design.png" alt="Sunstate Service Group Logo" style="width: 300px; height: 300px; object-fit: contain;">
+    <a href="#" style="display: flex; align-items: center; gap: 12px; text-decoration: none; position: relative; z-index: 50;">
+      <div class="nav-logo-img" style="flex-shrink: 0; width: 280px; height: 280px; margin: -84px -120px -84px -40px;">
+        <img src="brand_assets/Untitled design.png" alt="Sunstate Service Group Logo" style="width: 100%; height: 100%; object-fit: contain;">
       </div>
       <div>
-        <div class="nav-logo-text-main" style="font-family: 'Urbanist', sans-serif; font-weight: 900; font-size: 17px; letter-spacing: -0.02em; color: #fff; line-height: 1.1;">SUNSTATE</div>
-        <div class="nav-logo-text-sub" style="font-size: 8.5px; font-weight: 600; letter-spacing: 0.14em; color: #C9A227; text-transform: uppercase; line-height: 1.2; display: flex; align-items: center; gap: 5px;">
-          <span style="display: inline-block; width: 16px; height: 1px; background: #C9A227;"></span>SERVICE GROUP LLC<span style="display: inline-block; width: 16px; height: 1px; background: #C9A227;"></span>
-        </div>
-        <div style="font-size: 8px; font-style: italic; color: #7bc8f0; letter-spacing: 0.03em; line-height: 1.2; margin-top: 2px;">Certified Florida Home Inspector</div>
+        <div style="font-family: 'Libre Baskerville', serif; font-size: 18px; color: var(--navy-900); line-height: 1.1;">Sunstate</div>
+        <div style="font-size: 10px; font-weight: 600; letter-spacing: 0.08em; color: #6b7c8d; text-transform: uppercase; line-height: 1.2;">Service Group LLC</div>
       </div>
     </a>
 
@@ -251,13 +412,16 @@ tailwind.config = {
       <a href="#services" class="nav-link" style="text-decoration: none; font-size: 14px;" data-en="Services" data-es="Servicios">Services</a>
       <a href="#about" class="nav-link" style="text-decoration: none; font-size: 14px;" data-en="About" data-es="Nosotros">About</a>
       <a href="#featured" class="nav-link" style="text-decoration: none; font-size: 14px;" data-en="Wind Mitigation" data-es="Mitigaci&#243;n Viento">Wind Mitigation</a>
-      <a href="#permits" class="nav-link" style="text-decoration: none; font-size: 14px;" data-en="Building Permits" data-es="Permisos">Building Permits</a>
+      <a href="#process" class="nav-link" style="text-decoration: none; font-size: 14px;" data-en="How It Works" data-es="Cómo Funciona">How It Works</a>
       <a href="#contact" class="nav-link" style="text-decoration: none; font-size: 14px;" data-en="Contact" data-es="Contacto">Contact</a>
     </div>
 
     <div class="desktop-cta" style="display: flex; align-items: center; gap: 10px;">
-      <a href="tel:8134063903" class="btn-gold" style="padding: 10px 20px; border-radius: 6px; text-decoration: none; font-size: 13px; white-space: nowrap;">&#128222; 813-406-3903</a>
-      <a href="#contact" class="btn-outline" style="padding: 10px 18px; border-radius: 6px; text-decoration: none; font-size: 13px; white-space: nowrap;" data-en="Book Now" data-es="Reservar">Book Now</a>
+      <a href="tel:8134063903" style="color: #1a3a5c; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 6px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        813-406-3903
+      </a>
+      <a href="#contact" class="btn-primary" style="padding: 10px 24px; border-radius: 10px; text-decoration: none; font-size: 13px; white-space: nowrap;" data-en="Book Inspection" data-es="Reservar">Book Inspection</a>
     </div>
 
     <!-- Hamburger (mobile) -->
@@ -273,125 +437,282 @@ tailwind.config = {
   <a href="#services" onclick="toggleMobileMenu()" data-en="Services" data-es="Servicios">Services</a>
   <a href="#about" onclick="toggleMobileMenu()" data-en="About" data-es="Nosotros">About</a>
   <a href="#featured" onclick="toggleMobileMenu()" data-en="Wind Mitigation" data-es="Mitigaci&#243;n Viento">Wind Mitigation</a>
-  <a href="#permits" onclick="toggleMobileMenu()" data-en="Building Permits" data-es="Permisos">Building Permits</a>
+  <a href="#process" onclick="toggleMobileMenu()" data-en="How It Works" data-es="Cómo Funciona">How It Works</a>
   <a href="#contact" onclick="toggleMobileMenu()" data-en="Contact" data-es="Contacto">Contact</a>
-  <a href="tel:8134063903" class="btn-gold" style="padding: 14px 32px; border-radius: 8px; font-size: 16px; margin-top: 12px;">&#128222; 813-406-3903</a>
+  <a href="tel:8134063903" class="btn-primary" style="padding: 14px 32px; border-radius: 8px; font-size: 16px; margin-top: 12px; color: #fff;">813-406-3903</a>
 </div>
 
-<!-- HERO -->
-<section style="min-height: 620px; position: relative; overflow: hidden; background: linear-gradient(135deg, #0f0f2e 55%, #1a1a50 100%);">
-  <div style="position: absolute; width: 500px; height: 500px; background: rgba(232,168,0,0.07); border-radius: 50%; filter: blur(80px); top: -100px; left: -100px; pointer-events: none;"></div>
-  <div style="position: absolute; width: 400px; height: 400px; background: rgba(74,157,212,0.09); border-radius: 50%; filter: blur(80px); top: 50px; right: 200px; pointer-events: none;"></div>
-  <div class="hero-diagonal" style="position: absolute; top: 0; right: 0; width: 48%; height: 100%; clip-path: polygon(8% 0%, 100% 0%, 100% 100%, 0% 100%); background: linear-gradient(135deg, #e8a800 0%, #f5c842 100%); opacity: 0.1; pointer-events: none;"></div>
+<!-- HERO ENTRANCE ANIMATIONS -->
+<style>
+  @keyframes heroFadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes heroFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  .hero-anim-0 { opacity: 0; animation: heroFadeIn  0.7s cubic-bezier(0.16,1,0.3,1) 0.05s forwards; }
+  .hero-anim-1 { opacity: 0; animation: heroFadeUp  0.75s cubic-bezier(0.16,1,0.3,1) 0.2s  forwards; }
+  .hero-anim-2 { opacity: 0; animation: heroFadeUp  0.75s cubic-bezier(0.16,1,0.3,1) 0.38s forwards; }
+  .hero-anim-3 { opacity: 0; animation: heroFadeUp  0.75s cubic-bezier(0.16,1,0.3,1) 0.52s forwards; }
+  .hero-anim-4 { opacity: 0; animation: heroFadeUp  0.75s cubic-bezier(0.16,1,0.3,1) 0.66s forwards; }
+  .hero-anim-5 { opacity: 0; animation: heroFadeUp  0.65s cubic-bezier(0.16,1,0.3,1) 0.8s  forwards; }
 
-  <div class="hero-grid" style="max-width: 1200px; margin: 0 auto; padding: 80px 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; position: relative; z-index: 1;">
-    <!-- Left -->
-    <div>
-      <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(232,168,0,0.12); border: 1px solid rgba(232,168,0,0.3); border-radius: 100px; padding: 6px 16px; margin-bottom: 24px;" class="fade-up fade-up-1">
-        <span style="width: 8px; height: 8px; background: #f5c842; border-radius: 50%;"></span>
-        <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; color: #f5c842; text-transform: uppercase;" data-en="Certified Florida Home Inspector" data-es="Inspector de Viviendas Certificado en Florida">Certified Florida Home Inspector</span>
+  .hero-btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--gold-light);
+    color: var(--navy-900);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 700; font-size: 15px; letter-spacing: 0.01em;
+    padding: 15px 34px; border-radius: 10px; text-decoration: none;
+    box-shadow: 0 2px 8px rgba(245,200,66,0.2), 0 8px 28px rgba(245,200,66,0.22);
+    transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s cubic-bezier(0.16,1,0.3,1), background 0.2s ease;
+  }
+  .hero-btn-primary:hover {
+    background: #e8a800;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(245,200,66,0.25), 0 16px 40px rgba(245,200,66,0.28);
+  }
+  .hero-btn-primary:active { transform: translateY(0); }
+  .hero-btn-primary:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 3px; }
+
+  .hero-btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1.5px solid rgba(255,255,255,0.28);
+    color: rgba(255,255,255,0.88);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 600; font-size: 15px; letter-spacing: 0.01em;
+    padding: 14px 30px; border-radius: 10px; text-decoration: none;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(8px);
+    transition: background 0.25s ease, border-color 0.25s ease, transform 0.3s cubic-bezier(0.16,1,0.3,1);
+  }
+  .hero-btn-secondary:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.5);
+    transform: translateY(-2px);
+  }
+  .hero-btn-secondary:active { transform: translateY(0); }
+  .hero-btn-secondary:focus-visible { outline: 2px solid rgba(255,255,255,0.6); outline-offset: 3px; }
+
+  .hero-divider {
+    width: 1px; height: 32px;
+    background: rgba(255,255,255,0.15);
+    margin: 0 4px;
+  }
+
+  @media (max-width: 600px) {
+    .hero-cta-row { flex-direction: column !important; align-items: stretch !important; }
+    .hero-cta-row a { text-align: center; justify-content: center; }
+    .hero-divider { display: none; }
+    .hero-trust-items { grid-template-columns: 1fr 1fr !important; gap: 8px 16px !important; }
+  }
+</style>
+
+<!-- HERO -->
+<section class="hero-section" style="min-height: 88vh; position: relative; overflow: hidden; display: flex; align-items: center; background: var(--navy-900);">
+  <!-- Background layers -->
+  <div style="position: absolute; inset: 0; z-index: 0;">
+    <img src="HouseHeroSectionBackground.jpeg" alt="" style="width: 100%; height: 100%; object-fit: cover; object-position: center top;">
+    <div style="position: absolute; inset: 0; background: linear-gradient(168deg, rgba(10,20,36,0.78) 0%, rgba(18,35,60,0.60) 50%, rgba(10,20,36,0.72) 100%);"></div>
+    <!-- Ambient glows -->
+    <div style="position: absolute; width: 800px; height: 800px; background: radial-gradient(circle, rgba(245,200,66,0.045) 0%, transparent 55%); top: -300px; left: 50%; transform: translateX(-50%); pointer-events: none;"></div>
+    <div style="position: absolute; width: 600px; height: 400px; background: radial-gradient(ellipse, rgba(59,145,204,0.04) 0%, transparent 60%); bottom: 0; left: 0; pointer-events: none;"></div>
+    <div style="position: absolute; width: 500px; height: 400px; background: radial-gradient(ellipse, rgba(59,145,204,0.03) 0%, transparent 60%); bottom: 0; right: 0; pointer-events: none;"></div>
+    <!-- Bottom fade to white -->
+    <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 160px; background: linear-gradient(to bottom, transparent 0%, #ffffff 100%);"></div>
+  </div>
+
+  <!-- Centered content -->
+  <div style="position: relative; z-index: 2; width: 100%; padding: 80px 24px 100px;">
+    <div style="max-width: 760px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 0;">
+
+      <!-- Logo -->
+      <div class="hero-anim-0" style="margin-bottom: 36px;">
+        <img
+          src="brand_assets/Your paragraph text.png"
+          alt="Sunstate Service Group LLC"
+          style="height: clamp(72px, 12vw, 110px); width: auto; object-fit: contain; filter: drop-shadow(0 4px 24px rgba(245,200,66,0.18)) drop-shadow(0 2px 8px rgba(0,0,0,0.4));"
+        >
       </div>
 
-      <h1 style="font-size: clamp(28px, 4vw, 48px); font-weight: 900; line-height: 1.15; letter-spacing: -0.03em; color: #fff; margin-bottom: 20px;" class="fade-up fade-up-2">
-        <span style="color: #f5c842;" data-en="Your Home," data-es="Su Hogar,">Your Home,</span> <span data-en="Our" data-es="Nuestra">Our</span> <span style="color: #4a9dd4;" data-en="Priority" data-es="Prioridad">Priority</span>
+      <!-- Badge -->
+      <div class="hero-anim-1" style="display: inline-flex; align-items: center; gap: 8px; background: rgba(245,200,66,0.08); border: 1px solid rgba(245,200,66,0.22); border-radius: 100px; padding: 6px 18px; margin-bottom: 28px;">
+        <span style="width: 5px; height: 5px; background: var(--gold-light); border-radius: 50%; flex-shrink: 0;"></span>
+        <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.13em; color: var(--gold-light); text-transform: uppercase;" data-en="Certified Florida Home Inspector" data-es="Inspector de Viviendas Certificado en Florida">Certified Florida Home Inspector</span>
+      </div>
+
+      <!-- Headline -->
+      <h1 class="hero-anim-2" style="font-family: 'Libre Baskerville', serif; font-size: clamp(34px, 5.5vw, 62px); font-weight: 700; line-height: 1.1; letter-spacing: -0.028em; color: #fff; margin-bottom: 22px;">
+        <span style="color: var(--gold-light);" data-en="Your Home," data-es="Su Hogar,">Your Home,</span><br>
+        <span data-en="Our" data-es="Nuestra">Our</span> <span style="color: #5baee0;" data-en="Priority" data-es="Prioridad">Priority</span>
       </h1>
 
-      <ul style="list-style: none; padding: 0; margin: 0 0 32px; display: flex; flex-direction: column; gap: 10px;" class="fade-up fade-up-3">
-        <li style="display: flex; align-items: center; gap: 10px; font-size: 15px; color: rgba(255,255,255,0.85);">
-          <span style="width: 22px; height: 22px; background: linear-gradient(135deg, #e8a800, #f5c842); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 900; color: #080820; flex-shrink: 0;">&#10003;</span>
-          <span data-en="Licensed &amp; Insured &mdash; License # HI18594" data-es="Licenciado y Asegurado &mdash; Licencia # HI18594">Licensed &amp; Insured &mdash; License # HI18594</span>
-        </li>
-        <li style="display: flex; align-items: center; gap: 10px; font-size: 15px; color: rgba(255,255,255,0.85);">
-          <span style="width: 22px; height: 22px; background: linear-gradient(135deg, #e8a800, #f5c842); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 900; color: #080820; flex-shrink: 0;">&#10003;</span>
-          <span data-en="Comprehensive 4-Point &amp; Wind Mitigation Reports" data-es="Informes Completos de 4 Puntos y Mitigaci&#243;n de Viento">Comprehensive 4-Point &amp; Wind Mitigation Reports</span>
-        </li>
-        <li style="display: flex; align-items: center; gap: 10px; font-size: 15px; color: rgba(255,255,255,0.85);">
-          <span style="width: 22px; height: 22px; background: linear-gradient(135deg, #e8a800, #f5c842); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 900; color: #080820; flex-shrink: 0;">&#10003;</span>
-          <span data-en="Bilingual Service &mdash; English &amp; Espa&#241;ol" data-es="Servicio Biling&#252;e &mdash; Ingl&#233;s y Espa&#241;ol">Bilingual Service &mdash; English &amp; Espa&#241;ol</span>
-        </li>
-        <li style="display: flex; align-items: center; gap: 10px; font-size: 15px; color: rgba(255,255,255,0.85);">
-          <span style="width: 22px; height: 22px; background: linear-gradient(135deg, #e8a800, #f5c842); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 900; color: #080820; flex-shrink: 0;">&#10003;</span>
-          <span data-en="Fast, Detailed Reports Delivered Same Day" data-es="Informes R&#225;pidos y Detallados Entregados el Mismo D&#237;a">Fast, Detailed Reports Delivered Same Day</span>
-        </li>
-      </ul>
+      <!-- Subheadline -->
+      <p class="hero-anim-3" style="font-size: clamp(15px, 2vw, 18px); color: rgba(255,255,255,0.62); line-height: 1.72; margin-bottom: 40px; max-width: 560px;" data-en="Florida-licensed home inspections with same-day reports. Thorough, unbiased, and fully bilingual — so you can move forward with total peace of mind." data-es="Inspecciones de viviendas con licencia en Florida con informes el mismo d&iacute;a. Exhaustivas, imparciales y completamente biling&uuml;es.">
+        Florida-licensed home inspections with same-day reports. Thorough, unbiased, and fully bilingual — so you can move forward with total peace of mind.
+      </p>
 
-      <div style="display: flex; gap: 14px; flex-wrap: wrap;" class="fade-up fade-up-4">
-        <a href="#contact" class="btn-gold" style="padding: 14px 32px; border-radius: 8px; text-decoration: none; font-size: 15px; display: inline-block;" data-en="Book Your Inspection" data-es="Reserve Su Inspecci&#243;n">Book Your Inspection</a>
-        <a href="#services" class="btn-outline" style="padding: 14px 28px; border-radius: 8px; text-decoration: none; font-size: 15px; display: inline-block;" data-en="View Services" data-es="Ver Servicios">View Services</a>
+      <!-- CTA Buttons -->
+      <div class="hero-anim-4 hero-cta-row" style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; margin-bottom: 48px;">
+        <a href="#contact" class="hero-btn-primary" data-en="Book Your Inspection" data-es="Reserve Su Inspecci&oacute;n">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Book Your Inspection
+        </a>
+        <a href="tel:8134063903" class="hero-btn-secondary" data-en="Call 813-406-3903" data-es="Llamar 813-406-3903">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Call 813-406-3903
+        </a>
       </div>
+
+      <!-- Trust signals row -->
+      <div class="hero-anim-5 hero-trust-items" style="display: grid; grid-template-columns: repeat(4, auto); gap: 8px 28px; align-items: center; justify-content: center;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5c842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span style="font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.6);" data-en="Licensed &amp; Insured" data-es="Licenciado y Asegurado">Licensed &amp; Insured</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5c842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span style="font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.6);" data-en="Same-Day Reports" data-es="Informes el Mismo D&iacute;a">Same-Day Reports</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5c842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span style="font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.6);" data-en="Bilingual EN / ES" data-es="Biling&uuml;e EN / ES">Bilingual EN / ES</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5c842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span style="font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.6);" data-en="License # HI18594" data-es="Licencia # HI18594">License # HI18594</span>
+        </div>
+      </div>
+
     </div>
+  </div>
+</section>
 
-    <!-- Right image -->
-    <div class="hero-image-wrap fade-up fade-up-2" style="position: relative;">
-      <div style="border-radius: 16px; overflow: hidden; position: relative; box-shadow: 0 30px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(232,168,0,0.2);">
-        <img src="https://placehold.co/580x440/1e1e52/4a9dd4?text=Home+Inspector+at+Work" alt="Home Inspector" style="width: 100%; height: 440px; object-fit: cover; display: block;">
-        <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 50%, rgba(8,8,32,0.8) 100%);"></div>
-        <div style="position: absolute; inset: 0; background: rgba(42,100,170,0.15); mix-blend-mode: multiply;"></div>
+<!-- TRUST / CREDIBILITY -->
+<section style="background: var(--surface); padding: 52px 0; border-bottom: 1px solid var(--border); position: relative; z-index: 1;">
+  <div style="max-width: 1140px; margin: 0 auto; padding: 0 32px;">
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;" class="trust-grid">
+
+      <div class="reveal" style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px; padding: 32px 24px; background: #fff; border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 1px 3px rgba(12,24,41,0.04), 0 4px 16px rgba(12,24,41,0.06);">
+        <div style="width: 52px; height: 52px; background: #eef2f8; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1c3a5e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        </div>
+        <div>
+          <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px;" data-en="Florida Licensed" data-es="Licenciado en Florida">Florida Licensed</div>
+          <div style="font-size: 22px; font-weight: 700; color: var(--navy-900); letter-spacing: -0.02em; line-height: 1.1;" data-en="HI18594" data-es="HI18594">HI18594</div>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 4px;" data-en="State Certified Inspector" data-es="Inspector Certificado Estatal">State Certified Inspector</div>
+        </div>
       </div>
+
+      <div class="reveal reveal-delay-1" style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px; padding: 32px 24px; background: #fff; border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 1px 3px rgba(12,24,41,0.04), 0 4px 16px rgba(12,24,41,0.06);">
+        <div style="width: 52px; height: 52px; background: #fdf6e3; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c98f00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <div>
+          <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px;" data-en="Service Area" data-es="Área de Servicio">Service Area</div>
+          <div style="font-size: 18px; font-weight: 700; color: var(--navy-900); letter-spacing: -0.02em; line-height: 1.2;" data-en="Tampa Bay" data-es="Tampa Bay">Tampa Bay</div>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 4px;" data-en="&amp; Surrounding Areas" data-es="y Áreas Circundantes">&amp; Surrounding Areas</div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-delay-2" style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px; padding: 32px 24px; background: #fff; border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 1px 3px rgba(12,24,41,0.04), 0 4px 16px rgba(12,24,41,0.06);">
+        <div style="width: 52px; height: 52px; background: #eef7ee; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2a7a3b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><polyline points="9 16 11 18 15 14"/></svg>
+        </div>
+        <div>
+          <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px;" data-en="Scheduling" data-es="Programación">Scheduling</div>
+          <div style="font-size: 18px; font-weight: 700; color: var(--navy-900); letter-spacing: -0.02em; line-height: 1.2;" data-en="Fast &amp; Flexible" data-es="Rápido y Flexible">Fast &amp; Flexible</div>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 4px;" data-en="Appointments Available" data-es="Citas Disponibles">Appointments Available</div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-delay-3" style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px; padding: 32px 24px; background: #fff; border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 1px 3px rgba(12,24,41,0.04), 0 4px 16px rgba(12,24,41,0.06);">
+        <div style="width: 52px; height: 52px; background: #e8f3fb; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2270aa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div>
+          <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px;" data-en="Report Turnaround" data-es="Entrega de Informes">Report Turnaround</div>
+          <div style="font-size: 22px; font-weight: 700; color: var(--navy-900); letter-spacing: -0.02em; line-height: 1.1;" data-en="24-Hour" data-es="24 Horas">24-Hour</div>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 4px;" data-en="Same-Day Available" data-es="Mismo Día Disponible">Same-Day Available</div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
 
 <!-- SERVICES -->
-<section id="services" style="background: linear-gradient(180deg, #0d0d30 0%, #111135 100%); padding: 90px 0; position: relative; overflow: hidden;">
-  <div style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 600px; height: 300px; background: radial-gradient(ellipse, rgba(232,168,0,0.06) 0%, transparent 70%); pointer-events: none;"></div>
-
-  <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
-    <div style="text-align: center; margin-bottom: 56px;">
-      <div class="section-divider"></div>
-      <h2 style="font-size: clamp(22px, 3vw, 36px); font-weight: 900; letter-spacing: -0.02em; color: #fff; margin-bottom: 12px; text-transform: uppercase;">
-        <span data-en="Comprehensive Home &amp; Building" data-es="Servicios Completos de Inspecci&#243;n">Comprehensive Home &amp; Building</span><br><span style="color: #f5c842;" data-en="Inspection Services" data-es="de Viviendas y Edificios">Inspection Services</span>
+<section id="services" style="background: #ffffff; padding: 112px 0; position: relative;">
+  <div style="max-width: 1140px; margin: 0 auto; padding: 0 32px;">
+    <div style="text-align: center; margin-bottom: 60px;">
+      <div class="section-tag reveal" style="justify-content: center;" data-en="Our Services" data-es="Nuestros Servicios">Our Services</div>
+      <h2 class="reveal reveal-delay-1" style="font-family: 'Libre Baskerville', serif; font-size: clamp(28px, 3.4vw, 40px); color: var(--navy-900); margin-bottom: 16px; line-height: 1.2; letter-spacing: -0.018em;">
+        <span data-en="Comprehensive Home &amp; Building" data-es="Servicios Completos de Inspecci&#243;n">Comprehensive Home &amp; Building</span><br><span style="color: var(--navy-600);" data-en="Inspection Services" data-es="de Viviendas y Edificios">Inspection Services</span>
       </h2>
-      <p style="color: rgba(255,255,255,0.6); font-size: 16px; max-width: 560px; margin: 0 auto; line-height: 1.7;" data-en="Professional, thorough inspections protecting your investment. Certified and licensed in the State of Florida." data-es="Inspecciones profesionales y exhaustivas que protegen su inversi&#243;n. Certificados y licenciados en el Estado de Florida.">
+      <p class="reveal reveal-delay-2" style="color: var(--body); font-size: 17px; max-width: 560px; margin: 0 auto; line-height: 1.7;" data-en="Professional, thorough inspections protecting your investment. Certified and licensed in the State of Florida." data-es="Inspecciones profesionales y exhaustivas que protegen su inversi&#243;n. Certificados y licenciados en el Estado de Florida.">
         Professional, thorough inspections protecting your investment. Certified and licensed in the State of Florida.
       </p>
     </div>
 
     <div class="services-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
-      <a href="4-point-inspections.html" class="service-card" style="border-radius: 14px; padding: 32px 26px; cursor: pointer; text-decoration: none; display: block;">
-        <div style="width: 64px; height: 64px; background: linear-gradient(135deg, rgba(232,168,0,0.15), rgba(232,168,0,0.08)); border: 1px solid rgba(232,168,0,0.3); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; font-size: 28px;">&#127968;</div>
-        <h3 style="font-size: 16px; font-weight: 800; color: #fff; margin-bottom: 10px; letter-spacing: -0.01em;" data-en="4-Point Inspections" data-es="Inspecciones de 4 Puntos">4-Point Inspections</h3>
-        <p style="font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.7;" data-en="Insurance-required inspections covering roof, electrical, plumbing, and HVAC systems. Essential for Florida home insurance." data-es="Inspecciones requeridas por seguros que cubren techo, sistema el&#233;ctrico, plomer&#237;a y HVAC. Esencial para el seguro de hogar en Florida.">Insurance-required inspections covering roof, electrical, plumbing, and HVAC systems. Essential for Florida home insurance.</p>
-        <div style="margin-top: 20px; color: #f5c842; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 6px;" data-en="Learn More &#8594;" data-es="M&#225;s Informaci&#243;n &#8594;">Learn More &#8594;</div>
+      <a href="4-point-inspections.html" class="service-card reveal" style="padding: 36px 28px; cursor: pointer; text-decoration: none; display: block;">
+        <div style="width: 52px; height: 52px; background: #eef2f8; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1c3a5e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <h3 style="font-size: 17px; font-weight: 700; color: var(--navy-900); margin-bottom: 10px;" data-en="4-Point Inspections" data-es="Inspecciones de 4 Puntos">4-Point Inspections</h3>
+        <p style="font-size: 14px; color: var(--body); line-height: 1.7;" data-en="Insurance-required inspections covering roof, electrical, plumbing, and HVAC systems. Essential for Florida home insurance." data-es="Inspecciones requeridas por seguros que cubren techo, sistema el&#233;ctrico, plomer&#237;a y HVAC. Esencial para el seguro de hogar en Florida.">Insurance-required inspections covering roof, electrical, plumbing, and HVAC systems. Essential for Florida home insurance.</p>
+        <div style="margin-top: 20px; color: var(--navy-600); font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;" data-en="Learn More &rarr;" data-es="M&#225;s Informaci&#243;n &rarr;">Learn More &rarr;</div>
       </a>
 
-      <a href="wind-mitigation.html" class="service-card" style="border-radius: 14px; padding: 32px 26px; cursor: pointer; text-decoration: none; display: block;">
-        <div style="width: 64px; height: 64px; background: linear-gradient(135deg, rgba(74,157,212,0.15), rgba(74,157,212,0.08)); border: 1px solid rgba(74,157,212,0.3); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; font-size: 28px;">&#128168;</div>
-        <h3 style="font-size: 16px; font-weight: 800; color: #fff; margin-bottom: 10px; letter-spacing: -0.01em;" data-en="Wind Mitigation" data-es="Mitigaci&#243;n de Viento">Wind Mitigation</h3>
-        <p style="font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.7;" data-en="Potentially save hundreds on homeowners insurance. Our reports document wind-resistant features and construction methods." data-es="Ahorre potencialmente cientos en su seguro de hogar. Nuestros informes documentan las caracter&#237;sticas resistentes al viento.">Potentially save hundreds on homeowners insurance. Our reports document wind-resistant features and construction methods.</p>
-        <div style="margin-top: 20px; color: #f5c842; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 6px;" data-en="Learn More &#8594;" data-es="M&#225;s Informaci&#243;n &#8594;">Learn More &#8594;</div>
+      <a href="wind-mitigation.html" class="service-card reveal reveal-delay-1" style="padding: 36px 28px; cursor: pointer; text-decoration: none; display: block;">
+        <div style="width: 52px; height: 52px; background: #e8f3fb; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2270aa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>
+        </div>
+        <h3 style="font-size: 17px; font-weight: 700; color: var(--navy-900); margin-bottom: 10px;" data-en="Wind Mitigation" data-es="Mitigaci&#243;n de Viento">Wind Mitigation</h3>
+        <p style="font-size: 14px; color: var(--body); line-height: 1.7;" data-en="Potentially save hundreds on homeowners insurance. Our reports document wind-resistant features and construction methods." data-es="Ahorre potencialmente cientos en su seguro de hogar. Nuestros informes documentan las caracter&#237;sticas resistentes al viento.">Potentially save hundreds on homeowners insurance. Our reports document wind-resistant features and construction methods.</p>
+        <div style="margin-top: 20px; color: var(--navy-600); font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;" data-en="Learn More &rarr;" data-es="M&#225;s Informaci&#243;n &rarr;">Learn More &rarr;</div>
       </a>
 
-      <a href="pre-purchase-inspections.html" class="service-card" style="border-radius: 14px; padding: 32px 26px; cursor: pointer; text-decoration: none; display: block;">
-        <div style="width: 64px; height: 64px; background: linear-gradient(135deg, rgba(232,168,0,0.15), rgba(232,168,0,0.08)); border: 1px solid rgba(232,168,0,0.3); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; font-size: 28px;">&#128269;</div>
-        <h3 style="font-size: 16px; font-weight: 800; color: #fff; margin-bottom: 10px; letter-spacing: -0.01em;" data-en="Pre-Purchase Inspections" data-es="Inspecciones Pre-Compra">Pre-Purchase Inspections</h3>
-        <p style="font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.7;" data-en="Know exactly what you're buying. Comprehensive evaluation of all visible and accessible components before closing." data-es="Sepa exactamente lo que est&#225; comprando. Evaluaci&#243;n completa de todos los componentes visibles y accesibles antes del cierre.">Know exactly what you're buying. Comprehensive evaluation of all visible and accessible components before closing.</p>
-        <div style="margin-top: 20px; color: #f5c842; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 6px;" data-en="Learn More &#8594;" data-es="M&#225;s Informaci&#243;n &#8594;">Learn More &#8594;</div>
+      <a href="pre-purchase-inspections.html" class="service-card reveal reveal-delay-2" style="padding: 36px 28px; cursor: pointer; text-decoration: none; display: block;">
+        <div style="width: 52px; height: 52px; background: #eef2f8; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1c3a5e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <h3 style="font-size: 17px; font-weight: 700; color: var(--navy-900); margin-bottom: 10px;" data-en="Pre-Purchase Inspections" data-es="Inspecciones Pre-Compra">Pre-Purchase Inspections</h3>
+        <p style="font-size: 14px; color: var(--body); line-height: 1.7;" data-en="Know exactly what you're buying. Comprehensive evaluation of all visible and accessible components before closing." data-es="Sepa exactamente lo que est&#225; comprando. Evaluaci&#243;n completa de todos los componentes visibles y accesibles antes del cierre.">Know exactly what you're buying. Comprehensive evaluation of all visible and accessible components before closing.</p>
+        <div style="margin-top: 20px; color: var(--navy-600); font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;" data-en="Learn More &rarr;" data-es="M&#225;s Informaci&#243;n &rarr;">Learn More &rarr;</div>
       </a>
 
-      <a href="new-construction-inspections.html" class="service-card" style="border-radius: 14px; padding: 32px 26px; cursor: pointer; text-decoration: none; display: block;">
-        <div style="width: 64px; height: 64px; background: linear-gradient(135deg, rgba(74,157,212,0.15), rgba(74,157,212,0.08)); border: 1px solid rgba(74,157,212,0.3); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; font-size: 28px;">&#127959;</div>
-        <h3 style="font-size: 16px; font-weight: 800; color: #fff; margin-bottom: 10px; letter-spacing: -0.01em;" data-en="New Construction Inspections" data-es="Inspecciones de Construcci&#243;n Nueva">New Construction Inspections</h3>
-        <p style="font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.7;" data-en="Catch defects before the builder closes out. We inspect at key phases to ensure your new home meets all standards." data-es="Detecte defectos antes de que el constructor finalice. Inspeccionamos en fases clave para asegurar que su nuevo hogar cumpla con todos los est&#225;ndares.">Catch defects before the builder closes out. We inspect at key phases to ensure your new home meets all standards.</p>
-        <div style="margin-top: 20px; color: #f5c842; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 6px;" data-en="Learn More &#8594;" data-es="M&#225;s Informaci&#243;n &#8594;">Learn More &#8594;</div>
+      <a href="new-construction-inspections.html" class="service-card reveal" style="padding: 36px 28px; cursor: pointer; text-decoration: none; display: block;">
+        <div style="width: 52px; height: 52px; background: #e8f3fb; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2270aa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="6" width="22" height="16" rx="2"/><path d="M1 10h22"/><path d="M7 6V2"/><path d="M17 6V2"/></svg>
+        </div>
+        <h3 style="font-size: 17px; font-weight: 700; color: var(--navy-900); margin-bottom: 10px;" data-en="New Construction Inspections" data-es="Inspecciones de Construcci&#243;n Nueva">New Construction Inspections</h3>
+        <p style="font-size: 14px; color: var(--body); line-height: 1.7;" data-en="Catch defects before the builder closes out. We inspect at key phases to ensure your new home meets all standards." data-es="Detecte defectos antes de que el constructor finalice. Inspeccionamos en fases clave para asegurar que su nuevo hogar cumpla con todos los est&#225;ndares.">Catch defects before the builder closes out. We inspect at key phases to ensure your new home meets all standards.</p>
+        <div style="margin-top: 20px; color: var(--navy-600); font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;" data-en="Learn More &rarr;" data-es="M&#225;s Informaci&#243;n &rarr;">Learn More &rarr;</div>
       </a>
 
-      <a href="11-month-warranty-inspections.html" class="service-card" style="border-radius: 14px; padding: 32px 26px; cursor: pointer; text-decoration: none; display: block;">
-        <div style="width: 64px; height: 64px; background: linear-gradient(135deg, rgba(232,168,0,0.15), rgba(232,168,0,0.08)); border: 1px solid rgba(232,168,0,0.3); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; font-size: 28px;">&#128203;</div>
-        <h3 style="font-size: 16px; font-weight: 800; color: #fff; margin-bottom: 10px; letter-spacing: -0.01em;" data-en="11-Month Warranty Inspections" data-es="Inspecciones de Garant&#237;a de 11 Meses">11-Month Warranty Inspections</h3>
-        <p style="font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.7;" data-en="Before your builder's warranty expires, let us identify issues. Protect your rights before the one-year mark." data-es="Antes de que expire la garant&#237;a del constructor, permítanos identificar problemas. Proteja sus derechos antes de que se cumpla el a&#241;o.">Before your builder's warranty expires, let us identify issues. Protect your rights before the one-year mark.</p>
-        <div style="margin-top: 20px; color: #f5c842; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 6px;" data-en="Learn More &#8594;" data-es="M&#225;s Informaci&#243;n &#8594;">Learn More &#8594;</div>
+      <a href="11-month-warranty-inspections.html" class="service-card reveal reveal-delay-1" style="padding: 36px 28px; cursor: pointer; text-decoration: none; display: block;">
+        <div style="width: 52px; height: 52px; background: #eef2f8; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1c3a5e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <h3 style="font-size: 17px; font-weight: 700; color: var(--navy-900); margin-bottom: 10px;" data-en="11-Month Warranty Inspections" data-es="Inspecciones de Garant&#237;a de 11 Meses">11-Month Warranty Inspections</h3>
+        <p style="font-size: 14px; color: var(--body); line-height: 1.7;" data-en="Before your builder's warranty expires, let us identify issues. Protect your rights before the one-year mark." data-es="Antes de que expire la garant&#237;a del constructor, perm&iacute;tanos identificar problemas. Proteja sus derechos antes de que se cumpla el a&#241;o.">Before your builder's warranty expires, let us identify issues. Protect your rights before the one-year mark.</p>
+        <div style="margin-top: 20px; color: var(--navy-600); font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;" data-en="Learn More &rarr;" data-es="M&#225;s Informaci&#243;n &rarr;">Learn More &rarr;</div>
       </a>
 
       <!-- CTA card -->
-      <div style="border-radius: 14px; padding: 32px 26px; background: linear-gradient(135deg, #e8a800 0%, #f5c842 100%); cursor: pointer; position: relative; overflow: hidden;">
-        <div style="position: absolute; top: -20px; right: -20px; width: 120px; height: 120px; background: rgba(255,255,255,0.15); border-radius: 50%;"></div>
-        <div style="position: absolute; bottom: -30px; left: -10px; width: 90px; height: 90px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+      <div class="reveal reveal-delay-2" style="border-radius: 12px; padding: 36px 28px; background: linear-gradient(150deg, #0c1829 0%, #162b47 60%, #1c3a5e 100%); cursor: pointer; position: relative; overflow: hidden; box-shadow: 0 4px 16px rgba(12,24,41,0.12), 0 16px 40px rgba(12,24,41,0.1);">
+        <div style="position: absolute; top: -30px; right: -30px; width: 140px; height: 140px; background: radial-gradient(circle, rgba(240,180,41,0.1) 0%, transparent 70%); border-radius: 50%;"></div>
+        <div style="position: absolute; bottom: -20px; left: -20px; width: 100px; height: 100px; background: radial-gradient(circle, rgba(59,145,204,0.08) 0%, transparent 70%); border-radius: 50%;"></div>
         <div style="position: relative; z-index: 1;">
-          <div style="font-size: 36px; margin-bottom: 16px;">&#128222;</div>
-          <h3 style="font-size: 18px; font-weight: 900; color: #080820; margin-bottom: 10px; letter-spacing: -0.01em;" data-en="Ready to Schedule?" data-es="&#191;Listo para Programar?">Ready to Schedule?</h3>
-          <p style="font-size: 14px; color: rgba(8,8,32,0.75); line-height: 1.6; margin-bottom: 20px;" data-en="Call or text us today. Fast turnaround &mdash; reports delivered same day." data-es="Ll&#225;menos o env&#237;e un mensaje hoy. Respuesta r&#225;pida &mdash; informes entregados el mismo d&#237;a.">Call or text us today. Fast turnaround &mdash; reports delivered same day.</p>
-          <a href="tel:8134063903" style="display: inline-block; background: #080820; color: #fff; padding: 12px 24px; border-radius: 8px; font-weight: 700; font-size: 14px; text-decoration: none; letter-spacing: 0.02em;">813-406-3903</a>
+          <div style="width: 52px; height: 52px; background: var(--gold-light); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0a1628" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <h3 style="font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 10px;" data-en="Ready to Schedule?" data-es="&#191;Listo para Programar?">Ready to Schedule?</h3>
+          <p style="font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.7; margin-bottom: 20px;" data-en="Call or text us today. Fast turnaround &mdash; reports delivered same day." data-es="Ll&#225;menos o env&#237;e un mensaje hoy. Respuesta r&#225;pida &mdash; informes entregados el mismo d&#237;a.">Call or text us today. Fast turnaround &mdash; reports delivered same day.</p>
+          <a href="tel:8134063903" class="btn-gold" style="display: inline-block; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-size: 14px;">813-406-3903</a>
         </div>
       </div>
     </div>
@@ -399,232 +720,619 @@ tailwind.config = {
 </section>
 
 <!-- ABOUT -->
-<section id="about" style="background: linear-gradient(135deg, #0a0a28 0%, #0f0f2e 100%); padding: 90px 0; position: relative; overflow: hidden;">
-  <div style="position: absolute; bottom: 0; right: 0; width: 500px; height: 400px; background: radial-gradient(ellipse at bottom right, rgba(74,157,212,0.08) 0%, transparent 70%); pointer-events: none;"></div>
-
-  <div class="about-grid" style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;">
+<section id="about" style="background: #f7f9fc; padding: 112px 0; position: relative; overflow: hidden;">
+  <div class="about-grid" style="max-width: 1140px; margin: 0 auto; padding: 0 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center;">
     <div>
-      <div class="section-divider" style="margin: 0 0 20px;"></div>
-      <h2 style="font-size: clamp(22px, 3vw, 36px); font-weight: 900; letter-spacing: -0.02em; color: #fff; margin-bottom: 20px; text-transform: uppercase;">
-        <span data-en="About" data-es="Acerca de">About</span> <span style="color: #f5c842;">Sunstate</span><br><span data-en="Home Inspectors" data-es="Inspectores de Viviendas">Home Inspectors</span>
+      <div class="section-tag reveal" data-en="Why Choose Us" data-es="Por Qué Elegirnos">Why Choose Us</div>
+      <h2 class="reveal reveal-delay-1" style="font-family: 'Libre Baskerville', serif; font-size: clamp(30px, 3.8vw, 44px); color: var(--navy-900); margin-bottom: 24px; line-height: 1.15; letter-spacing: -0.02em;">
+        <span data-en="Why Choose" data-es="Por Qué Elegir">Why Choose</span> <span style="color: var(--navy-600);" data-en="Sunstate?" data-es="¿Sunstate?">Sunstate?</span>
       </h2>
-      <p style="color: rgba(255,255,255,0.7); font-size: 16px; line-height: 1.8; margin-bottom: 20px;" data-en="At Sunstate Service Group LLC, we believe that the people who help understand what matters most. Led by Yamir Diaz, a certified and licensed Florida home inspector, we bring professionalism, precision, and care to every inspection." data-es="En Sunstate Service Group LLC, creemos que las personas que ayudan entienden lo que m&#225;s importa. Dirigido por Yamir Diaz, un inspector de viviendas certificado y licenciado en Florida, aportamos profesionalismo, precisi&#243;n y cuidado a cada inspecci&#243;n.">
+      <p class="reveal reveal-delay-2" style="color: var(--body); font-size: 16px; line-height: 1.8; margin-bottom: 20px;" data-en="At Sunstate Service Group LLC, we believe that the people who help understand what matters most. Led by Yamir Diaz, a certified and licensed Florida home inspector, we bring professionalism, precision, and care to every inspection." data-es="En Sunstate Service Group LLC, creemos que las personas que ayudan entienden lo que m&#225;s importa. Dirigido por Yamir Diaz, un inspector de viviendas certificado y licenciado en Florida, aportamos profesionalismo, precisi&#243;n y cuidado a cada inspecci&#243;n.">
         At Sunstate Service Group LLC, we believe that the people who help understand what matters most. Led by Yamir Diaz, a certified and licensed Florida home inspector, we bring professionalism, precision, and care to every inspection.
       </p>
-      <p style="color: rgba(255,255,255,0.7); font-size: 16px; line-height: 1.8; margin-bottom: 32px;" data-en="&quot;Your Home, Our Priority&quot; is not just a tagline &mdash; it's our commitment. Whether you're buying your first home or protecting your investment, our detailed reports give you the knowledge and confidence to make informed decisions." data-es="&quot;Su Hogar, Nuestra Prioridad&quot; no es solo un lema &mdash; es nuestro compromiso. Ya sea que est&#233; comprando su primera casa o protegiendo su inversi&#243;n, nuestros informes detallados le brindan el conocimiento y la confianza para tomar decisiones informadas.">
+      <p class="reveal reveal-delay-2" style="color: var(--body); font-size: 16px; line-height: 1.8; margin-bottom: 32px;" data-en="&quot;Your Home, Our Priority&quot; is not just a tagline &mdash; it's our commitment. Whether you're buying your first home or protecting your investment, our detailed reports give you the knowledge and confidence to make informed decisions." data-es="&quot;Su Hogar, Nuestra Prioridad&quot; no es solo un lema &mdash; es nuestro compromiso. Ya sea que est&#233; comprando su primera casa o protegiendo su inversi&#243;n, nuestros informes detallados le brindan el conocimiento y la confianza para tomar decisiones informadas.">
         "Your Home, Our Priority" is not just a tagline &mdash; it's our commitment. Whether you're buying your first home or protecting your investment, our detailed reports give you the knowledge and confidence to make informed decisions.
       </p>
-      <div style="display: inline-flex; align-items: center; gap: 14px; background: rgba(245,200,66,0.08); border: 1px solid rgba(245,200,66,0.2); border-radius: 12px; padding: 14px 24px; margin-bottom: 36px;">
-        <div style="width: 44px; height: 44px; background: linear-gradient(145deg, #f5c842, #e8a800); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#080820" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <div class="reveal reveal-delay-3" style="display: inline-flex; align-items: center; gap: 16px; background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 18px 28px; margin-bottom: 32px; box-shadow: 0 1px 3px rgba(12,24,41,0.04), 0 4px 16px rgba(12,24,41,0.06);">
+        <div style="width: 44px; height: 44px; background: #fdf6e3; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c98f00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         </div>
         <div>
-          <div style="font-size: 22px; font-weight: 900; color: #f5c842; line-height: 1; letter-spacing: -0.02em;" data-en="24-Hour" data-es="24 Horas">24-Hour</div>
-          <div style="font-size: 13px; color: rgba(255,255,255,0.6); font-weight: 600; margin-top: 2px;" data-en="Report Turnaround" data-es="Entrega de Informes">Report Turnaround</div>
+          <div style="font-size: 22px; font-weight: 700; color: var(--navy-900); line-height: 1; letter-spacing: -0.02em;" data-en="24-Hour" data-es="24 Horas">24-Hour</div>
+          <div style="font-size: 13px; color: var(--body); font-weight: 500; margin-top: 2px;" data-en="Report Turnaround" data-es="Entrega de Informes">Report Turnaround</div>
         </div>
       </div>
-      <a href="#contact" class="btn-gold" style="padding: 14px 36px; border-radius: 8px; text-decoration: none; font-size: 15px; display: inline-block;" data-en="Book an Inspection" data-es="Reserve una Inspecci&#243;n">Book an Inspection</a>
+      <br>
+      <a href="#contact" class="btn-primary reveal reveal-delay-3" style="padding: 14px 36px; border-radius: 10px; text-decoration: none; font-size: 15px; display: inline-block;" data-en="Book an Inspection" data-es="Reserve una Inspecci&#243;n">Book an Inspection</a>
     </div>
 
-    <div class="about-image-wrap" style="position: relative;">
-      <div style="border-radius: 20px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.5); position: relative;">
-        <img src="https://placehold.co/540x460/161641/4a9dd4?text=Yamir+Diaz" alt="Yamir Diaz - Certified Florida Home Inspector" style="width: 100%; height: 460px; object-fit: cover; display: block;">
-        <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(8,8,32,0.85) 0%, transparent 50%);"></div>
+    <div class="about-image-wrap reveal reveal-delay-2" style="position: relative;">
+      <div style="border-radius: 20px; overflow: hidden; box-shadow: 0 8px 24px rgba(10,22,40,0.08), 0 24px 64px rgba(10,22,40,0.14); position: relative;">
+        <img src="https://placehold.co/540x460/0c1829/3b91cc?text=Yamir+Diaz" alt="Yamir Diaz - Certified Florida Home Inspector" style="width: 100%; height: 460px; object-fit: cover; display: block;">
+        <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,22,40,0.9) 0%, transparent 50%);"></div>
         <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 28px;">
-          <div style="font-size: 22px; font-weight: 900; color: #fff; letter-spacing: -0.02em;">Yamir Diaz</div>
+          <div style="font-family: 'Libre Baskerville', serif; font-size: 22px; color: #fff;">Yamir Diaz</div>
           <div style="font-size: 14px; color: #f5c842; font-weight: 600; margin-top: 4px;" data-en="Certified Florida Home Inspector" data-es="Inspector de Viviendas Certificado en Florida">Certified Florida Home Inspector</div>
           <div style="font-size: 13px; color: rgba(255,255,255,0.6); margin-top: 4px;" data-en="License # HI18594 &bull; Licensed &amp; Insured" data-es="Licencia # HI18594 &bull; Licenciado y Asegurado">License # HI18594 &bull; Licensed &amp; Insured</div>
         </div>
       </div>
-      <div style="position: absolute; top: -20px; right: -20px; background: linear-gradient(145deg, #161641, #1e1e52); border: 1px solid rgba(232,168,0,0.3); border-radius: 14px; padding: 16px 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.5); text-align: center;">
-        <div style="font-size: 24px; margin-bottom: 4px;">&#127942;</div>
-        <div style="font-size: 11px; font-weight: 800; color: #f5c842; text-transform: uppercase; letter-spacing: 0.06em;">Certified</div>
-        <div style="font-size: 10px; color: rgba(255,255,255,0.6); font-weight: 600;">State of Florida</div>
+      <div style="position: absolute; top: -16px; right: -16px; background: #fff; border: 1px solid rgba(223,230,238,0.7); border-radius: 14px; padding: 16px 20px; box-shadow: 0 4px 12px rgba(10,22,40,0.06), 0 12px 32px rgba(10,22,40,0.1); text-align: center;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e8a800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+        <div style="font-size: 11px; font-weight: 700; color: #1a3a5c; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 6px;">Certified</div>
+        <div style="font-size: 10px; color: var(--body); font-weight: 500;">State of Florida</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FEATURED: WIND MITIGATION -->
-<section id="featured" style="background: linear-gradient(180deg, #111135 0%, #0d0d30 100%); padding: 90px 0; position: relative; overflow: hidden;">
-  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 700px; height: 400px; background: radial-gradient(ellipse, rgba(74,157,212,0.07) 0%, transparent 70%); pointer-events: none;"></div>
+<!-- WHY CHOOSE US -->
+<section id="why-us" style="background: #ffffff; padding: 112px 0; position: relative; overflow: hidden;">
+  <!-- Subtle background accent -->
+  <div style="position: absolute; top: -120px; right: -120px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(28,58,94,0.04) 0%, transparent 70%); pointer-events: none;"></div>
+  <div style="position: absolute; bottom: -80px; left: -80px; width: 380px; height: 380px; background: radial-gradient(circle, rgba(212,146,10,0.05) 0%, transparent 70%); pointer-events: none;"></div>
 
-  <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
-    <div style="text-align: center; margin-bottom: 56px;">
-      <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(74,157,212,0.12); border: 1px solid rgba(74,157,212,0.3); border-radius: 100px; padding: 6px 16px; margin-bottom: 16px;">
-        <span style="width: 8px; height: 8px; background: #4a9dd4; border-radius: 50%;"></span>
-        <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; color: #4a9dd4; text-transform: uppercase;" data-en="Featured Service" data-es="Servicio Destacado">Featured Service</span>
+  <div style="max-width: 1140px; margin: 0 auto; padding: 0 32px;">
+
+    <!-- Header -->
+    <div style="text-align: center; margin-bottom: 72px;">
+      <div class="section-tag reveal" style="justify-content: center;" data-en="Why Choose Us" data-es="Por Qué Elegirnos">Why Choose Us</div>
+      <h2 class="reveal reveal-delay-1" style="font-family: 'Libre Baskerville', serif; font-size: clamp(28px, 3.4vw, 42px); color: var(--navy-900); margin-bottom: 18px; line-height: 1.18; letter-spacing: -0.02em;">
+        <span data-en="The Sunstate Difference" data-es="La Diferencia Sunstate">The Sunstate Difference</span>
+      </h2>
+      <p class="reveal reveal-delay-2" style="color: var(--body); font-size: 17px; max-width: 520px; margin: 0 auto; line-height: 1.72;" data-en="Every detail matters when it comes to your home. Here's what sets us apart from the rest." data-es="Cada detalle importa cuando se trata de su hogar. Esto es lo que nos diferencia del resto.">
+        Every detail matters when it comes to your home. Here's what sets us apart from the rest.
+      </p>
+    </div>
+
+    <!-- Two-column layout: Trust Points + Certifications -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;" class="why-us-grid">
+
+      <!-- Left: Bullet points -->
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+
+        <div class="why-item reveal" style="display: flex; gap: 20px; align-items: flex-start; padding: 28px; background: #f7f9fc; border: 1px solid var(--border); border-radius: 14px; transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out), border-color 0.3s ease; position: relative; overflow: hidden;">
+          <div style="width: 52px; height: 52px; background: #eef2f8; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1c3a5e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          </div>
+          <div>
+            <div style="font-size: 16px; font-weight: 700; color: var(--navy-900); margin-bottom: 6px; letter-spacing: -0.01em;" data-en="State-Licensed &amp; Insured" data-es="Licenciado y Asegurado en el Estado">State-Licensed &amp; Insured</div>
+            <div style="font-size: 14px; color: var(--body); line-height: 1.72;" data-en="Fully licensed by the State of Florida (HI18594) and fully insured, giving you complete peace of mind with every inspection." data-es="Completamente licenciado por el Estado de Florida (HI18594) y completamente asegurado, brindándole tranquilidad total en cada inspección.">Fully licensed by the State of Florida (HI18594) and fully insured, giving you complete peace of mind with every inspection.</div>
+          </div>
+        </div>
+
+        <div class="why-item reveal reveal-delay-1" style="display: flex; gap: 20px; align-items: flex-start; padding: 28px; background: #f7f9fc; border: 1px solid var(--border); border-radius: 14px; transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out), border-color 0.3s ease; position: relative; overflow: hidden;">
+          <div style="width: 52px; height: 52px; background: #fdf6e3; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c98f00" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div>
+            <div style="font-size: 16px; font-weight: 700; color: var(--navy-900); margin-bottom: 6px; letter-spacing: -0.01em;" data-en="Precise, Detailed Reports" data-es="Informes Precisos y Detallados">Precise, Detailed Reports</div>
+            <div style="font-size: 14px; color: var(--body); line-height: 1.72;" data-en="Thorough, easy-to-read reports with photos, clear findings, and actionable guidance — delivered within 24 hours of your inspection." data-es="Informes detallados y fáciles de leer con fotos, hallazgos claros y orientación práctica, entregados dentro de las 24 horas de su inspección.">Thorough, easy-to-read reports with photos, clear findings, and actionable guidance — delivered within 24 hours of your inspection.</div>
+          </div>
+        </div>
+
+        <div class="why-item reveal reveal-delay-2" style="display: flex; gap: 20px; align-items: flex-start; padding: 28px; background: #f7f9fc; border: 1px solid var(--border); border-radius: 14px; transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out), border-color 0.3s ease; position: relative; overflow: hidden;">
+          <div style="width: 52px; height: 52px; background: #e8f3fb; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2270aa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div>
+            <div style="font-size: 16px; font-weight: 700; color: var(--navy-900); margin-bottom: 6px; letter-spacing: -0.01em;" data-en="Responsive &amp; Professional Service" data-es="Servicio Profesional y Ágil">Responsive &amp; Professional Service</div>
+            <div style="font-size: 14px; color: var(--body); line-height: 1.72;" data-en="We treat every client like family. Prompt communication, honest answers, and a professional attitude from first call to final report." data-es="Tratamos a cada cliente como familia. Comunicación rápida, respuestas honestas y una actitud profesional desde la primera llamada hasta el informe final.">We treat every client like family. Prompt communication, honest answers, and a professional attitude from first call to final report.</div>
+          </div>
+        </div>
+
+        <div class="why-item reveal reveal-delay-3" style="display: flex; gap: 20px; align-items: flex-start; padding: 28px; background: #f7f9fc; border: 1px solid var(--border); border-radius: 14px; transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out), border-color 0.3s ease; position: relative; overflow: hidden;">
+          <div style="width: 52px; height: 52px; background: #eef2f8; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1c3a5e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <div>
+            <div style="font-size: 16px; font-weight: 700; color: var(--navy-900); margin-bottom: 6px; letter-spacing: -0.01em;" data-en="Bilingual Service (EN / ES)" data-es="Servicio Bilingüe (EN / ES)">Bilingual Service (EN / ES)</div>
+            <div style="font-size: 14px; color: var(--body); line-height: 1.72;" data-en="We serve all Tampa Bay homeowners in both English and Spanish, ensuring clear communication no matter your preferred language." data-es="Servimos a todos los propietarios de Tampa Bay en inglés y español, garantizando una comunicación clara sin importar su idioma de preferencia.">We serve all Tampa Bay homeowners in both English and Spanish, ensuring clear communication no matter your preferred language.</div>
+          </div>
+        </div>
+
       </div>
-      <h2 style="font-size: clamp(22px, 3vw, 36px); font-weight: 900; letter-spacing: -0.02em; color: #fff; text-transform: uppercase;">
-        <span data-en="Wind Mitigation" data-es="Mitigaci&#243;n de Viento">Wind Mitigation</span> <span style="color: #f5c842;" data-en="Inspections" data-es="Inspecciones">Inspections</span>
+
+      <!-- Right: Certifications & credentials -->
+      <div class="reveal reveal-delay-2" style="display: flex; flex-direction: column; gap: 24px;">
+
+        <!-- Credentials header -->
+        <div style="background: var(--navy-900); border-radius: 16px; padding: 36px 32px; position: relative; overflow: hidden;">
+          <div style="position: absolute; top: -40px; right: -40px; width: 180px; height: 180px; background: radial-gradient(circle, rgba(59,145,204,0.18) 0%, transparent 70%); pointer-events: none;"></div>
+          <div style="position: absolute; bottom: -30px; left: -30px; width: 140px; height: 140px; background: radial-gradient(circle, rgba(212,146,10,0.12) 0%, transparent 70%); pointer-events: none;"></div>
+          <div style="font-size: 10.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 12px;" data-en="Credentials &amp; Certifications" data-es="Credenciales y Certificaciones">Credentials &amp; Certifications</div>
+          <div style="font-family: 'Libre Baskerville', serif; font-size: 22px; color: #fff; line-height: 1.3; margin-bottom: 6px;" data-en="Qualified &amp; Verified" data-es="Calificado y Verificado">Qualified &amp; Verified</div>
+          <div style="font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.6;" data-en="All credentials current, active, and verifiable through the State of Florida." data-es="Todas las credenciales son actuales, activas y verificables a través del Estado de Florida.">All credentials current, active, and verifiable through the State of Florida.</div>
+        </div>
+
+        <!-- Cert badge: Licensed -->
+        <div style="display: flex; align-items: center; gap: 18px; padding: 22px 24px; background: #f7f9fc; border: 1px solid var(--border); border-radius: 14px; box-shadow: 0 1px 3px rgba(12,24,41,0.04), 0 4px 12px rgba(12,24,41,0.05);">
+          <div style="width: 56px; height: 56px; background: #eef2f8; border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(28,58,94,0.1);">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1c3a5e" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+          </div>
+          <div style="flex: 1;">
+            <div style="font-size: 15px; font-weight: 700; color: var(--navy-900); letter-spacing: -0.01em;" data-en="Florida Licensed Inspector" data-es="Inspector Licenciado en Florida">Florida Licensed Inspector</div>
+            <div style="font-size: 13px; color: var(--muted); margin-top: 3px;" data-en="License #HI18594 — State of Florida DBPR" data-es="Licencia #HI18594 — DBPR del Estado de Florida">License #HI18594 — State of Florida DBPR</div>
+          </div>
+          <div style="background: #e6f4ee; color: #1a6b3a; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; white-space: nowrap; border: 1px solid rgba(26,107,58,0.15);" data-en="Active" data-es="Activo">Active</div>
+        </div>
+
+        <!-- Cert badge: Insured -->
+        <div style="display: flex; align-items: center; gap: 18px; padding: 22px 24px; background: #f7f9fc; border: 1px solid var(--border); border-radius: 14px; box-shadow: 0 1px 3px rgba(12,24,41,0.04), 0 4px 12px rgba(12,24,41,0.05);">
+          <div style="width: 56px; height: 56px; background: #fdf6e3; border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(200,143,0,0.12);">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c98f00" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div style="flex: 1;">
+            <div style="font-size: 15px; font-weight: 700; color: var(--navy-900); letter-spacing: -0.01em;" data-en="Fully Insured" data-es="Completamente Asegurado">Fully Insured</div>
+            <div style="font-size: 13px; color: var(--muted); margin-top: 3px;" data-en="General Liability &amp; E&amp;O Insurance" data-es="Responsabilidad General y Seguro E&amp;O">General Liability &amp; E&amp;O Insurance</div>
+          </div>
+          <div style="background: #e6f4ee; color: #1a6b3a; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; white-space: nowrap; border: 1px solid rgba(26,107,58,0.15);" data-en="Verified" data-es="Verificado">Verified</div>
+        </div>
+
+        <!-- Cert badge: InterNACHI -->
+        <div style="display: flex; align-items: center; gap: 18px; padding: 22px 24px; background: #f7f9fc; border: 1px solid var(--border); border-radius: 14px; box-shadow: 0 1px 3px rgba(12,24,41,0.04), 0 4px 12px rgba(12,24,41,0.05);">
+          <div style="width: 56px; height: 56px; background: #e8f3fb; border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(34,112,170,0.12);">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2270aa" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <div style="flex: 1;">
+            <div style="font-size: 15px; font-weight: 700; color: var(--navy-900); letter-spacing: -0.01em;" data-en="Professionally Trained" data-es="Capacitación Profesional">Professionally Trained</div>
+            <div style="font-size: 13px; color: var(--muted); margin-top: 3px;" data-en="Certified Home Inspector Education" data-es="Educación de Inspector de Viviendas Certificado">Certified Home Inspector Education</div>
+          </div>
+          <div style="background: #e6f4ee; color: #1a6b3a; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; white-space: nowrap; border: 1px solid rgba(26,107,58,0.15);" data-en="Certified" data-es="Certificado">Certified</div>
+        </div>
+
+        <!-- CTA -->
+        <div style="text-align: center; margin-top: 4px;">
+          <a href="#contact" class="btn-gold reveal reveal-delay-4" style="padding: 14px 40px; border-radius: 10px; text-decoration: none; font-size: 15px; display: inline-block;" data-en="Schedule Your Inspection" data-es="Programe Su Inspección">Schedule Your Inspection</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .why-us-grid { }
+  .why-item:hover {
+    transform: translateY(-3px);
+    border-color: rgba(28,58,94,0.12);
+    box-shadow: 0 4px 16px rgba(12,24,41,0.06), 0 12px 32px rgba(12,24,41,0.09);
+  }
+  @media (max-width: 768px) {
+    .why-us-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+  }
+</style>
+
+<!-- FEATURED: WIND MITIGATION -->
+<section id="featured" style="background: #ffffff; padding: 112px 0; position: relative; overflow: hidden;">
+  <div style="max-width: 1140px; margin: 0 auto; padding: 0 32px;">
+    <div style="text-align: center; margin-bottom: 56px;">
+      <div class="section-tag reveal" style="justify-content: center; color: #2b7cb8;">
+        <span data-en="Featured Service" data-es="Servicio Destacado">Featured Service</span>
+      </div>
+      <h2 class="reveal reveal-delay-1" style="font-family: 'Libre Baskerville', serif; font-size: clamp(30px, 3.8vw, 44px); color: var(--navy-900); line-height: 1.15; letter-spacing: -0.02em;">
+        <span data-en="Wind Mitigation" data-es="Mitigaci&#243;n de Viento">Wind Mitigation</span> <span style="color: var(--navy-600);" data-en="Inspections" data-es="Inspecciones">Inspections</span>
       </h2>
     </div>
 
-    <div class="featured-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;">
-      <div class="featured-card" style="border-radius: 20px; overflow: hidden; position: relative;">
-        <img src="https://placehold.co/560x380/161641/4a9dd4?text=Wind+Mitigation+Inspection" alt="Wind Mitigation" style="width: 100%; height: 380px; object-fit: cover; display: block;">
-        <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 40%, rgba(8,8,32,0.9) 100%);"></div>
+    <div class="featured-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;">
+      <div class="featured-card reveal" style="border-radius: 20px; overflow: hidden; position: relative; box-shadow: 0 8px 24px rgba(10,22,40,0.06), 0 20px 56px rgba(10,22,40,0.1);">
+        <img src="https://placehold.co/560x380/0c1829/3b91cc?text=Wind+Mitigation+Inspection" alt="Wind Mitigation" style="width: 100%; height: 380px; object-fit: cover; display: block;">
+        <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 40%, rgba(10,22,40,0.9) 100%);"></div>
         <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 28px;">
-          <div style="display: inline-block; background: linear-gradient(135deg, #e8a800, #f5c842); color: #080820; padding: 6px 16px; border-radius: 100px; font-size: 12px; font-weight: 800; letter-spacing: 0.05em; margin-bottom: 10px; text-transform: uppercase;" data-en="Save on Insurance" data-es="Ahorre en Seguro">Save on Insurance</div>
-          <div style="font-size: 18px; font-weight: 800; color: #fff;" data-en="Potentially save hundreds per year" data-es="Ahorre potencialmente cientos por a&#241;o">Potentially save hundreds per year</div>
+          <div style="display: inline-block; background: linear-gradient(135deg, #e8a800, #f5c842); color: var(--navy-900); padding: 6px 16px; border-radius: 100px; font-size: 12px; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 10px; text-transform: uppercase;" data-en="Save on Insurance" data-es="Ahorre en Seguro">Save on Insurance</div>
+          <div style="font-size: 18px; font-weight: 700; color: #fff;" data-en="Potentially save hundreds per year" data-es="Ahorre potencialmente cientos por a&#241;o">Potentially save hundreds per year</div>
         </div>
       </div>
 
       <div>
-        <p style="font-size: 16px; color: rgba(255,255,255,0.75); line-height: 1.8; margin-bottom: 28px;" data-en="Florida homeowners can significantly reduce their insurance premiums with a Wind Mitigation report. Our certified inspectors assess your home's wind-resistant features and provide a detailed OIR-B1-1802 form accepted by all Florida insurers." data-es="Los propietarios de viviendas en Florida pueden reducir significativamente sus primas de seguro con un informe de Mitigaci&#243;n de Viento. Nuestros inspectores certificados eval&#250;an las caracter&#237;sticas resistentes al viento de su hogar y proporcionan un formulario detallado OIR-B1-1802 aceptado por todas las aseguradoras de Florida.">
+        <p class="reveal" style="font-size: 16px; color: var(--body); line-height: 1.8; margin-bottom: 28px;" data-en="Florida homeowners can significantly reduce their insurance premiums with a Wind Mitigation report. Our certified inspectors assess your home's wind-resistant features and provide a detailed OIR-B1-1802 form accepted by all Florida insurers." data-es="Los propietarios de viviendas en Florida pueden reducir significativamente sus primas de seguro con un informe de Mitigaci&#243;n de Viento. Nuestros inspectores certificados eval&#250;an las caracter&#237;sticas resistentes al viento de su hogar y proporcionan un formulario detallado OIR-B1-1802 aceptado por todas las aseguradoras de Florida.">
           Florida homeowners can significantly reduce their insurance premiums with a Wind Mitigation report. Our certified inspectors assess your home's wind-resistant features and provide a detailed OIR-B1-1802 form accepted by all Florida insurers.
         </p>
-        <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 14px; margin-bottom: 36px;">
-          <li style="display: flex; align-items: flex-start; gap: 14px; font-size: 15px; color: rgba(255,255,255,0.85);">
-            <span style="width: 24px; height: 24px; background: linear-gradient(135deg, #4a9dd4, #2b7cb8); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 900; color: #fff; flex-shrink: 0; margin-top: 2px;">&#10003;</span>
-            <span><strong style="color: #fff;" data-en="Roof Shape Analysis" data-es="An&#225;lisis de Forma del Techo">Roof Shape Analysis</strong> &mdash; <span data-en="Hip, gable, or flat roof evaluation" data-es="Evaluaci&#243;n de techo a cuatro aguas, a dos aguas o plano">Hip, gable, or flat roof evaluation</span></span>
+        <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 16px; margin-bottom: 36px;">
+          <li class="reveal" style="display: flex; align-items: flex-start; gap: 14px; font-size: 15px; color: var(--slate);">
+            <span style="width: 22px; height: 22px; background: #1c3a5e; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <span><strong style="color: var(--navy-900);" data-en="Roof Shape Analysis" data-es="An&#225;lisis de Forma del Techo">Roof Shape Analysis</strong> &mdash; <span data-en="Hip, gable, or flat roof evaluation" data-es="Evaluaci&#243;n de techo a cuatro aguas, a dos aguas o plano">Hip, gable, or flat roof evaluation</span></span>
           </li>
-          <li style="display: flex; align-items: flex-start; gap: 14px; font-size: 15px; color: rgba(255,255,255,0.85);">
-            <span style="width: 24px; height: 24px; background: linear-gradient(135deg, #4a9dd4, #2b7cb8); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 900; color: #fff; flex-shrink: 0; margin-top: 2px;">&#10003;</span>
-            <span><strong style="color: #fff;" data-en="Roof Deck Attachment" data-es="Fijaci&#243;n del Deck del Techo">Roof Deck Attachment</strong> &mdash; <span data-en="Nail type, pattern, and spacing" data-es="Tipo de clavo, patr&#243;n y espaciado">Nail type, pattern, and spacing</span></span>
+          <li class="reveal reveal-delay-1" style="display: flex; align-items: flex-start; gap: 14px; font-size: 15px; color: var(--slate);">
+            <span style="width: 22px; height: 22px; background: #1c3a5e; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <span><strong style="color: var(--navy-900);" data-en="Roof Deck Attachment" data-es="Fijaci&#243;n del Deck del Techo">Roof Deck Attachment</strong> &mdash; <span data-en="Nail type, pattern, and spacing" data-es="Tipo de clavo, patr&#243;n y espaciado">Nail type, pattern, and spacing</span></span>
           </li>
-          <li style="display: flex; align-items: flex-start; gap: 14px; font-size: 15px; color: rgba(255,255,255,0.85);">
-            <span style="width: 24px; height: 24px; background: linear-gradient(135deg, #4a9dd4, #2b7cb8); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 900; color: #fff; flex-shrink: 0; margin-top: 2px;">&#10003;</span>
-            <span><strong style="color: #fff;" data-en="Opening Protection" data-es="Protecci&#243;n de Aberturas">Opening Protection</strong> &mdash; <span data-en="Windows, doors, and skylights rating" data-es="Clasificaci&#243;n de ventanas, puertas y tragaluces">Windows, doors, and skylights rating</span></span>
+          <li class="reveal reveal-delay-2" style="display: flex; align-items: flex-start; gap: 14px; font-size: 15px; color: var(--slate);">
+            <span style="width: 22px; height: 22px; background: #1c3a5e; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <span><strong style="color: var(--navy-900);" data-en="Opening Protection" data-es="Protecci&#243;n de Aberturas">Opening Protection</strong> &mdash; <span data-en="Windows, doors, and skylights rating" data-es="Clasificaci&#243;n de ventanas, puertas y tragaluces">Windows, doors, and skylights rating</span></span>
           </li>
-          <li style="display: flex; align-items: flex-start; gap: 14px; font-size: 15px; color: rgba(255,255,255,0.85);">
-            <span style="width: 24px; height: 24px; background: linear-gradient(135deg, #4a9dd4, #2b7cb8); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 900; color: #fff; flex-shrink: 0; margin-top: 2px;">&#10003;</span>
-            <span><strong style="color: #fff;" data-en="Roof-to-Wall Connections" data-es="Conexiones Techo-Pared">Roof-to-Wall Connections</strong> &mdash; <span data-en="Clips, straps, and anchors" data-es="Clips, correas y anclajes">Clips, straps, and anchors</span></span>
+          <li class="reveal reveal-delay-3" style="display: flex; align-items: flex-start; gap: 14px; font-size: 15px; color: var(--slate);">
+            <span style="width: 22px; height: 22px; background: #1c3a5e; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <span><strong style="color: var(--navy-900);" data-en="Roof-to-Wall Connections" data-es="Conexiones Techo-Pared">Roof-to-Wall Connections</strong> &mdash; <span data-en="Clips, straps, and anchors" data-es="Clips, correas y anclajes">Clips, straps, and anchors</span></span>
           </li>
         </ul>
-        <a href="#contact" class="btn-gold" style="padding: 14px 32px; border-radius: 8px; text-decoration: none; font-size: 15px; display: inline-block;" data-en="Schedule Wind Mitigation" data-es="Programe Mitigaci&#243;n de Viento">Schedule Wind Mitigation</a>
+        <a href="#contact" class="btn-primary reveal reveal-delay-4" style="padding: 14px 32px; border-radius: 10px; text-decoration: none; font-size: 15px; display: inline-block;" data-en="Schedule Wind Mitigation" data-es="Programe Mitigaci&#243;n de Viento">Schedule Wind Mitigation</a>
       </div>
     </div>
   </div>
 </section>
 
 <!-- BUILDING PERMITS -->
-<section id="permits" style="background: linear-gradient(180deg, #0a0a28 0%, #0f0f2e 100%); padding: 90px 0; position: relative; overflow: hidden;">
-  <div style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 600px; height: 300px; background: radial-gradient(ellipse, rgba(232,168,0,0.05) 0%, transparent 70%); pointer-events: none;"></div>
-
-  <div style="max-width: 700px; margin: 0 auto; padding: 0 24px; text-align: center;">
-    <div class="section-divider"></div>
-    <h2 style="font-size: clamp(22px, 3vw, 36px); font-weight: 900; letter-spacing: -0.02em; color: #fff; margin-bottom: 12px; text-transform: uppercase;">
-      <span data-en="Building Permit" data-es="Permisos de">Building Permit</span> <span style="color: #f5c842;" data-en="Information" data-es="Construcci&#243;n">Information</span>
+<section id="permits" style="background: #f7f9fc; padding: 112px 0; position: relative; overflow: hidden;">
+  <div style="max-width: 660px; margin: 0 auto; padding: 0 32px; text-align: center;">
+    <div class="section-tag reveal" style="justify-content: center;" data-en="Resources" data-es="Recursos">Resources</div>
+    <h2 class="reveal reveal-delay-1" style="font-family: 'Libre Baskerville', serif; font-size: clamp(30px, 3.8vw, 44px); color: var(--navy-900); margin-bottom: 16px; line-height: 1.15; letter-spacing: -0.02em;">
+      <span data-en="Building Permit" data-es="Permisos de">Building Permit</span> <span style="color: var(--navy-600);" data-en="Information" data-es="Construcci&#243;n">Information</span>
     </h2>
-    <p style="color: rgba(255,255,255,0.6); font-size: 16px; line-height: 1.7; margin-bottom: 40px;" data-en="Access building permit portals for counties across the Tampa Bay area. Find property records, permit reports, and more." data-es="Acceda a los portales de permisos de construcci&#243;n de los condados del &#225;rea de Tampa Bay. Encuentre registros de propiedad, informes de permisos y m&#225;s.">
+    <p class="reveal reveal-delay-2" style="color: var(--body); font-size: 17px; line-height: 1.7; margin-bottom: 40px;" data-en="Access building permit portals for counties across the Tampa Bay area. Find property records, permit reports, and more." data-es="Acceda a los portales de permisos de construcci&#243;n de los condados del &#225;rea de Tampa Bay. Encuentre registros de propiedad, informes de permisos y m&#225;s.">
       Access building permit portals for counties across the Tampa Bay area. Find property records, permit reports, and more.
     </p>
-    <a href="building-permits.html" class="btn-gold" style="padding: 16px 44px; border-radius: 10px; text-decoration: none; font-size: 16px; display: inline-flex; align-items: center; gap: 10px;" data-en="View Permit Information Sheet" data-es="Ver Hoja de Informaci&#243;n de Permisos">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#080820" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+    <a href="building-permits.html" class="btn-primary reveal reveal-delay-3" style="padding: 16px 44px; border-radius: 10px; text-decoration: none; font-size: 16px; display: inline-flex; align-items: center; gap: 10px;" data-en="View Permit Information Sheet" data-es="Ver Hoja de Informaci&#243;n de Permisos">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
       View Permit Information Sheet
     </a>
   </div>
 </section>
 
-<!-- CONTACT -->
-<section id="contact" style="background: linear-gradient(135deg, #0f0f2e 0%, #111135 100%); padding: 90px 0; position: relative; overflow: hidden;">
-  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 600px; height: 400px; background: radial-gradient(ellipse, rgba(232,168,0,0.08) 0%, transparent 70%); pointer-events: none;"></div>
+<!-- HOW IT WORKS -->
+<section id="process" style="background: #0c1829; padding: 112px 0; position: relative; overflow: hidden;">
+  <!-- Background accents -->
+  <div style="position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(240,180,41,0.04) 0%, transparent 60%); top: -150px; right: -80px; pointer-events: none;"></div>
+  <div style="position: absolute; width: 400px; height: 400px; background: radial-gradient(circle, rgba(59,145,204,0.04) 0%, transparent 60%); bottom: -80px; left: -40px; pointer-events: none;"></div>
 
-  <div style="max-width: 900px; margin: 0 auto; padding: 0 24px; text-align: center; position: relative; z-index: 1;">
-    <div class="section-divider"></div>
-    <h2 style="font-size: clamp(24px, 4vw, 44px); font-weight: 900; letter-spacing: -0.03em; color: #fff; margin-bottom: 16px;">
-      "<span data-en="Your Home," data-es="Su Hogar,">Your Home,</span> <span style="color: #f5c842;" data-en='Our Priority"' data-es='Nuestra Prioridad"'>Our Priority"</span>
-    </h2>
-    <p style="font-size: 17px; color: rgba(255,255,255,0.65); line-height: 1.7; margin-bottom: 48px; max-width: 560px; margin-left: auto; margin-right: auto;" data-en="Schedule your inspection today. Fast response, detailed reports, and bilingual service for every Florida homeowner." data-es="Programe su inspecci&#243;n hoy. Respuesta r&#225;pida, informes detallados y servicio biling&#252;e para cada propietario de vivienda en Florida.">
-      Schedule your inspection today. Fast response, detailed reports, and bilingual service for every Florida homeowner.
-    </p>
-
-    <div class="contact-cards-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 48px;">
-      <a href="tel:8134063903" style="display: flex; flex-direction: column; align-items: center; gap: 12px; background: linear-gradient(145deg, #161641, #1e1e52); border: 1px solid rgba(232,168,0,0.2); border-radius: 14px; padding: 28px 20px; text-decoration: none; transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.25s ease;" onmouseover="this.style.transform='translateY(-4px)'; this.style.borderColor='rgba(232,168,0,0.5)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(232,168,0,0.2)'">
-        <span style="font-size: 32px;">&#128222;</span>
-        <div>
-          <div style="font-size: 13px; color: rgba(255,255,255,0.5); font-weight: 600; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.06em;" data-en="Call or Text" data-es="Llame o Env&#237;e Texto">Call or Text</div>
-          <div style="font-size: 18px; font-weight: 800; color: #f5c842;">813-406-3903</div>
-        </div>
-      </a>
-
-      <a href="mailto:sunstateservicegroup@gmail.com" style="display: flex; flex-direction: column; align-items: center; gap: 12px; background: linear-gradient(145deg, #161641, #1e1e52); border: 1px solid rgba(232,168,0,0.2); border-radius: 14px; padding: 28px 20px; text-decoration: none; transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.25s ease;" onmouseover="this.style.transform='translateY(-4px)'; this.style.borderColor='rgba(232,168,0,0.5)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(232,168,0,0.2)'">
-        <span style="font-size: 32px;">&#9993;</span>
-        <div>
-          <div style="font-size: 13px; color: rgba(255,255,255,0.5); font-weight: 600; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.06em;" data-en="Email Us" data-es="Env&#237;enos un Correo">Email Us</div>
-          <div style="font-size: 12px; font-weight: 700; color: #f5c842; word-break: break-all;">sunstateservicegroup@gmail.com</div>
-        </div>
-      </a>
-
-      <div style="display: flex; flex-direction: column; align-items: center; gap: 12px; background: linear-gradient(145deg, #161641, #1e1e52); border: 1px solid rgba(232,168,0,0.2); border-radius: 14px; padding: 28px 20px;">
-        <span style="font-size: 32px;">&#128205;</span>
-        <div>
-          <div style="font-size: 13px; color: rgba(255,255,255,0.5); font-weight: 600; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.06em;" data-en="Service Area" data-es="&#193;rea de Servicio">Service Area</div>
-          <div style="font-size: 15px; font-weight: 700; color: #fff;" data-en="Tampa Bay &amp; All Florida" data-es="Tampa Bay y Toda Florida">Tampa Bay &amp; All Florida</div>
-        </div>
+  <div style="max-width: 1140px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 1;">
+    <div style="text-align: center; margin-bottom: 64px;">
+      <div class="reveal" style="display: inline-flex; align-items: center; gap: 12px; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 18px;">
+        <span style="display: inline-block; width: 32px; height: 2px; background: linear-gradient(90deg, var(--gold), var(--gold-light)); border-radius: 2px;"></span>
+        <span data-en="How It Works" data-es="Cómo Funciona">How It Works</span>
       </div>
+      <h2 class="reveal reveal-delay-1" style="font-family: 'Libre Baskerville', serif; font-size: clamp(30px, 3.8vw, 44px); color: #fff; margin-bottom: 16px; line-height: 1.15; letter-spacing: -0.02em;">
+        <span data-en="Your Inspection," data-es="Su Inspección,">Your Inspection,</span> <span style="color: var(--gold-light);" data-en="Step by Step" data-es="Paso a Paso">Step by Step</span>
+      </h2>
+      <p class="reveal reveal-delay-2" style="font-size: 17px; color: rgba(255,255,255,0.55); max-width: 520px; margin: 0 auto; line-height: 1.7;" data-en="Simple, transparent, and fast. Here's exactly what happens when you book with Sunstate." data-es="Simple, transparente y rápido. Esto es exactamente lo que sucede cuando reserva con Sunstate.">Simple, transparent, and fast. Here's exactly what happens when you book with Sunstate.</p>
     </div>
 
-    <!-- Contact form -->
-    <div class="contact-form-box" style="background: linear-gradient(145deg, #161641, #1e1e52); border: 1px solid rgba(232,168,0,0.15); border-radius: 20px; padding: 40px; text-align: left; box-shadow: 0 20px 60px rgba(0,0,0,0.4);">
-      <h3 style="font-size: 20px; font-weight: 800; color: #fff; margin-bottom: 24px; text-align: center;" data-en="Request an Inspection" data-es="Solicite una Inspecci&#243;n">Request an Inspection</h3>
-      <form id="inspection-form">
-      <div class="contact-form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
-        <div>
-          <label style="display: block; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.6); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.06em;" data-en="Name" data-es="Nombre">Name</label>
-          <input type="text" name="from_name" required placeholder="Your full name" data-ph-en="Your full name" data-ph-es="Su nombre completo" style="width: 100%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 12px 16px; color: #fff; font-size: 15px; font-family: 'Urbanist', sans-serif; outline: none;" onfocus="this.style.borderColor='rgba(232,168,0,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;" class="process-grid">
+
+      <div class="reveal" style="position: relative; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 36px 28px; overflow: hidden;">
+        <div style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--gold-light);"></div>
+        <div style="font-size: 52px; font-weight: 800; color: rgba(255,255,255,0.05); line-height: 1; margin-bottom: 16px; letter-spacing: -0.04em; font-family: 'Libre Baskerville', serif;">01</div>
+        <div style="width: 48px; height: 48px; background: linear-gradient(135deg, rgba(232,168,0,0.15), rgba(232,168,0,0.06)); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f5c842" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         </div>
-        <div>
-          <label style="display: block; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.6); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.06em;" data-en="Phone" data-es="Tel&#233;fono">Phone</label>
-          <input type="tel" name="phone" required placeholder="Your phone number" data-ph-en="Your phone number" data-ph-es="Su n&#250;mero de tel&#233;fono" style="width: 100%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 12px 16px; color: #fff; font-size: 15px; font-family: 'Urbanist', sans-serif; outline: none;" onfocus="this.style.borderColor='rgba(232,168,0,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
-        </div>
-        <div>
-          <label style="display: block; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.6); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.06em;" data-en="Email" data-es="Correo Electr&#243;nico">Email</label>
-          <input type="email" name="from_email" required placeholder="your@email.com" data-ph-en="your@email.com" data-ph-es="su@correo.com" style="width: 100%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 12px 16px; color: #fff; font-size: 15px; font-family: 'Urbanist', sans-serif; outline: none;" onfocus="this.style.borderColor='rgba(232,168,0,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
-        </div>
-        <div>
-          <label style="display: block; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.6); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.06em;" data-en="Inspection Type" data-es="Tipo de Inspecci&#243;n">Inspection Type</label>
-          <select name="inspection_type" required style="width: 100%; background: #161641; border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 12px 16px; color: #fff; font-size: 15px; font-family: 'Urbanist', sans-serif; outline: none; cursor: pointer;" onfocus="this.style.borderColor='rgba(232,168,0,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
-            <option value="" disabled selected data-en="Select a service" data-es="Seleccione un servicio">Select a service</option>
-            <option value="4-Point Inspection" data-en="4-Point Inspection" data-es="Inspecci&#243;n de 4 Puntos">4-Point Inspection</option>
-            <option value="Wind Mitigation" data-en="Wind Mitigation" data-es="Mitigaci&#243;n de Viento">Wind Mitigation</option>
-            <option value="Pre-Purchase Inspection" data-en="Pre-Purchase Inspection" data-es="Inspecci&#243;n Pre-Compra">Pre-Purchase Inspection</option>
-            <option value="New Construction Inspection" data-en="New Construction Inspection" data-es="Inspecci&#243;n de Construcci&#243;n Nueva">New Construction Inspection</option>
-            <option value="11-Month Warranty Inspection" data-en="11-Month Warranty Inspection" data-es="Inspecci&#243;n de Garant&#237;a de 11 Meses">11-Month Warranty Inspection</option>
-            <option value="Multiple Services" data-en="Multiple Services" data-es="M&#250;ltiples Servicios">Multiple Services</option>
-          </select>
-        </div>
+        <h3 style="font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 10px;" data-en="Schedule Your Inspection" data-es="Programe Su Inspección">Schedule Your Inspection</h3>
+        <p style="font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.7;" data-en="Call, text, or fill out our form. We'll confirm your appointment quickly and answer any questions." data-es="Llame, envíe un texto o complete nuestro formulario. Confirmaremos su cita rápidamente y responderemos cualquier pregunta.">Call, text, or fill out our form. We'll confirm your appointment quickly and answer any questions.</p>
       </div>
-      <div style="margin-bottom: 20px;">
-        <label style="display: block; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.6); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.06em;" data-en="Property Address" data-es="Direcci&#243;n de la Propiedad">Property Address</label>
-        <input type="text" name="address" required placeholder="Property address in Florida" data-ph-en="Property address in Florida" data-ph-es="Direcci&#243;n de la propiedad en Florida" style="width: 100%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 12px 16px; color: #fff; font-size: 15px; font-family: 'Urbanist', sans-serif; outline: none;" onfocus="this.style.borderColor='rgba(232,168,0,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
+
+      <div class="reveal reveal-delay-1" style="position: relative; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 36px 28px; overflow: hidden;">
+        <div style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--gold-light);"></div>
+        <div style="font-size: 52px; font-weight: 800; color: rgba(255,255,255,0.05); line-height: 1; margin-bottom: 16px; letter-spacing: -0.04em; font-family: 'Libre Baskerville', serif;">02</div>
+        <div style="width: 48px; height: 48px; background: linear-gradient(135deg, rgba(74,157,212,0.15), rgba(74,157,212,0.06)); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4a9dd4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <h3 style="font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 10px;" data-en="We Inspect Your Property" data-es="Inspeccionamos Su Propiedad">We Inspect Your Property</h3>
+        <p style="font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.7;" data-en="Yamir Diaz performs a thorough, certified inspection of all visible and accessible systems and components." data-es="Yamir Diaz realiza una inspección exhaustiva y certificada de todos los sistemas y componentes visibles y accesibles.">Yamir Diaz performs a thorough, certified inspection of all visible and accessible systems and components.</p>
       </div>
-      <div style="margin-bottom: 24px;">
-        <label style="display: block; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.6); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.06em;" data-en="Message" data-es="Mensaje">Message</label>
-        <textarea name="message" placeholder="Any additional details or questions..." data-ph-en="Any additional details or questions..." data-ph-es="Cualquier detalle o pregunta adicional..." rows="3" style="width: 100%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 12px 16px; color: #fff; font-size: 15px; font-family: 'Urbanist', sans-serif; outline: none; resize: vertical;" onfocus="this.style.borderColor='rgba(232,168,0,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'"></textarea>
+
+      <div class="reveal reveal-delay-2" style="position: relative; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 36px 28px; overflow: hidden;">
+        <div style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--gold-light);"></div>
+        <div style="font-size: 52px; font-weight: 800; color: rgba(255,255,255,0.05); line-height: 1; margin-bottom: 16px; letter-spacing: -0.04em; font-family: 'Libre Baskerville', serif;">03</div>
+        <div style="width: 48px; height: 48px; background: linear-gradient(135deg, rgba(232,168,0,0.15), rgba(232,168,0,0.06)); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f5c842" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <h3 style="font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 10px;" data-en="Receive Your Report" data-es="Reciba Su Informe">Receive Your Report</h3>
+        <p style="font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.7;" data-en="Get a detailed, easy-to-read inspection report delivered within 24 hours — often the same day." data-es="Reciba un informe de inspección detallado y fácil de leer en 24 horas, a menudo el mismo día.">Get a detailed, easy-to-read inspection report delivered within 24 hours — often the same day.</p>
       </div>
-      <button type="submit" class="btn-gold" style="width: 100%; padding: 16px; border-radius: 10px; border: none; font-size: 16px; cursor: pointer; font-family: 'Urbanist', sans-serif;" data-en="Submit Request" data-es="Enviar Solicitud">Submit Request</button>
-      <div id="form-status" style="text-align: center; margin-top: 16px; font-size: 15px; font-weight: 600; display: none;"></div>
-      </form>
+
+      <div class="reveal reveal-delay-3" style="position: relative; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 36px 28px; overflow: hidden;">
+        <div style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--gold-light);"></div>
+        <div style="font-size: 52px; font-weight: 800; color: rgba(255,255,255,0.05); line-height: 1; margin-bottom: 16px; letter-spacing: -0.04em; font-family: 'Libre Baskerville', serif;">04</div>
+        <div style="width: 48px; height: 48px; background: linear-gradient(135deg, rgba(74,157,212,0.15), rgba(74,157,212,0.06)); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4a9dd4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <h3 style="font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 10px;" data-en="Make Confident Decisions" data-es="Tome Decisiones Confiadas">Make Confident Decisions</h3>
+        <p style="font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.7;" data-en="Use your report to negotiate repairs, save on insurance premiums, or close on your new home with total confidence." data-es="Use su informe para negociar reparaciones, ahorrar en primas de seguro o cerrar su nuevo hogar con total confianza.">Use your report to negotiate repairs, save on insurance premiums, or close on your new home with total confidence.</p>
+      </div>
+
+    </div>
+
+    <div style="text-align: center; margin-top: 52px;" class="reveal reveal-delay-4">
+      <a href="#contact" class="btn-gold" style="padding: 16px 44px; border-radius: 10px; text-decoration: none; font-size: 16px; display: inline-block;" data-en="Start the Process — Book Now" data-es="Comience el Proceso — Reserve Ahora">Start the Process — Book Now</a>
     </div>
   </div>
 </section>
 
+<!-- CONTACT -->
+<section id="contact" style="background: linear-gradient(170deg, #0c1829 0%, #162b47 50%, #0c1829 100%); padding: 100px 0 112px; position: relative; overflow: hidden;">
+  <!-- Background radial glows -->
+  <div style="position: absolute; width: 700px; height: 500px; background: radial-gradient(ellipse, rgba(232,168,0,0.07) 0%, transparent 70%); top: -100px; left: 50%; transform: translateX(-50%); pointer-events: none;"></div>
+  <div style="position: absolute; width: 400px; height: 400px; background: radial-gradient(ellipse, rgba(59,145,204,0.06) 0%, transparent 65%); bottom: -80px; right: 5%; pointer-events: none;"></div>
+
+  <div style="max-width: 1080px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 1;">
+
+    <!-- Section header -->
+    <div style="text-align: center; margin-bottom: 56px;">
+      <div class="section-tag reveal" style="justify-content: center; color: #f5c842;">
+        <span data-en="Get In Touch" data-es="Cont&#225;ctenos">Get In Touch</span>
+      </div>
+      <h2 class="reveal reveal-delay-1" style="font-family: 'Libre Baskerville', serif; font-size: clamp(30px, 4vw, 46px); color: #fff; margin-bottom: 14px; line-height: 1.12; letter-spacing: -0.02em;">
+        <span data-en="Ready for Your Inspection?" data-es="&#191;Listo para su Inspecci&#243;n?">Ready for Your Inspection?</span>
+      </h2>
+      <p class="reveal reveal-delay-2" style="font-size: 17px; color: rgba(255,255,255,0.58); line-height: 1.7; max-width: 520px; margin: 0 auto;" data-en="Fast response guaranteed. Detailed digital reports. Bilingual service available — English &amp; Español." data-es="Respuesta r&#225;pida garantizada. Informes digitales detallados. Servicio biling&#252;e disponible — Ingl&#233;s y Espa&#241;ol.">
+        Fast response guaranteed. Detailed digital reports. Bilingual service available — English &amp; Español.
+      </p>
+    </div>
+
+    <!-- Two-column layout: Quick CTAs left + Form right -->
+    <div style="display: grid; grid-template-columns: 1fr 1.55fr; gap: 32px; align-items: start;" class="contact-layout-grid reveal">
+
+      <!-- LEFT: Quick actions & trust signals -->
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+
+        <!-- Primary phone CTA — most prominent -->
+        <a href="tel:8134063903" style="display: flex; align-items: center; gap: 16px; background: linear-gradient(135deg, rgba(240,180,41,0.18) 0%, rgba(232,168,0,0.08) 100%); border: 1.5px solid rgba(245,200,66,0.35); border-radius: 16px; padding: 24px 22px; text-decoration: none; transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), border-color 0.3s ease, background 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.borderColor='rgba(245,200,66,0.65)'; this.style.background='linear-gradient(135deg,rgba(240,180,41,0.25) 0%,rgba(232,168,0,0.12) 100%)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(245,200,66,0.35)'; this.style.background='linear-gradient(135deg,rgba(240,180,41,0.18) 0%,rgba(232,168,0,0.08) 100%)'">
+          <div style="width: 52px; height: 52px; background: rgba(245,200,66,0.15); border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f5c842" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <div>
+            <div style="font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 3px;" data-en="Call or Text Now" data-es="Llame o Escriba Ahora">Call or Text Now</div>
+            <div style="font-size: 22px; font-weight: 800; color: #f5c842; letter-spacing: -0.01em; line-height: 1.1;">813-406-3903</div>
+            <div style="font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 2px;" data-en="Fastest way to book" data-es="La forma m&#225;s r&#225;pida de reservar">Fastest way to book</div>
+          </div>
+        </a>
+
+        <!-- Email CTA -->
+        <button onclick="copyEmail(this)" style="display: flex; align-items: center; gap: 16px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 20px 22px; text-decoration: none; cursor: pointer; width: 100%; text-align: left; font-family: inherit; transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), border-color 0.3s ease, background 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.borderColor='rgba(74,157,212,0.4)'; this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(255,255,255,0.1)'; this.style.background='rgba(255,255,255,0.04)'">
+          <div style="width: 44px; height: 44px; background: rgba(74,157,212,0.12); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4a9dd4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <div style="font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px;" data-en="Email Us" data-es="Env&#237;enos un Correo">Email Us</div>
+            <div style="font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.8); word-break: break-all;">sunstateservicegroup@gmail.com</div>
+          </div>
+        </button>
+
+        <!-- Service area -->
+        <div style="display: flex; align-items: center; gap: 16px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 20px 22px;">
+          <div style="width: 44px; height: 44px; background: rgba(74,157,212,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4a9dd4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <div style="font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px;" data-en="Service Area" data-es="&#193;rea de Servicio">Service Area</div>
+            <div style="font-size: 14px; font-weight: 700; color: #fff;" data-en="Tampa Bay &amp; All Florida" data-es="Tampa Bay y Toda Florida">Tampa Bay &amp; All Florida</div>
+          </div>
+        </div>
+
+        <!-- Trust signals strip -->
+        <div style="background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 20px 22px; display: flex; flex-direction: column; gap: 12px;">
+          <div style="font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px;" data-en="Why Choose Us" data-es="Por qu&#233; elegirnos">Why Choose Us</div>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5c842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span style="font-size: 14px; color: rgba(255,255,255,0.7);" data-en="Licensed &amp; Insured (HI18594)" data-es="Licenciado y Asegurado (HI18594)">Licensed &amp; Insured (HI18594)</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5c842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span style="font-size: 14px; color: rgba(255,255,255,0.7);" data-en="Same-week appointments available" data-es="Citas disponibles la misma semana">Same-week appointments available</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5c842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span style="font-size: 14px; color: rgba(255,255,255,0.7);" data-en="Digital report within 24 hours" data-es="Informe digital en 24 horas">Digital report within 24 hours</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5c842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span style="font-size: 14px; color: rgba(255,255,255,0.7);" data-en="English &amp; Español service" data-es="Servicio en Ingl&#233;s y Espa&#241;ol">English &amp; Español service</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Request form -->
+      <div class="dark-form contact-form-box" style="background: rgba(255,255,255,0.045); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 40px; text-align: left; backdrop-filter: blur(16px); box-shadow: 0 8px 40px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.06);">
+
+        <!-- Form header with urgency badge -->
+        <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 28px; flex-wrap: wrap;">
+          <div>
+            <h3 style="font-family: 'Libre Baskerville', serif; font-size: 22px; color: #fff; line-height: 1.2; margin-bottom: 4px;" data-en="Request an Inspection" data-es="Solicite una Inspecci&#243;n">Request an Inspection</h3>
+            <p style="font-size: 13px; color: rgba(255,255,255,0.4);" data-en="We respond within 1 business hour" data-es="Respondemos en 1 hora h&#225;bil">We respond within 1 business hour</p>
+          </div>
+          <div style="background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.3); border-radius: 100px; padding: 5px 12px; display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
+            <span style="width: 7px; height: 7px; background: #4ade80; border-radius: 50%; display: inline-block; box-shadow: 0 0 0 3px rgba(74,222,128,0.2);"></span>
+            <span style="font-size: 11px; font-weight: 700; color: #4ade80; text-transform: uppercase; letter-spacing: 0.08em;" data-en="Available Now" data-es="Disponible Ahora">Available Now</span>
+          </div>
+        </div>
+
+        <form id="inspection-form">
+          <div class="contact-form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+            <div>
+              <label style="display: block; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.45); margin-bottom: 7px; text-transform: uppercase; letter-spacing: 0.07em;" data-en="Name" data-es="Nombre">Name</label>
+              <input type="text" name="from_name" required placeholder="Your full name" data-ph-en="Your full name" data-ph-es="Su nombre completo" style="width: 100%; background: rgba(255,255,255,0.07); border: 1.5px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 13px 15px; color: #fff; font-size: 15px; font-family: 'IBM Plex Sans', sans-serif; outline: none; transition: border-color 0.25s ease, background 0.25s ease;" onfocus="this.style.borderColor='rgba(245,200,66,0.55)'; this.style.background='rgba(255,255,255,0.09)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'; this.style.background='rgba(255,255,255,0.07)'">
+            </div>
+            <div>
+              <label style="display: block; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.45); margin-bottom: 7px; text-transform: uppercase; letter-spacing: 0.07em;" data-en="Phone" data-es="Tel&#233;fono">Phone</label>
+              <input type="tel" name="phone" required placeholder="Your phone number" data-ph-en="Your phone number" data-ph-es="Su n&#250;mero de tel&#233;fono" style="width: 100%; background: rgba(255,255,255,0.07); border: 1.5px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 13px 15px; color: #fff; font-size: 15px; font-family: 'IBM Plex Sans', sans-serif; outline: none; transition: border-color 0.25s ease, background 0.25s ease;" onfocus="this.style.borderColor='rgba(245,200,66,0.55)'; this.style.background='rgba(255,255,255,0.09)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'; this.style.background='rgba(255,255,255,0.07)'">
+            </div>
+            <div>
+              <label style="display: block; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.45); margin-bottom: 7px; text-transform: uppercase; letter-spacing: 0.07em;" data-en="Email" data-es="Correo Electr&#243;nico">Email</label>
+              <input type="email" name="from_email" required placeholder="your@email.com" data-ph-en="your@email.com" data-ph-es="su@correo.com" style="width: 100%; background: rgba(255,255,255,0.07); border: 1.5px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 13px 15px; color: #fff; font-size: 15px; font-family: 'IBM Plex Sans', sans-serif; outline: none; transition: border-color 0.25s ease, background 0.25s ease;" onfocus="this.style.borderColor='rgba(245,200,66,0.55)'; this.style.background='rgba(255,255,255,0.09)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'; this.style.background='rgba(255,255,255,0.07)'">
+            </div>
+            <div style="position: relative;">
+              <label style="display: block; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.45); margin-bottom: 7px; text-transform: uppercase; letter-spacing: 0.07em;" data-en="Inspection Type" data-es="Tipo de Inspecci&#243;n">Inspection Type</label>
+              <!-- Hidden input carries the final value for EmailJS -->
+              <input type="hidden" name="inspection_type" id="inspection_type_value">
+              <!-- Main select trigger -->
+              <select id="inspection_type_select" required style="width: 100%; background: rgba(22,43,71,0.95); border: 1.5px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 13px 15px; color: #fff; font-size: 15px; font-family: 'IBM Plex Sans', sans-serif; outline: none; cursor: pointer; transition: border-color 0.25s ease;" onfocus="this.style.borderColor='rgba(245,200,66,0.55)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'" onchange="handleInspectionTypeChange(this)">
+                <option value="" disabled selected data-en="Select a service" data-es="Seleccione un servicio">Select a service</option>
+                <option value="4-Point Inspection" data-en="4-Point Inspection" data-es="Inspecci&#243;n de 4 Puntos">4-Point Inspection</option>
+                <option value="Wind Mitigation" data-en="Wind Mitigation" data-es="Mitigaci&#243;n de Viento">Wind Mitigation</option>
+                <option value="Pre-Purchase Inspection" data-en="Pre-Purchase Inspection" data-es="Inspecci&#243;n Pre-Compra">Pre-Purchase Inspection</option>
+                <option value="New Construction Inspection" data-en="New Construction Inspection" data-es="Inspecci&#243;n de Construcci&#243;n Nueva">New Construction Inspection</option>
+                <option value="11-Month Warranty Inspection" data-en="11-Month Warranty Inspection" data-es="Inspecci&#243;n de Garant&#237;a de 11 Meses">11-Month Warranty Inspection</option>
+                <option value="Multiple Services" data-en="Multiple Services" data-es="M&#250;ltiples Servicios">Multiple Services</option>
+              </select>
+              <!-- Multi-select panel (shown only when "Multiple Services" is chosen) -->
+              <div id="multi_service_panel" style="display: none; margin-top: 8px; background: rgba(22,43,71,0.98); border: 1.5px solid rgba(245,200,66,0.35); border-radius: 10px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.45);">
+                <div style="padding: 10px 14px 6px; font-size: 11px; font-weight: 700; color: rgba(245,200,66,0.7); text-transform: uppercase; letter-spacing: 0.08em;" data-en="Select all that apply:" data-es="Seleccione todos los que apliquen:">Select all that apply:</div>
+                <label id="ms_opt_4pt" style="display: flex; align-items: center; gap: 11px; padding: 10px 14px; cursor: pointer; transition: background 0.15s ease;" onmouseover="this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.background='transparent'">
+                  <input type="checkbox" value="4-Point Inspection" onchange="syncMultiServices()" style="width: 17px; height: 17px; accent-color: #f5c842; cursor: pointer; flex-shrink: 0;">
+                  <span style="font-size: 14px; color: #fff; font-family: 'IBM Plex Sans', sans-serif;" data-en="4-Point Inspection" data-es="Inspecci&#243;n de 4 Puntos">4-Point Inspection</span>
+                </label>
+                <label id="ms_opt_wind" style="display: flex; align-items: center; gap: 11px; padding: 10px 14px; cursor: pointer; transition: background 0.15s ease;" onmouseover="this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.background='transparent'">
+                  <input type="checkbox" value="Wind Mitigation" onchange="syncMultiServices()" style="width: 17px; height: 17px; accent-color: #f5c842; cursor: pointer; flex-shrink: 0;">
+                  <span style="font-size: 14px; color: #fff; font-family: 'IBM Plex Sans', sans-serif;" data-en="Wind Mitigation" data-es="Mitigaci&#243;n de Viento">Wind Mitigation</span>
+                </label>
+                <label id="ms_opt_prepurch" style="display: flex; align-items: center; gap: 11px; padding: 10px 14px; cursor: pointer; transition: background 0.15s ease;" onmouseover="this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.background='transparent'">
+                  <input type="checkbox" value="Pre-Purchase Inspection" onchange="syncMultiServices()" style="width: 17px; height: 17px; accent-color: #f5c842; cursor: pointer; flex-shrink: 0;">
+                  <span style="font-size: 14px; color: #fff; font-family: 'IBM Plex Sans', sans-serif;" data-en="Pre-Purchase Inspection" data-es="Inspecci&#243;n Pre-Compra">Pre-Purchase Inspection</span>
+                </label>
+                <label id="ms_opt_newcon" style="display: flex; align-items: center; gap: 11px; padding: 10px 14px; cursor: pointer; transition: background 0.15s ease;" onmouseover="this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.background='transparent'">
+                  <input type="checkbox" value="New Construction Inspection" onchange="syncMultiServices()" style="width: 17px; height: 17px; accent-color: #f5c842; cursor: pointer; flex-shrink: 0;">
+                  <span style="font-size: 14px; color: #fff; font-family: 'IBM Plex Sans', sans-serif;" data-en="New Construction Inspection" data-es="Inspecci&#243;n de Construcci&#243;n Nueva">New Construction Inspection</span>
+                </label>
+                <label id="ms_opt_11mo" style="display: flex; align-items: center; gap: 11px; padding: 10px 14px; cursor: pointer; transition: background 0.15s ease;" onmouseover="this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.background='transparent'">
+                  <input type="checkbox" value="11-Month Warranty Inspection" onchange="syncMultiServices()" style="width: 17px; height: 17px; accent-color: #f5c842; cursor: pointer; flex-shrink: 0;">
+                  <span style="font-size: 14px; color: #fff; font-family: 'IBM Plex Sans', sans-serif;" data-en="11-Month Warranty Inspection" data-es="Inspecci&#243;n de Garant&#237;a de 11 Meses">11-Month Warranty Inspection</span>
+                </label>
+                <div style="padding: 8px 14px 12px;">
+                  <div id="multi_service_hint" style="font-size: 12px; color: rgba(245,200,66,0.55); font-style: italic;" data-en="Please select at least one service above." data-es="Por favor seleccione al menos un servicio.">Please select at least one service above.</div>
+                </div>
+              </div>
+            </div>
+            <script>
+              function handleInspectionTypeChange(sel) {
+                var panel = document.getElementById('multi_service_panel');
+                var hiddenInput = document.getElementById('inspection_type_value');
+                if (sel.value === 'Multiple Services') {
+                  panel.style.display = 'block';
+                  hiddenInput.value = ''; // will be filled by syncMultiServices
+                  // uncheck all when re-opening
+                  panel.querySelectorAll('input[type=checkbox]').forEach(function(cb){ cb.checked = false; });
+                  document.getElementById('multi_service_hint').style.display = 'block';
+                } else {
+                  panel.style.display = 'none';
+                  hiddenInput.value = sel.value;
+                }
+              }
+              function syncMultiServices() {
+                var checked = Array.from(document.querySelectorAll('#multi_service_panel input[type=checkbox]:checked')).map(function(cb){ return cb.value; });
+                var hiddenInput = document.getElementById('inspection_type_value');
+                var hint = document.getElementById('multi_service_hint');
+                if (checked.length > 0) {
+                  hiddenInput.value = checked.join(', ');
+                  hint.style.display = 'none';
+                } else {
+                  hiddenInput.value = '';
+                  hint.style.display = 'block';
+                }
+              }
+              // Sync hidden input for single-service path on page load
+              document.addEventListener('DOMContentLoaded', function() {
+                var sel = document.getElementById('inspection_type_select');
+                if (sel && sel.value && sel.value !== 'Multiple Services') {
+                  document.getElementById('inspection_type_value').value = sel.value;
+                }
+              });
+            </script>
+          </div>
+          <div style="margin-bottom: 14px;">
+            <label style="display: block; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.45); margin-bottom: 7px; text-transform: uppercase; letter-spacing: 0.07em;" data-en="Property Address" data-es="Direcci&#243;n de la Propiedad">Property Address</label>
+            <input type="text" name="address" required placeholder="Property address in Florida" data-ph-en="Property address in Florida" data-ph-es="Direcci&#243;n de la propiedad en Florida" style="width: 100%; background: rgba(255,255,255,0.07); border: 1.5px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 13px 15px; color: #fff; font-size: 15px; font-family: 'IBM Plex Sans', sans-serif; outline: none; transition: border-color 0.25s ease, background 0.25s ease;" onfocus="this.style.borderColor='rgba(245,200,66,0.55)'; this.style.background='rgba(255,255,255,0.09)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'; this.style.background='rgba(255,255,255,0.07)'">
+          </div>
+          <div style="margin-bottom: 22px;">
+            <label style="display: block; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.45); margin-bottom: 7px; text-transform: uppercase; letter-spacing: 0.07em;" data-en="Message (Optional)" data-es="Mensaje (Opcional)">Message (Optional)</label>
+            <textarea name="message" placeholder="Any additional details or questions..." data-ph-en="Any additional details or questions..." data-ph-es="Cualquier detalle o pregunta adicional..." rows="3" style="width: 100%; background: rgba(255,255,255,0.07); border: 1.5px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 13px 15px; color: #fff; font-size: 15px; font-family: 'IBM Plex Sans', sans-serif; outline: none; resize: vertical; transition: border-color 0.25s ease, background 0.25s ease;" onfocus="this.style.borderColor='rgba(245,200,66,0.55)'; this.style.background='rgba(255,255,255,0.09)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'; this.style.background='rgba(255,255,255,0.07)'"></textarea>
+          </div>
+
+          <!-- Primary CTA button -->
+          <button type="submit" style="width: 100%; padding: 17px 24px; border-radius: 12px; border: none; cursor: pointer; font-family: 'IBM Plex Sans', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.02em; background: linear-gradient(135deg, #f0b429 0%, #e8a800 100%); color: #0c1829; display: flex; align-items: center; justify-content: center; gap: 10px; transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease; box-shadow: 0 2px 8px rgba(232,168,0,0.2), 0 8px 24px rgba(232,168,0,0.28);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(232,168,0,0.28), 0 14px 36px rgba(232,168,0,0.36)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(232,168,0,0.2), 0 8px 24px rgba(232,168,0,0.28)'" onmousedown="this.style.transform='translateY(0)'" onfocus="this.style.outline='2px solid #f5c842'; this.style.outlineOffset='3px'" onblur="this.style.outline='none'">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            <span data-en="Request My Inspection" data-es="Solicitar Mi Inspecci&#243;n">Request My Inspection</span>
+          </button>
+
+          <!-- Secondary: call instead -->
+          <div style="text-align: center; margin-top: 14px;">
+            <span style="font-size: 13px; color: rgba(255,255,255,0.35);" data-en="Prefer to call?" data-es="&#191;Prefiere llamar?">Prefer to call?</span>
+            <a href="tel:8134063903" style="font-size: 13px; font-weight: 600; color: #f5c842; text-decoration: none; margin-left: 6px;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">813-406-3903</a>
+          </div>
+
+          <div id="form-status" style="text-align: center; margin-top: 16px; font-size: 15px; font-weight: 600; display: none;"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STICKY MOBILE CTA BAR -->
+<div id="mobile-cta-bar" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 900; background: #0c1829; border-top: 1px solid rgba(255,255,255,0.1); padding: 12px 16px; gap: 10px; box-shadow: 0 -4px 24px rgba(0,0,0,0.35);">
+  <a href="tel:8134063903" style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #f0b429 0%, #e8a800 100%); color: #0c1829; font-weight: 700; font-size: 15px; padding: 13px 12px; border-radius: 10px; text-decoration: none; transition: opacity 0.2s ease;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    <span data-en="Call Now" data-es="Llamar Ahora">Call Now</span>
+  </a>
+  <a href="#contact" onclick="document.getElementById('mobile-cta-bar').style.display='none'" style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; background: rgba(255,255,255,0.08); border: 1.5px solid rgba(255,255,255,0.18); color: #fff; font-weight: 600; font-size: 15px; padding: 13px 12px; border-radius: 10px; text-decoration: none; transition: background 0.2s ease;" onmouseover="this.style.background='rgba(255,255,255,0.13)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+    <span data-en="Get a Quote" data-es="Obtener Cotizaci&#243;n">Get a Quote</span>
+  </a>
+</div>
+<script>
+(function() {
+  var bar = document.getElementById('mobile-cta-bar');
+  function checkMobile() {
+    if (window.innerWidth <= 768) {
+      bar.style.display = 'flex';
+      document.body.style.paddingBottom = '72px';
+    } else {
+      bar.style.display = 'none';
+      document.body.style.paddingBottom = '';
+    }
+  }
+  checkMobile();
+  window.addEventListener('resize', checkMobile);
+  // Hide bar when contact section is in view (user already sees the form)
+  var contactSection = document.getElementById('contact');
+  if (contactSection && 'IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (window.innerWidth <= 768) {
+          bar.style.opacity = e.isIntersecting ? '0' : '1';
+          bar.style.pointerEvents = e.isIntersecting ? 'none' : '';
+        }
+      });
+    }, { threshold: 0.2 });
+    obs.observe(contactSection);
+  }
+})();
+</script>
+
 <!-- FOOTER -->
-<footer style="background: #050518; border-top: 1px solid rgba(232,168,0,0.15); padding: 60px 0 0;">
-  <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
+<footer style="background: #080f1c; padding: 80px 0 0; border-top: 1px solid rgba(255,255,255,0.06);">
+  <div style="max-width: 1140px; margin: 0 auto; padding: 0 32px;">
     <div class="footer-grid" style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px;">
       <div>
-        <div style="display: flex; align-items: center; gap: 0px; margin-bottom: 20px;">
-          <div class="footer-logo-img" style="width: 300px; height: 300px; flex-shrink: 0; margin-right: -80px;">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+          <div class="footer-logo-img" style="width: 140px; height: 140px; flex-shrink: 0; margin: -42px -30px -42px -20px;">
             <img src="brand_assets/Untitled design.png" alt="Sunstate Service Group Logo" style="width: 100%; height: 100%; object-fit: contain;">
           </div>
           <div>
-            <div style="font-weight: 900; font-size: 16px; color: #fff; letter-spacing: -0.01em; line-height: 1.1;">SUNSTATE</div>
-            <div style="font-size: 8.5px; font-weight: 600; letter-spacing: 0.14em; color: #C9A227; text-transform: uppercase; line-height: 1.3; display: flex; align-items: center; gap: 5px;">
-              <span style="display: inline-block; width: 14px; height: 1px; background: #C9A227;"></span>SERVICE GROUP LLC<span style="display: inline-block; width: 14px; height: 1px; background: #C9A227;"></span>
-            </div>
-            <div style="font-size: 8px; font-style: italic; color: #7bc8f0; letter-spacing: 0.02em; margin-top: 1px;" data-en="Certified Florida Home Inspector" data-es="Inspector de Viviendas Certificado en Florida">Certified Florida Home Inspector</div>
+            <div style="font-family: 'Libre Baskerville', serif; font-size: 18px; color: #fff; line-height: 1.1;">Sunstate</div>
+            <div style="font-size: 10px; font-weight: 600; letter-spacing: 0.08em; color: rgba(255,255,255,0.5); text-transform: uppercase; line-height: 1.3;">Service Group LLC</div>
           </div>
         </div>
-        <p style="font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.75; max-width: 300px; margin-bottom: 20px;" data-en="Certified Florida Home Inspector serving Tampa Bay and surrounding areas. Professional, thorough, bilingual." data-es="Inspector de Viviendas Certificado en Florida sirviendo Tampa Bay y &#225;reas circundantes. Profesional, exhaustivo, biling&#252;e.">Certified Florida Home Inspector serving Tampa Bay and surrounding areas. Professional, thorough, bilingual.</p>
-        <div style="font-size: 13px; color: rgba(255,255,255,0.45); margin-bottom: 8px;">&#128222; 813-406-3903</div>
-        <div style="font-size: 13px; color: rgba(255,255,255,0.45);">&#9993; sunstateservicegroup@gmail.com</div>
+        <p style="font-size: 14px; color: rgba(255,255,255,0.45); line-height: 1.75; max-width: 300px; margin-bottom: 20px;" data-en="Certified Florida Home Inspector serving Tampa Bay and surrounding areas. Professional, thorough, bilingual." data-es="Inspector de Viviendas Certificado en Florida sirviendo Tampa Bay y &#225;reas circundantes. Profesional, exhaustivo, biling&#252;e.">Certified Florida Home Inspector serving Tampa Bay and surrounding areas. Professional, thorough, bilingual.</p>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <a href="tel:8134063903" style="font-size: 13px; color: rgba(255,255,255,0.45); text-decoration: none; display: flex; align-items: center; gap: 8px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            813-406-3903
+          </a>
+          <button onclick="copyEmail(this)" style="font-size: 13px; color: rgba(255,255,255,0.45); text-decoration: none; display: flex; align-items: center; gap: 8px; background: none; border: none; cursor: pointer; font-family: inherit; padding: 0;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            sunstateservicegroup@gmail.com
+          </button>
+        </div>
       </div>
 
       <div>
-        <div style="font-size: 12px; font-weight: 800; color: #f5c842; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 20px;" data-en="Services" data-es="Servicios">Services</div>
+        <div style="font-size: 12px; font-weight: 700; color: #f5c842; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 20px;" data-en="Services" data-es="Servicios">Services</div>
         <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 10px;">
           <li><a href="4-point-inspections.html" class="footer-link" style="text-decoration: none; font-size: 14px;" data-en="4-Point Inspections" data-es="Inspecciones de 4 Puntos">4-Point Inspections</a></li>
           <li><a href="wind-mitigation.html" class="footer-link" style="text-decoration: none; font-size: 14px;" data-en="Wind Mitigation" data-es="Mitigaci&#243;n de Viento">Wind Mitigation</a></li>
@@ -635,7 +1343,7 @@ tailwind.config = {
       </div>
 
       <div>
-        <div style="font-size: 12px; font-weight: 800; color: #f5c842; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 20px;" data-en="Company" data-es="Empresa">Company</div>
+        <div style="font-size: 12px; font-weight: 700; color: #f5c842; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 20px;" data-en="Company" data-es="Empresa">Company</div>
         <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 10px;">
           <li><a href="#about" class="footer-link" style="text-decoration: none; font-size: 14px;" data-en="About Us" data-es="Nosotros">About Us</a></li>
           <li><a href="building-permits.html" class="footer-link" style="text-decoration: none; font-size: 14px;" data-en="Building Permits" data-es="Permisos de Construcci&#243;n">Building Permits</a></li>
@@ -645,26 +1353,26 @@ tailwind.config = {
       </div>
 
       <div>
-        <div style="font-size: 12px; font-weight: 800; color: #f5c842; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 20px;" data-en="Credentials" data-es="Credenciales">Credentials</div>
+        <div style="font-size: 12px; font-weight: 700; color: #f5c842; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 20px;" data-en="Credentials" data-es="Credenciales">Credentials</div>
         <div style="display: flex; flex-direction: column; gap: 12px;">
-          <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 10px 14px;">
-            <div style="font-size: 11px; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 0.05em;" data-en="License # HI18594" data-es="Licencia # HI18594">License # HI18594</div>
-            <div style="font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 2px;" data-en="State of Florida" data-es="Estado de Florida">State of Florida</div>
+          <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 14px 16px;">
+            <div style="font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.9); text-transform: uppercase; letter-spacing: 0.05em;" data-en="License # HI18594" data-es="Licencia # HI18594">License # HI18594</div>
+            <div style="font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 4px;" data-en="State of Florida" data-es="Estado de Florida">State of Florida</div>
           </div>
-          <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 10px 14px;">
-            <div style="font-size: 11px; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 0.05em;" data-en="Licensed &amp; Insured" data-es="Licenciado y Asegurado">Licensed &amp; Insured</div>
-            <div style="font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 2px;" data-en="Fully covered" data-es="Completamente cubierto">Fully covered</div>
+          <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 14px 16px;">
+            <div style="font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.9); text-transform: uppercase; letter-spacing: 0.05em;" data-en="Licensed &amp; Insured" data-es="Licenciado y Asegurado">Licensed &amp; Insured</div>
+            <div style="font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 4px;" data-en="Fully covered" data-es="Completamente cubierto">Fully covered</div>
           </div>
-          <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 10px 14px;">
-            <div style="font-size: 11px; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 0.05em;">English &bull; Espa&#241;ol</div>
-            <div style="font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 2px;" data-en="Bilingual service" data-es="Servicio biling&#252;e">Bilingual service</div>
+          <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 14px 16px;">
+            <div style="font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.9); text-transform: uppercase; letter-spacing: 0.05em;">English &bull; Espa&#241;ol</div>
+            <div style="font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 4px;" data-en="Bilingual service" data-es="Servicio biling&#252;e">Bilingual service</div>
           </div>
         </div>
       </div>
     </div>
 
     <div class="footer-bottom" style="border-top: 1px solid rgba(255,255,255,0.07); padding: 24px 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
-      <div style="font-size: 13px; color: rgba(255,255,255,0.35);" data-en="&copy; 2026 Sunstate Service Group LLC. All rights reserved." data-es="&copy; 2026 Sunstate Service Group LLC. Todos los derechos reservados.">&copy; 2026 Sunstate Service Group LLC. All rights reserved.</div>
+      <div style="font-size: 13px; color: rgba(255,255,255,0.3);" data-en="&copy; 2026 Sunstate Service Group LLC. All rights reserved." data-es="&copy; 2026 Sunstate Service Group LLC. Todos los derechos reservados.">&copy; 2026 Sunstate Service Group LLC. All rights reserved.</div>
       <div style="display: flex; gap: 20px;">
         <a href="privacy-policy.html" class="footer-link" style="text-decoration: none; font-size: 13px;" data-en="Privacy Policy" data-es="Pol&#237;tica de Privacidad">Privacy Policy</a>
         <a href="terms-of-service.html" class="footer-link" style="text-decoration: none; font-size: 13px;" data-en="Terms of Service" data-es="T&#233;rminos de Servicio">Terms of Service</a>
@@ -673,6 +1381,7 @@ tailwind.config = {
   </div>
 </footer>
 
+<!-- Smooth scroll -->
 <script>
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
@@ -694,24 +1403,57 @@ function toggleMobileMenu() {
 }
 </script>
 
+<!-- Nav scroll effect -->
+<script>
+(function() {
+  var nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 40) {
+      nav.classList.add('nav-scrolled');
+    } else {
+      nav.classList.remove('nav-scrolled');
+    }
+  });
+})();
+</script>
+
+<!-- Scroll reveal animations -->
+<script>
+(function() {
+  var reveals = document.querySelectorAll('.reveal');
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
+  reveals.forEach(function(el) { observer.observe(el); });
+})();
+</script>
+
 <!-- Language Toggle -->
 <script>
+var fontSizes=[14,16,18,20];
+var zoomLevels=[0.85,1,1.12,1.25];
+var fontSizeIdx=parseInt(localStorage.getItem('ssg-fontSize')||'1');
+(function(){document.documentElement.style.fontSize=fontSizes[fontSizeIdx]+'px';document.addEventListener('DOMContentLoaded',function(){document.body.style.zoom=zoomLevels[fontSizeIdx];});})();
+function changeFontSize(dir){fontSizeIdx=Math.min(3,Math.max(0,fontSizeIdx+dir));localStorage.setItem('ssg-fontSize',fontSizeIdx);document.documentElement.style.fontSize=fontSizes[fontSizeIdx]+'px';document.body.style.zoom=zoomLevels[fontSizeIdx];}
+
 var currentLang = 'en';
 
 function toggleLanguage() {
   currentLang = currentLang === 'en' ? 'es' : 'en';
 
-  // Update all elements with data-en / data-es attributes
   document.querySelectorAll('[data-en][data-es]').forEach(function(el) {
     var text = el.getAttribute('data-' + currentLang);
     if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') return;
     if (el.tagName === 'OPTION') {
       el.textContent = text;
     } else if (el.children.length === 0 || el.tagName === 'A' || el.tagName === 'BUTTON' || el.tagName === 'P' || el.tagName === 'DIV' || el.tagName === 'SPAN' || el.tagName === 'STRONG' || el.tagName === 'LABEL' || el.tagName === 'H2' || el.tagName === 'H3') {
-      // Only update if element has no child elements with their own translations
       var hasTranslatableChildren = el.querySelector('[data-en][data-es]');
       if (!hasTranslatableChildren) {
-        // Preserve SVG children in buttons/links
         var svgs = el.querySelectorAll('svg');
         if (svgs.length > 0) {
           var svgHtml = '';
@@ -724,12 +1466,10 @@ function toggleLanguage() {
     }
   });
 
-  // Update placeholders
   document.querySelectorAll('[data-ph-en][data-ph-es]').forEach(function(el) {
     el.placeholder = el.getAttribute('data-ph-' + currentLang);
   });
 
-  // Update the toggle button itself
   var label = document.getElementById('lang-label');
   var flag = document.getElementById('lang-flag');
   if (currentLang === 'es') {
@@ -742,82 +1482,31 @@ function toggleLanguage() {
 }
 </script>
 
-<!-- BackgroundPaths: animated flowing SVG paths behind hero text -->
+<!-- Copy email to clipboard -->
 <script>
-(function () {
-  var heroSection = document.querySelector('section');
-  if (!heroSection) return;
-
-  var svgNS = 'http://www.w3.org/2000/svg';
-
-  // Inject CSS keyframes once — one animation per unique duration/offset combo
-  var styleEl = document.createElement('style');
-  document.head.appendChild(styleEl);
-
-  var container = document.createElement('div');
-  container.style.cssText = 'position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0;';
-
-  var svg = document.createElementNS(svgNS, 'svg');
-  svg.setAttribute('viewBox', '0 0 696 316');
-  svg.setAttribute('preserveAspectRatio', 'xMidYMid slice');
-  svg.setAttribute('fill', 'none');
-  svg.setAttribute('class', 'hero-paths-svg');
-  svg.style.cssText = 'width:100%;height:100%;';
-
-  container.appendChild(svg);
-  heroSection.insertBefore(container, heroSection.firstChild);
-
-  var cssRules = '';
-
-  for (var i = 0; i < 36; i++) {
-    var p0x = -(380 - i * 5);
-    var p0y = -(189 + i * 6);
-    var c1x = -(312 - i * 5);
-    var c1y = 216 - i * 6;
-    var c2x = 152 - i * 5;
-    var c2y = 343 - i * 6;
-    var c3x = 616 - i * 5;
-    var c3y = 470 - i * 6;
-    var ex  = 684 - i * 5;
-    var ey  = 875 - i * 6;
-
-    var d = 'M' + p0x + ' ' + p0y +
-            'C' + p0x + ' ' + p0y + ' ' + c1x + ' ' + c1y + ' ' + c2x + ' ' + c2y +
-            'C' + c3x + ' ' + c3y + ' ' + ex  + ' ' + ey  + ' ' + ex  + ' ' + ey;
-
-    var path = document.createElementNS(svgNS, 'path');
-    path.setAttribute('d', d);
-    path.setAttribute('stroke', 'currentColor');
-    path.setAttribute('stroke-width', String(0.5 + i * 0.03));
-    svg.appendChild(path);
-  }
-
-  requestAnimationFrame(function () {
-    var paths = svg.querySelectorAll('path');
-    paths.forEach(function (path, i) {
-      var length;
-      try { length = path.getTotalLength(); } catch (e) { length = 1200; }
-      if (!length) length = 1200;
-
-      var baseOpacity = Math.min(0.03 + i * 0.004, 0.14);
-      var duration   = 28 + Math.random() * 12;
-      var delay      = -(Math.random() * duration);
-      var dashLen    = length * 0.35;
-      var name       = 'heroPath' + i;
-
-      cssRules += '@keyframes ' + name + '{from{stroke-dashoffset:0}to{stroke-dashoffset:' + (-length) + 'px}}';
-
-      path.style.strokeDasharray  = dashLen + ' ' + length;
-      path.style.opacity          = baseOpacity;
-      path.style.animation        = name + ' ' + duration + 's linear ' + delay + 's infinite';
-      path.style.willChange       = 'stroke-dashoffset';
-    });
-
-    styleEl.textContent = cssRules;
+function copyEmail(el) {
+  navigator.clipboard.writeText('sunstateservicegroup@gmail.com').then(function() {
+    // Show toast
+    var toast = document.getElementById('email-copy-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'email-copy-toast';
+      toast.style.cssText = 'position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(20px);background:#1a2e45;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-family:inherit;z-index:9999;opacity:0;transition:opacity 0.3s ease,transform 0.3s ease;pointer-events:none;border:1px solid rgba(74,157,212,0.4);';
+      toast.textContent = 'Email copied to clipboard!';
+      document.body.appendChild(toast);
+    }
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateX(-50%) translateY(0)';
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(function() {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateX(-50%) translateY(20px)';
+    }, 2500);
   });
-})();
+}
 </script>
 
+<!-- EmailJS form submission -->
 <script>
 (function() {
   var form = document.getElementById('inspection-form');
@@ -825,7 +1514,19 @@ function toggleLanguage() {
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
-    console.log('Form submit triggered');
+    // Validate inspection type
+    var typeVal = document.getElementById('inspection_type_value').value;
+    var selectEl = document.getElementById('inspection_type_select');
+    if (!selectEl || !selectEl.value) {
+      var hint = document.getElementById('multi_service_hint');
+      if (hint) { hint.textContent = 'Please select a service.'; hint.style.display = 'block'; hint.style.color = '#f87171'; }
+      return;
+    }
+    if (selectEl.value === 'Multiple Services' && !typeVal) {
+      var hint2 = document.getElementById('multi_service_hint');
+      if (hint2) { hint2.style.display = 'block'; hint2.style.color = '#f87171'; }
+      return;
+    }
     var btn = form.querySelector('button[type="submit"]');
     var status = document.getElementById('form-status');
     var originalText = btn.textContent;
@@ -840,8 +1541,8 @@ function toggleLanguage() {
       .then(function() {
         status.style.color = '#4ade80';
         status.textContent = (currentLang === 'es')
-          ? '✓ Solicitud enviada con éxito. ¡Nos comunicaremos pronto!'
-          : '✓ Request sent successfully. We\'ll be in touch soon!';
+          ? '\u2713 Solicitud enviada con \u00e9xito. \u00a1Nos comunicaremos pronto!'
+          : '\u2713 Request sent successfully. We\'ll be in touch soon!';
         btn.textContent = originalText;
         btn.disabled = false;
         btn.style.opacity = '1';
