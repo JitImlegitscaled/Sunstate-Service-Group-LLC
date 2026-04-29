@@ -351,7 +351,7 @@ tailwind.config = {
     .featured-card img { height: 240px !important; }
     .trust-grid { grid-template-columns: 1fr 1fr !important; gap: 14px !important; }
     .process-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
-    .contact-layout-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
+    .contact-layout-grid { flex-direction: column !important; gap: 20px !important; }
     .contact-cards-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
     .contact-form-grid { grid-template-columns: 1fr !important; }
     .contact-form-box { padding: 24px !important; }
@@ -751,10 +751,10 @@ tailwind.config = {
       </a>
 
       <!-- CTA card -->
-      <div class="reveal reveal-delay-2" style="border-radius: 12px; padding: 36px 28px; background: linear-gradient(150deg, #0c1829 0%, #162b47 60%, #1c3a5e 100%); cursor: pointer; position: relative; overflow: hidden; box-shadow: 0 4px 16px rgba(12,24,41,0.12), 0 16px 40px rgba(12,24,41,0.1);">
+      <div class="reveal reveal-delay-2" style="grid-column: 1 / -1; border-radius: 12px; padding: 36px 28px; background: linear-gradient(150deg, #0c1829 0%, #162b47 60%, #1c3a5e 100%); cursor: pointer; position: relative; overflow: hidden; box-shadow: 0 4px 16px rgba(12,24,41,0.12), 0 16px 40px rgba(12,24,41,0.1);">
         <div style="position: absolute; top: -30px; right: -30px; width: 140px; height: 140px; background: radial-gradient(circle, rgba(240,180,41,0.1) 0%, transparent 70%); border-radius: 50%;"></div>
         <div style="position: absolute; bottom: -20px; left: -20px; width: 100px; height: 100px; background: radial-gradient(circle, rgba(59,145,204,0.08) 0%, transparent 70%); border-radius: 50%;"></div>
-        <div style="position: relative; z-index: 1;">
+        <div style="position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; text-align: center;">
           <div style="width: 52px; height: 52px; background: var(--gold-light); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
             <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0a1628" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
           </div>
@@ -1121,10 +1121,10 @@ tailwind.config = {
     </div>
 
     <!-- Two-column layout: Quick CTAs left + Form right -->
-    <div style="display: grid; grid-template-columns: 1fr 1.55fr; gap: 32px; align-items: start;" class="contact-layout-grid reveal">
+    <div style="display: flex; flex-direction: row; gap: 32px; align-items: stretch;" class="contact-layout-grid reveal">
 
       <!-- LEFT: Quick actions & trust signals -->
-      <div style="display: flex; flex-direction: column; gap: 16px;">
+      <div style="display: flex; flex-direction: column; gap: 16px; flex: 1 1 0; min-width: 0;">
 
         <!-- Primary phone CTA — most prominent -->
         <a href="tel:8134063903" style="display: flex; align-items: center; gap: 16px; background: linear-gradient(135deg, rgba(240,180,41,0.18) 0%, rgba(232,168,0,0.08) 100%); border: 1.5px solid rgba(245,200,66,0.35); border-radius: 16px; padding: 24px 22px; text-decoration: none; transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), border-color 0.3s ease, background 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.borderColor='rgba(245,200,66,0.65)'; this.style.background='linear-gradient(135deg,rgba(240,180,41,0.25) 0%,rgba(232,168,0,0.12) 100%)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(245,200,66,0.35)'; this.style.background='linear-gradient(135deg,rgba(240,180,41,0.18) 0%,rgba(232,168,0,0.08) 100%)'">
@@ -1161,7 +1161,7 @@ tailwind.config = {
         </div>
 
         <!-- Trust signals strip -->
-        <div style="background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 20px 22px; display: flex; flex-direction: column; gap: 12px;">
+        <div style="background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 20px 22px; display: flex; flex-direction: column; gap: 12px; flex-grow: 1;">
           <div style="font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px;" data-en="Why Choose Us" data-es="Por qu&#233; elegirnos">Why Choose Us</div>
           <div style="display: flex; align-items: center; gap: 10px;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5c842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -1183,7 +1183,7 @@ tailwind.config = {
       </div>
 
       <!-- RIGHT: Request form -->
-      <div class="dark-form contact-form-box" style="background: rgba(255,255,255,0.045); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 40px; text-align: left; backdrop-filter: blur(16px); box-shadow: 0 8px 40px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.06);">
+      <div class="dark-form contact-form-box" style="background: rgba(255,255,255,0.045); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 40px; text-align: left; backdrop-filter: blur(16px); box-shadow: 0 8px 40px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.06); flex: 1.55 1 0; min-width: 0;">
 
         <!-- Form header with urgency badge -->
         <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 28px; flex-wrap: wrap;">
@@ -1209,114 +1209,143 @@ tailwind.config = {
               <label style="display: block; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.45); margin-bottom: 7px; text-transform: uppercase; letter-spacing: 0.07em;" data-en="Phone" data-es="Tel&#233;fono">Phone</label>
               <input type="tel" name="phone" required placeholder="Your phone number" data-ph-en="Your phone number" data-ph-es="Su n&#250;mero de tel&#233;fono" style="width: 100%; background: rgba(255,255,255,0.07); border: 1.5px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 13px 15px; color: #fff; font-size: 15px; font-family: 'IBM Plex Sans', sans-serif; outline: none; transition: border-color 0.25s ease, background 0.25s ease;" onfocus="this.style.borderColor='rgba(245,200,66,0.55)'; this.style.background='rgba(255,255,255,0.09)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'; this.style.background='rgba(255,255,255,0.07)'">
             </div>
-            <div>
+            <div style="grid-column: 1 / -1;">
               <label style="display: block; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.45); margin-bottom: 7px; text-transform: uppercase; letter-spacing: 0.07em;" data-en="Email" data-es="Correo Electr&#243;nico">Email</label>
               <input type="email" name="from_email" required placeholder="your@email.com" data-ph-en="your@email.com" data-ph-es="su@correo.com" style="width: 100%; background: rgba(255,255,255,0.07); border: 1.5px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 13px 15px; color: #fff; font-size: 15px; font-family: 'IBM Plex Sans', sans-serif; outline: none; transition: border-color 0.25s ease, background 0.25s ease;" onfocus="this.style.borderColor='rgba(245,200,66,0.55)'; this.style.background='rgba(255,255,255,0.09)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'; this.style.background='rgba(255,255,255,0.07)'">
             </div>
-            <div style="position: relative;">
-              <label style="display: block; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.45); margin-bottom: 7px; text-transform: uppercase; letter-spacing: 0.07em;" data-en="Inspection Type" data-es="Tipo de Inspecci&#243;n">Inspection Type</label>
+            <div style="grid-column: 1 / -1;">
+              <label style="display: block; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.45); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.07em;" data-en="Inspection Type" data-es="Tipo de Inspecci&#243;n">Inspection Type</label>
               <!-- Hidden input carries the final value for EmailJS -->
               <input type="hidden" name="inspection_type" id="inspection_type_value">
-              <!-- Main select trigger -->
-              <select id="inspection_type_select" required style="width: 100%; background: rgba(22,43,71,0.95); border: 1.5px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 13px 15px; color: #fff; font-size: 15px; font-family: 'IBM Plex Sans', sans-serif; outline: none; cursor: pointer; transition: border-color 0.25s ease;" onfocus="this.style.borderColor='rgba(245,200,66,0.55)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'" onchange="handleInspectionTypeChange(this)">
-                <option value="" disabled selected data-en="Select a service" data-es="Seleccione un servicio">Select a service</option>
-                <optgroup label="Individual Services" data-en="Individual Services" data-es="Servicios Individuales">
-                  <option value="Wind Mitigation" data-en="Wind Mitigation — $85" data-es="Mitigaci&#243;n de Viento — $85">Wind Mitigation — $85</option>
-                  <option value="4-Point Inspection" data-en="4-Point Inspection — $85" data-es="Inspecci&#243;n de 4 Puntos — $85">4-Point Inspection — $85</option>
-                  <option value="Pre-Purchase Inspection" data-en="Pre-Purchase Inspection — Starting at $350" data-es="Inspecci&#243;n Pre-Compra — Desde $350">Pre-Purchase Inspection — Starting at $350</option>
-                  <option value="New Construction Inspection" data-en="New Construction Inspection — Starting at $350" data-es="Inspecci&#243;n de Construcci&#243;n Nueva — Desde $350">New Construction Inspection — Starting at $350</option>
-                  <option value="11-Month Warranty Inspection" data-en="11-Month Warranty Inspection — Starting at $350" data-es="Inspecci&#243;n de Garant&#237;a de 11 Meses — Desde $350">11-Month Warranty Inspection — Starting at $350</option>
-                </optgroup>
-                <optgroup label="Bundle" data-en="Bundle" data-es="Paquete">
-                  <option value="Wind Mitigation + 4-Point Package" data-en="⭐ Wind Mitigation + 4-Point Package — $130" data-es="⭐ Paquete Mitigaci&#243;n + 4 Puntos — $130">⭐ Wind Mitigation + 4-Point Package — $130</option>
-                </optgroup>
-              </select>
-              <!-- Multi-select panel (shown only when "Multiple Services" is chosen) -->
-              <div id="multi_service_panel" style="display: none; margin-top: 8px; background: rgba(22,43,71,0.98); border: 1.5px solid rgba(245,200,66,0.35); border-radius: 10px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.45);">
-                <div style="padding: 10px 14px 6px; font-size: 11px; font-weight: 700; color: rgba(245,200,66,0.7); text-transform: uppercase; letter-spacing: 0.08em;" data-en="Select all that apply:" data-es="Seleccione todos los que apliquen:">Select all that apply:</div>
-                <label id="ms_opt_4pt" style="display: flex; align-items: center; gap: 11px; padding: 10px 14px; cursor: pointer; transition: background 0.15s ease;" onmouseover="this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.background='transparent'">
-                  <input type="checkbox" value="4-Point Inspection" data-price="85" onchange="syncMultiServices()" style="width: 17px; height: 17px; accent-color: #f5c842; cursor: pointer; flex-shrink: 0;">
-                  <span style="flex: 1; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
-                    <span style="font-size: 14px; color: #fff; font-family: 'IBM Plex Sans', sans-serif;" data-en="4-Point Inspection" data-es="Inspecci&#243;n de 4 Puntos">4-Point Inspection</span>
-                    <span style="font-size: 13px; font-weight: 700; color: #3b91cc; white-space: nowrap;">$85</span>
+              <!-- Service toggle cards — select one or many -->
+              <div id="service_cards" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+
+                <label class="svc-card" data-value="Wind Mitigation" data-price="85" data-from="false" style="display: flex; align-items: center; gap: 10px; padding: 11px 13px; border-radius: 9px; border: 1.5px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); cursor: pointer; user-select: none;">
+                  <input type="checkbox" value="Wind Mitigation" style="position:absolute;opacity:0;width:0;height:0;" onchange="syncServiceCards()">
+                  <span class="svc-check" style="width:18px;height:18px;border-radius:5px;border:1.5px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;background:transparent;">
+                    <svg width="11" height="9" viewBox="0 0 11 9" fill="none" class="svc-tick" style="display:none;"><path d="M1 4L4 7.5L10 1" stroke="#0a1628" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  <span style="flex:1;min-width:0;">
+                    <span style="display:block;font-size:13px;font-weight:600;color:#fff;line-height:1.3;" data-en="Wind Mitigation" data-es="Mitigaci&#243;n de Viento">Wind Mitigation</span>
+                    <span style="display:block;font-size:12px;font-weight:700;color:#3b91cc;margin-top:1px;">$85</span>
                   </span>
                 </label>
-                <label id="ms_opt_wind" style="display: flex; align-items: center; gap: 11px; padding: 10px 14px; cursor: pointer; transition: background 0.15s ease;" onmouseover="this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.background='transparent'">
-                  <input type="checkbox" value="Wind Mitigation" data-price="85" onchange="syncMultiServices()" style="width: 17px; height: 17px; accent-color: #f5c842; cursor: pointer; flex-shrink: 0;">
-                  <span style="flex: 1; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
-                    <span style="font-size: 14px; color: #fff; font-family: 'IBM Plex Sans', sans-serif;" data-en="Wind Mitigation" data-es="Mitigaci&#243;n de Viento">Wind Mitigation</span>
-                    <span style="font-size: 13px; font-weight: 700; color: #3b91cc; white-space: nowrap;">$85</span>
+
+                <label class="svc-card" data-value="4-Point Inspection" data-price="85" data-from="false" style="display: flex; align-items: center; gap: 10px; padding: 11px 13px; border-radius: 9px; border: 1.5px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); cursor: pointer; user-select: none;">
+                  <input type="checkbox" value="4-Point Inspection" style="position:absolute;opacity:0;width:0;height:0;" onchange="syncServiceCards()">
+                  <span class="svc-check" style="width:18px;height:18px;border-radius:5px;border:1.5px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;background:transparent;">
+                    <svg width="11" height="9" viewBox="0 0 11 9" fill="none" class="svc-tick" style="display:none;"><path d="M1 4L4 7.5L10 1" stroke="#0a1628" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  <span style="flex:1;min-width:0;">
+                    <span style="display:block;font-size:13px;font-weight:600;color:#fff;line-height:1.3;" data-en="4-Point Inspection" data-es="Inspecci&#243;n de 4 Puntos">4-Point Inspection</span>
+                    <span style="display:block;font-size:12px;font-weight:700;color:#3b91cc;margin-top:1px;">$85</span>
                   </span>
                 </label>
-                <label id="ms_opt_prepurch" style="display: flex; align-items: center; gap: 11px; padding: 10px 14px; cursor: pointer; transition: background 0.15s ease;" onmouseover="this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.background='transparent'">
-                  <input type="checkbox" value="Pre-Purchase Inspection" data-price="350" onchange="syncMultiServices()" style="width: 17px; height: 17px; accent-color: #f5c842; cursor: pointer; flex-shrink: 0;">
-                  <span style="flex: 1; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
-                    <span style="font-size: 14px; color: #fff; font-family: 'IBM Plex Sans', sans-serif;" data-en="Pre-Purchase Inspection" data-es="Inspecci&#243;n Pre-Compra">Pre-Purchase Inspection</span>
-                    <span style="font-size: 13px; font-weight: 700; color: #3b91cc; white-space: nowrap;">from $350</span>
+
+                <label class="svc-card" data-value="Pre-Purchase Inspection" data-price="350" data-from="true" style="display: flex; align-items: center; gap: 10px; padding: 11px 13px; border-radius: 9px; border: 1.5px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); cursor: pointer; user-select: none;">
+                  <input type="checkbox" value="Pre-Purchase Inspection" style="position:absolute;opacity:0;width:0;height:0;" onchange="syncServiceCards()">
+                  <span class="svc-check" style="width:18px;height:18px;border-radius:5px;border:1.5px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;background:transparent;">
+                    <svg width="11" height="9" viewBox="0 0 11 9" fill="none" class="svc-tick" style="display:none;"><path d="M1 4L4 7.5L10 1" stroke="#0a1628" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  <span style="flex:1;min-width:0;">
+                    <span style="display:block;font-size:13px;font-weight:600;color:#fff;line-height:1.3;" data-en="Pre-Purchase" data-es="Inspecci&#243;n Pre-Compra">Pre-Purchase</span>
+                    <span style="display:block;font-size:12px;font-weight:700;color:#3b91cc;margin-top:1px;">Starting at $350</span>
                   </span>
                 </label>
-                <label id="ms_opt_newcon" style="display: flex; align-items: center; gap: 11px; padding: 10px 14px; cursor: pointer; transition: background 0.15s ease;" onmouseover="this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.background='transparent'">
-                  <input type="checkbox" value="New Construction Inspection" data-price="350" onchange="syncMultiServices()" style="width: 17px; height: 17px; accent-color: #f5c842; cursor: pointer; flex-shrink: 0;">
-                  <span style="flex: 1; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
-                    <span style="font-size: 14px; color: #fff; font-family: 'IBM Plex Sans', sans-serif;" data-en="New Construction Inspection" data-es="Inspecci&#243;n de Construcci&#243;n Nueva">New Construction Inspection</span>
-                    <span style="font-size: 13px; font-weight: 700; color: #3b91cc; white-space: nowrap;">from $350</span>
+
+                <label class="svc-card" data-value="New Construction Inspection" data-price="350" data-from="true" style="display: flex; align-items: center; gap: 10px; padding: 11px 13px; border-radius: 9px; border: 1.5px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); cursor: pointer; user-select: none;">
+                  <input type="checkbox" value="New Construction Inspection" style="position:absolute;opacity:0;width:0;height:0;" onchange="syncServiceCards()">
+                  <span class="svc-check" style="width:18px;height:18px;border-radius:5px;border:1.5px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;background:transparent;">
+                    <svg width="11" height="9" viewBox="0 0 11 9" fill="none" class="svc-tick" style="display:none;"><path d="M1 4L4 7.5L10 1" stroke="#0a1628" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  <span style="flex:1;min-width:0;">
+                    <span style="display:block;font-size:13px;font-weight:600;color:#fff;line-height:1.3;" data-en="New Construction" data-es="Inspecci&#243;n de Construcci&#243;n Nueva">New Construction</span>
+                    <span style="display:block;font-size:12px;font-weight:700;color:#3b91cc;margin-top:1px;">Starting at $350</span>
                   </span>
                 </label>
-                <label id="ms_opt_11mo" style="display: flex; align-items: center; gap: 11px; padding: 10px 14px; cursor: pointer; transition: background 0.15s ease;" onmouseover="this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.background='transparent'">
-                  <input type="checkbox" value="11-Month Warranty Inspection" data-price="350" onchange="syncMultiServices()" style="width: 17px; height: 17px; accent-color: #f5c842; cursor: pointer; flex-shrink: 0;">
-                  <span style="flex: 1; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
-                    <span style="font-size: 14px; color: #fff; font-family: 'IBM Plex Sans', sans-serif;" data-en="11-Month Warranty Inspection" data-es="Inspecci&#243;n de Garant&#237;a de 11 Meses">11-Month Warranty Inspection</span>
-                    <span style="font-size: 13px; font-weight: 700; color: #3b91cc; white-space: nowrap;">from $350</span>
+
+                <label class="svc-card" data-value="11-Month Warranty Inspection" data-price="350" data-from="true" style="display: flex; align-items: center; gap: 10px; padding: 11px 13px; border-radius: 9px; border: 1.5px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); cursor: pointer; user-select: none;">
+                  <input type="checkbox" value="11-Month Warranty Inspection" style="position:absolute;opacity:0;width:0;height:0;" onchange="syncServiceCards()">
+                  <span class="svc-check" style="width:18px;height:18px;border-radius:5px;border:1.5px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;background:transparent;">
+                    <svg width="11" height="9" viewBox="0 0 11 9" fill="none" class="svc-tick" style="display:none;"><path d="M1 4L4 7.5L10 1" stroke="#0a1628" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  <span style="flex:1;min-width:0;">
+                    <span style="display:block;font-size:13px;font-weight:600;color:#fff;line-height:1.3;" data-en="11-Month Warranty" data-es="Inspecci&#243;n de Garant&#237;a de 11 Meses">11-Month Warranty</span>
+                    <span style="display:block;font-size:12px;font-weight:700;color:#3b91cc;margin-top:1px;">Starting at $350</span>
                   </span>
                 </label>
-                <div style="padding: 8px 14px 12px; border-top: 1px solid rgba(255,255,255,0.07); margin-top: 4px;">
-                  <div id="multi_service_hint" style="font-size: 12px; color: rgba(245,200,66,0.55); font-style: italic;" data-en="Please select at least one service above." data-es="Por favor seleccione al menos un servicio.">Please select at least one service above.</div>
-                  <div id="multi_service_total" style="display: none; font-size: 13px; font-weight: 700; color: #f5c842;">
-                    <span data-en="Estimated total: " data-es="Total estimado: ">Estimated total: </span><span id="multi_service_total_amount"></span>
-                  </div>
+
+                <label class="svc-card svc-card--bundle" data-value="Wind Mitigation + 4-Point Package" data-price="130" data-from="false" style="display: flex; align-items: center; gap: 10px; padding: 11px 13px; border-radius: 9px; border: 1.5px solid rgba(245,200,66,0.25); background: rgba(245,200,66,0.06); cursor: pointer; user-select: none;">
+                  <input type="checkbox" value="Wind Mitigation + 4-Point Package" style="position:absolute;opacity:0;width:0;height:0;" onchange="syncServiceCards()">
+                  <span class="svc-check" style="width:18px;height:18px;border-radius:5px;border:1.5px solid rgba(245,200,66,0.35);display:flex;align-items:center;justify-content:center;flex-shrink:0;background:transparent;">
+                    <svg width="11" height="9" viewBox="0 0 11 9" fill="none" class="svc-tick" style="display:none;"><path d="M1 4L4 7.5L10 1" stroke="#0a1628" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  <span style="flex:1;min-width:0;">
+                    <span style="display:block;font-size:13px;font-weight:600;color:#f5c842;line-height:1.3;" data-en="Wind + 4-Point" data-es="Paquete Viento + 4 Puntos">Wind + 4-Point</span>
+                    <span style="display:block;font-size:12px;font-weight:700;color:#f5c842;margin-top:1px;">$130</span>
+                    <span style="display:block;font-size:11px;font-weight:600;color:#f5c842;margin-top:1px;opacity:0.65;">Save $40</span>
+                  </span>
+                </label>
+
+              </div>
+              <!-- Validation hint + live total -->
+              <div style="margin-top: 8px; min-height: 20px;">
+                <div id="svc_hint" style="font-size: 12px; color: rgba(245,200,66,0.55); font-style: italic; display: none;" data-en="Please select at least one service." data-es="Por favor seleccione al menos un servicio.">Please select at least one service.</div>
+                <div id="svc_total" style="display: none; font-size: 13px; font-weight: 700; color: #f5c842;">
+                  <span data-en="Estimated total: " data-es="Total estimado: ">Estimated total: </span><span id="svc_total_amount"></span>
                 </div>
               </div>
             </div>
+            <style>
+              .svc-card { transition: border-color 0.18s ease, background 0.18s ease, transform 0.12s ease; }
+              .svc-card:hover { border-color: rgba(59,145,204,0.45) !important; background: rgba(59,145,204,0.08) !important; }
+              .svc-card--bundle:hover { border-color: rgba(245,200,66,0.5) !important; background: rgba(245,200,66,0.1) !important; }
+              .svc-card.selected { border-color: rgba(245,200,66,0.7) !important; background: rgba(245,200,66,0.1) !important; }
+              .svc-card.selected .svc-check { background: #f5c842 !important; border-color: #f5c842 !important; }
+              .svc-card.selected .svc-tick { display: block !important; }
+              .svc-card:active { transform: scale(0.98); }
+            </style>
             <script>
-              function handleInspectionTypeChange(sel) {
-                var panel = document.getElementById('multi_service_panel');
+              function syncServiceCards() {
+                var cards = document.querySelectorAll('#service_cards .svc-card');
+                var checked = [];
+                var total = 0;
+                var hasFrom = false;
+                cards.forEach(function(card) {
+                  var cb = card.querySelector('input[type=checkbox]');
+                  if (cb.checked) {
+                    card.classList.add('selected');
+                    checked.push(cb.value);
+                    total += parseInt(card.dataset.price || 0, 10);
+                    if (card.dataset.from === 'true') hasFrom = true;
+                  } else {
+                    card.classList.remove('selected');
+                  }
+                });
                 var hiddenInput = document.getElementById('inspection_type_value');
-                if (sel.value === 'Multiple Services') {
-                  panel.style.display = 'block';
-                  hiddenInput.value = ''; // will be filled by syncMultiServices
-                  // uncheck all when re-opening
-                  panel.querySelectorAll('input[type=checkbox]').forEach(function(cb){ cb.checked = false; });
-                  document.getElementById('multi_service_hint').style.display = 'block';
-                } else {
-                  panel.style.display = 'none';
-                  hiddenInput.value = sel.value;
-                }
-              }
-              function syncMultiServices() {
-                var checkedBoxes = Array.from(document.querySelectorAll('#multi_service_panel input[type=checkbox]:checked'));
-                var checked = checkedBoxes.map(function(cb){ return cb.value; });
-                var hiddenInput = document.getElementById('inspection_type_value');
-                var hint = document.getElementById('multi_service_hint');
-                var totalEl = document.getElementById('multi_service_total');
-                var totalAmountEl = document.getElementById('multi_service_total_amount');
+                var hint = document.getElementById('svc_hint');
+                var totalEl = document.getElementById('svc_total');
+                var totalAmountEl = document.getElementById('svc_total_amount');
                 if (checked.length > 0) {
                   hiddenInput.value = checked.join(', ');
                   hint.style.display = 'none';
-                  var total = checkedBoxes.reduce(function(sum, cb){ return sum + parseInt(cb.dataset.price || 0, 10); }, 0);
-                  var hasFromPrice = checkedBoxes.some(function(cb){ return parseInt(cb.dataset.price, 10) >= 350; });
-                  totalAmountEl.textContent = (hasFromPrice ? 'from ' : '') + '$' + total;
+                  totalAmountEl.textContent = (hasFrom ? 'from ' : '') + '$' + total;
                   totalEl.style.display = 'block';
                 } else {
                   hiddenInput.value = '';
-                  hint.style.display = 'block';
+                  hint.style.display = 'none';
                   totalEl.style.display = 'none';
                 }
               }
-              // Sync hidden input for single-service path on page load
+              // Show validation hint on submit if nothing selected
               document.addEventListener('DOMContentLoaded', function() {
-                var sel = document.getElementById('inspection_type_select');
-                if (sel && sel.value && sel.value !== 'Multiple Services') {
-                  document.getElementById('inspection_type_value').value = sel.value;
+                var form = document.querySelector('form');
+                if (form) {
+                  form.addEventListener('submit', function() {
+                    var val = document.getElementById('inspection_type_value').value;
+                    var hint = document.getElementById('svc_hint');
+                    if (!val) { hint.style.display = 'block'; }
+                  }, true);
                 }
               });
             </script>
@@ -1610,17 +1639,11 @@ function copyEmail(el) {
     e.preventDefault();
     // Honeypot check — bots fill hidden fields, humans don't
     if (form.elements['website'] && form.elements['website'].value) { return; }
-    // Validate inspection type
+    // Validate inspection type (card-toggle system)
     var typeVal = document.getElementById('inspection_type_value').value;
-    var selectEl = document.getElementById('inspection_type_select');
-    if (!selectEl || !selectEl.value) {
-      var hint = document.getElementById('multi_service_hint');
-      if (hint) { hint.textContent = 'Please select a service.'; hint.style.display = 'block'; hint.style.color = '#f87171'; }
-      return;
-    }
-    if (selectEl.value === 'Multiple Services' && !typeVal) {
-      var hint2 = document.getElementById('multi_service_hint');
-      if (hint2) { hint2.style.display = 'block'; hint2.style.color = '#f87171'; }
+    if (!typeVal) {
+      var hint = document.getElementById('svc_hint');
+      if (hint) { hint.textContent = 'Please select at least one service.'; hint.style.display = 'block'; hint.style.color = '#f87171'; }
       return;
     }
     var btn = form.querySelector('button[type="submit"]');
