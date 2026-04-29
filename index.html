@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>document.documentElement.style.zoom=[0.85,1,1.12,1.25][parseInt(localStorage.getItem("ssg-fontSize")||"1")];document.documentElement.style.overflowX="hidden";</script>
+<script>document.documentElement.style.zoom=1.12;document.documentElement.style.overflowX="hidden";</script>
 <link rel="icon" type="image/png" href="brand_assets/favicon.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -397,11 +397,6 @@ tailwind.config = {
       </div>
     </div>
     <div style="display:flex; align-items:center; gap:8px;">
-      <div style="display:inline-flex; align-items:center; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.15); border-radius:100px; padding:3px 5px; gap:3px;">
-        <button onclick="changeFontSize(-1)" title="Decrease font size" style="width:26px; height:26px; display:inline-flex; align-items:center; justify-content:center; background:none; border:none; color:rgba(255,255,255,0.75); font-family:'IBM Plex Sans',sans-serif; font-size:12px; font-weight:700; cursor:pointer; border-radius:100px; line-height:1;" onmouseover="this.style.background='rgba(255,255,255,0.2)';this.style.color='#fff'" onmouseout="this.style.background='none';this.style.color='rgba(255,255,255,0.75)'">A</button>
-        <div style="width:1px; height:14px; background:rgba(255,255,255,0.2);"></div>
-        <button onclick="changeFontSize(1)" title="Increase font size" style="width:26px; height:26px; display:inline-flex; align-items:center; justify-content:center; background:none; border:none; color:rgba(255,255,255,0.75); font-family:'IBM Plex Sans',sans-serif; font-size:18px; font-weight:700; cursor:pointer; border-radius:100px; line-height:1;" onmouseover="this.style.background='rgba(255,255,255,0.2)';this.style.color='#fff'" onmouseout="this.style.background='none';this.style.color='rgba(255,255,255,0.75)'">A</button>
-      </div>
       <button id="lang-toggle" onclick="toggleLanguage()" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); border-radius: 100px; padding: 4px 14px 4px 8px; color: rgba(255,255,255,0.9); font-size: 12px; font-weight: 600; font-family: 'IBM Plex Sans', sans-serif; cursor: pointer; white-space: nowrap; transition: background 0.25s ease;" onmouseover="this.style.background='rgba(255,255,255,0.18)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">
       <span id="lang-flag" style="font-size: 11px; font-weight: 700; background: rgba(255,255,255,0.15); border-radius: 4px; padding: 2px 5px; letter-spacing: 0.04em;">EN</span>
       <span id="lang-label">Espa&#241;ol</span>
@@ -1588,10 +1583,7 @@ function toggleMobileMenu() {
 
 <!-- Language Toggle -->
 <script>
-var zoomLevels=[0.85,1,1.12,1.25];
-var fontSizeIdx=parseInt(localStorage.getItem('ssg-fontSize')||'1');
-(function(){document.documentElement.style.zoom=zoomLevels[fontSizeIdx];document.documentElement.style.overflowX='hidden';})();
-function changeFontSize(dir){fontSizeIdx=Math.min(3,Math.max(0,fontSizeIdx+dir));localStorage.setItem('ssg-fontSize',fontSizeIdx);document.documentElement.style.zoom=zoomLevels[fontSizeIdx];}
+(function(){document.documentElement.style.zoom=1.12;document.documentElement.style.overflowX='hidden';})();
 
 var currentLang = 'en';
 
