@@ -1308,6 +1308,37 @@ tailwind.config = {
             <script>
               function syncServiceCards() {
                 var cards = document.querySelectorAll('#service_cards .svc-card');
+                var bundleCard = document.querySelector('.svc-card[data-value="Wind Mitigation + 4-Point Package"]');
+                var windCard = document.querySelector('.svc-card[data-value="Wind Mitigation"]');
+                var fourPtCard = document.querySelector('.svc-card[data-value="4-Point Inspection"]');
+                var bundleCb = bundleCard.querySelector('input[type=checkbox]');
+                var windCb = windCard.querySelector('input[type=checkbox]');
+                var fourPtCb = fourPtCard.querySelector('input[type=checkbox]');
+
+                if (bundleCb.checked) {
+                  // Bundle selected: uncheck and disable Wind Mitigation and 4-Point individually
+                  windCb.checked = false;
+                  fourPtCb.checked = false;
+                  [windCard, fourPtCard].forEach(function(c) {
+                    c.classList.remove('selected');
+                    c.style.opacity = '0.35';
+                    c.style.pointerEvents = 'none';
+                    c.style.cursor = 'not-allowed';
+                  });
+                } else {
+                  // Bundle not selected: re-enable Wind Mitigation and 4-Point
+                  [windCard, fourPtCard].forEach(function(c) {
+                    c.style.opacity = '';
+                    c.style.pointerEvents = '';
+                    c.style.cursor = '';
+                  });
+                  // If either individual is now checked, deselect bundle
+                  if (windCb.checked || fourPtCb.checked) {
+                    bundleCb.checked = false;
+                    bundleCard.classList.remove('selected');
+                  }
+                }
+
                 var checked = [];
                 var total = 0;
                 var hasFrom = false;
