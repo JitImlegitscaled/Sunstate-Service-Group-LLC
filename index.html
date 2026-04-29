@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>document.documentElement.style.zoom=1.12;document.documentElement.style.overflowX="hidden";</script>
+<script>document.documentElement.style.overflowX="hidden";</script>
 <link rel="icon" type="image/png" href="brand_assets/favicon.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -72,6 +72,7 @@ tailwind.config = {
   * { box-sizing: border-box; margin: 0; }
   html { scroll-behavior: smooth; }
   body {
+    zoom: 1.12;
     font-family: 'IBM Plex Sans', sans-serif;
     background: #ffffff;
     color: var(--body);
@@ -103,7 +104,14 @@ tailwind.config = {
   .reveal-delay-5 { transition-delay: 0.4s; }
 
   /* Nav */
-  nav { position: sticky; top: 0; z-index: 1000; }
+  nav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    transition: background 0.4s ease, box-shadow 0.4s ease;
+  }
+  #nav-spacer { height: 68px; }
   .nav-logo-img { width: 280px; height: 280px; margin: -84px -120px -84px -40px; flex-shrink: 0; }
   .nav-scrolled {
     background: rgba(255,255,255,0.98) !important;
@@ -406,7 +414,7 @@ tailwind.config = {
 </div>
 
 <!-- NAV -->
-<nav id="main-nav" style="background: #ffffff; border-bottom: 1px solid var(--border); transition: background 0.4s ease, box-shadow 0.4s ease;">
+<nav id="main-nav" style="background: #ffffff; border-bottom: 1px solid var(--border);">
   <div style="max-width: 1140px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; height: 68px; position: relative;">
     <!-- Logo -->
     <a href="#" style="display: flex; align-items: center; gap: 12px; text-decoration: none; position: relative; z-index: 50;">
@@ -442,6 +450,7 @@ tailwind.config = {
     </button>
   </div>
 </nav>
+<div id="nav-spacer"></div>
 
 <!-- Mobile Menu Overlay -->
 <div class="mobile-menu" id="mobileMenu">
@@ -1555,13 +1564,35 @@ function toggleMobileMenu() {
 <script>
 (function() {
   var nav = document.getElementById('main-nav');
-  window.addEventListener('scroll', function() {
-    if (window.scrollY > 40) {
+  var topBar = nav.previousElementSibling;
+  var ticking = false;
+
+  function updateNav() {
+    var y = window.scrollY;
+    var topBarH = topBar.offsetHeight;
+
+    // Position nav just below top bar, or at 0 once top bar scrolled away
+    nav.style.top = Math.max(0, topBarH - y) + 'px';
+
+    // Glass effect once scrolled past top bar
+    if (y > topBarH) {
       nav.classList.add('nav-scrolled');
     } else {
       nav.classList.remove('nav-scrolled');
     }
-  });
+  }
+
+  updateNav();
+
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(function() {
+        updateNav();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
 })();
 </script>
 
@@ -1583,7 +1614,7 @@ function toggleMobileMenu() {
 
 <!-- Language Toggle -->
 <script>
-(function(){document.documentElement.style.zoom=1.12;document.documentElement.style.overflowX='hidden';})();
+(function(){document.documentElement.style.overflowX='hidden';})();
 
 var currentLang = 'en';
 
