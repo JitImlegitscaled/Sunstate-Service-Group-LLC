@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>document.documentElement.style.fontSize=["14px","16px","18px","20px"][parseInt(localStorage.getItem("ssg-fontSize")||"1")];</script>
+<script>document.documentElement.style.zoom=[0.85,1,1.12,1.25][parseInt(localStorage.getItem("ssg-fontSize")||"1")];document.documentElement.style.overflowX="hidden";</script>
 <link rel="icon" type="image/png" href="brand_assets/favicon.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1588,10 +1588,10 @@ function toggleMobileMenu() {
 
 <!-- Language Toggle -->
 <script>
-var fontSizes=[14,16,18,20];
+var zoomLevels=[0.85,1,1.12,1.25];
 var fontSizeIdx=parseInt(localStorage.getItem('ssg-fontSize')||'1');
-(function(){document.documentElement.style.fontSize=fontSizes[fontSizeIdx]+'px';})();
-function changeFontSize(dir){fontSizeIdx=Math.min(3,Math.max(0,fontSizeIdx+dir));localStorage.setItem('ssg-fontSize',fontSizeIdx);document.documentElement.style.fontSize=fontSizes[fontSizeIdx]+'px';}
+(function(){document.documentElement.style.zoom=zoomLevels[fontSizeIdx];document.documentElement.style.overflowX='hidden';})();
+function changeFontSize(dir){fontSizeIdx=Math.min(3,Math.max(0,fontSizeIdx+dir));localStorage.setItem('ssg-fontSize',fontSizeIdx);document.documentElement.style.zoom=zoomLevels[fontSizeIdx];}
 
 var currentLang = 'en';
 
