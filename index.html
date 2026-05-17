@@ -1611,11 +1611,9 @@ function toggleMobileMenu() {
 <script>
 (function(){document.documentElement.style.overflowX='hidden';})();
 
-var currentLang = 'en';
+var currentLang = localStorage.getItem('lang') || 'en';
 
-function toggleLanguage() {
-  currentLang = currentLang === 'en' ? 'es' : 'en';
-
+function applyLanguage() {
   document.querySelectorAll('[data-en][data-es]').forEach(function(el) {
     var text = el.getAttribute('data-' + currentLang);
     if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') return;
@@ -1636,23 +1634,28 @@ function toggleLanguage() {
       }
     }
   });
-
   document.querySelectorAll('[data-ph-en][data-ph-es]').forEach(function(el) {
     el.placeholder = el.getAttribute('data-ph-' + currentLang);
   });
-
   var label = document.getElementById('lang-label');
   var flag = document.getElementById('lang-flag');
-  if (currentLang === 'es') {
-    label.textContent = 'English';
-    flag.textContent = 'ES';
-  } else {
-    label.textContent = 'Espa\u00f1ol';
-    flag.textContent = 'EN';
+  if (label && flag) {
+    if (currentLang === 'es') { label.textContent = 'English'; flag.textContent = 'ES'; }
+    else { label.textContent = 'Español'; flag.textContent = 'EN'; }
   }
   var windImg = document.getElementById('wind-mit-image');
   if (windImg) { windImg.src = currentLang === 'es' ? 'ChatGPT Image May 17, 2026, 01_14_19 PM (spanish).png' : 'ChatGPT Image May 17, 2026, 12_28_34 PM.png'; }
 }
+
+function toggleLanguage() {
+  currentLang = currentLang === 'en' ? 'es' : 'en';
+  localStorage.setItem('lang', currentLang);
+  applyLanguage();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  if (currentLang === 'es') applyLanguage();
+});
 </script>
 
 <!-- Copy email to clipboard -->

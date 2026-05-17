@@ -377,9 +377,8 @@
 <script>
 
 
-var currentLang = 'en';
-function toggleLanguage() {
-  currentLang = currentLang === 'en' ? 'es' : 'en';
+var currentLang = localStorage.getItem('lang') || 'en';
+function applyLanguage() {
   document.querySelectorAll('[data-en][data-es]').forEach(function(el) {
     var text = el.getAttribute('data-' + currentLang);
     if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') return;
@@ -387,11 +386,19 @@ function toggleLanguage() {
   });
   var label = document.getElementById('lang-label');
   var flag = document.getElementById('lang-flag');
-  if (currentLang === 'es') { label.textContent = 'English'; flag.textContent = 'ES'; }
-  else { label.textContent = 'Espa\u00f1ol'; flag.textContent = 'EN'; }
+  if (label && flag) {
+    if (currentLang === 'es') { label.textContent = 'English'; flag.textContent = 'ES'; }
+    else { label.textContent = 'Espa\u00f1ol'; flag.textContent = 'EN'; }
+  }
   var fourptImg = document.getElementById('fourpt-image');
   if (fourptImg) { fourptImg.src = currentLang === 'es' ? 'images/4-point-inspection-spanish.png' : 'images/4-point-inspection.jpg'; }
 }
+function toggleLanguage() {
+  currentLang = currentLang === 'en' ? 'es' : 'en';
+  localStorage.setItem('lang', currentLang);
+  applyLanguage();
+}
+document.addEventListener('DOMContentLoaded', function() { if (currentLang === 'es') applyLanguage(); });
 function toggleMobileMenu() {
   var menu = document.getElementById('mobileMenu');
   var ham = document.querySelector('.hamburger');
