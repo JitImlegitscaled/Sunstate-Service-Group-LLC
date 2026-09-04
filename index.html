@@ -354,7 +354,6 @@ tailwind.config = {
     .services-grid { grid-template-columns: 1fr !important; gap: 14px !important; }
     .about-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
     .about-image-wrap { order: -1; }
-    .about-image-wrap img { height: 280px !important; }
     .featured-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
     .featured-card img { height: 240px !important; }
     .trust-grid { grid-template-columns: 1fr 1fr !important; gap: 14px !important; }
@@ -770,47 +769,75 @@ tailwind.config = {
 
 <!-- ABOUT -->
 <section id="about" style="background: #f7f9fc; padding: 112px 0; position: relative; overflow: hidden;">
-  <div class="about-grid" style="max-width: 1140px; margin: 0 auto; padding: 0 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center;">
-    <div>
-      <div class="section-tag reveal" data-en="Why Choose Us" data-es="Por Qué Elegirnos">Why Choose Us</div>
-      <h2 class="reveal reveal-delay-1" style="font-family: 'Libre Baskerville', serif; font-size: clamp(30px, 3.8vw, 44px); color: var(--navy-900); margin-bottom: 24px; line-height: 1.15; letter-spacing: -0.02em;">
-        <span data-en="Why Choose" data-es="Por Qué Elegir">Why Choose</span> <span style="color: var(--navy-600);" data-en="Sunstate?" data-es="¿Sunstate?">Sunstate?</span>
-      </h2>
-      <p class="reveal reveal-delay-2" style="color: var(--body); font-size: 16px; line-height: 1.8; margin-bottom: 20px;" data-en="At Sunstate Service Group LLC, we believe that the people who help understand what matters most. Led by Yamir Diaz, a certified and licensed Florida home inspector, we bring professionalism, precision, and care to every inspection." data-es="En Sunstate Service Group LLC, creemos que las personas que ayudan entienden lo que m&#225;s importa. Dirigido por Yamir Diaz, un inspector de viviendas certificado y licenciado en Florida, aportamos profesionalismo, precisi&#243;n y cuidado a cada inspecci&#243;n.">
-        At Sunstate Service Group LLC, we believe that the people who help understand what matters most. Led by Yamir Diaz, a certified and licensed Florida home inspector, we bring professionalism, precision, and care to every inspection.
-      </p>
-      <p class="reveal reveal-delay-2" style="color: var(--body); font-size: 16px; line-height: 1.8; margin-bottom: 32px;" data-en="&quot;Your Home, Our Priority&quot; is not just a tagline &mdash; it's our commitment. Whether you're buying your first home or protecting your investment, our detailed reports give you the knowledge and confidence to make informed decisions." data-es="&quot;Su Hogar, Nuestra Prioridad&quot; no es solo un lema &mdash; es nuestro compromiso. Ya sea que est&#233; comprando su primera casa o protegiendo su inversi&#243;n, nuestros informes detallados le brindan el conocimiento y la confianza para tomar decisiones informadas.">
-        "Your Home, Our Priority" is not just a tagline &mdash; it's our commitment. Whether you're buying your first home or protecting your investment, our detailed reports give you the knowledge and confidence to make informed decisions.
-      </p>
-      <div class="reveal reveal-delay-3" style="display: inline-flex; align-items: center; gap: 16px; background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 18px 28px; margin-bottom: 32px; box-shadow: 0 1px 3px rgba(12,24,41,0.04), 0 4px 16px rgba(12,24,41,0.06);">
-        <div style="width: 44px; height: 44px; background: #fdf6e3; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c98f00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </div>
-        <div>
-          <div style="font-size: 22px; font-weight: 700; color: var(--navy-900); line-height: 1; letter-spacing: -0.02em;" data-en="24-Hour" data-es="24 Horas">24-Hour</div>
-          <div style="font-size: 13px; color: var(--body); font-weight: 500; margin-top: 2px;" data-en="Report Turnaround" data-es="Entrega de Informes">Report Turnaround</div>
-        </div>
+  <div class="about-grid" style="max-width: 1140px; margin: 0 auto; padding: 0 32px; display: grid; grid-template-columns: 1fr 1.15fr; gap: 72px; align-items: center;">
+
+    <!-- Left: Circular photo + identity -->
+    <div class="about-image-wrap reveal reveal-delay-2" style="text-align: center;">
+      <div style="width: 240px; height: 240px; margin: 0 auto 28px; border-radius: 50%; overflow: hidden; position: relative; box-shadow: 0 8px 24px rgba(10,22,40,0.1), 0 24px 64px rgba(10,22,40,0.16); border: 4px solid #fff;">
+        <img src="brand_assets/WhatsApp Image 2026-05-17 at 11.54.19 AM.jpeg" alt="Yamir Diaz - Certified Florida Home Inspector" style="width: 100%; height: 100%; object-fit: cover; display: block;">
       </div>
-      <br>
-      <a href="#contact" class="btn-primary reveal reveal-delay-3" style="padding: 14px 36px; border-radius: 10px; text-decoration: none; font-size: 15px; display: inline-block;" data-en="Book an Inspection" data-es="Reserve una Inspecci&#243;n">Book an Inspection</a>
+      <div style="font-family: 'Libre Baskerville', serif; font-size: 24px; color: var(--navy-900);">Yamir Diaz</div>
+      <div style="font-size: 14px; color: var(--gold); font-weight: 600; margin-top: 6px;" data-en="Certified Florida Home Inspector" data-es="Inspector de Viviendas Certificado en Florida">Certified Florida Home Inspector</div>
+      <div style="font-size: 13px; color: var(--body); margin-top: 6px;" data-en="License # HI18594 &bull; Licensed &amp; Insured" data-es="Licencia # HI18594 &bull; Licenciado y Asegurado">License # HI18594 &bull; Licensed &amp; Insured</div>
+      <div style="font-size: 13px; color: var(--body); margin-top: 4px;" data-en="InterNACHI&reg; Certified &bull; CPI&reg; &mdash; Certified Professional Inspector&reg;" data-es="Certificado por InterNACHI&reg; &bull; CPI&reg; &mdash; Inspector Profesional Certificado&reg;">InterNACHI&reg; Certified &bull; CPI&reg; &mdash; Certified Professional Inspector&reg;</div>
+      <a href="#contact" class="btn-primary reveal reveal-delay-3" style="padding: 14px 36px; border-radius: 10px; text-decoration: none; font-size: 15px; display: inline-block; margin-top: 24px;" data-en="Book an Inspection" data-es="Reserve una Inspecci&#243;n">Book an Inspection</a>
     </div>
 
-    <div class="about-image-wrap reveal reveal-delay-2" style="position: relative;">
-      <div style="border-radius: 20px; overflow: hidden; box-shadow: 0 8px 24px rgba(10,22,40,0.08), 0 24px 64px rgba(10,22,40,0.14); position: relative;">
-        <img src="brand_assets/WhatsApp Image 2026-05-17 at 11.54.19 AM.jpeg" alt="Yamir Diaz - Certified Florida Home Inspector" style="width: 100%; height: 460px; object-fit: cover; display: block;">
-        <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,22,40,0.9) 0%, transparent 50%);"></div>
-        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 28px;">
-          <div style="font-family: 'Libre Baskerville', serif; font-size: 22px; color: #fff;">Yamir Diaz</div>
-          <div style="font-size: 14px; color: #f5c842; font-weight: 600; margin-top: 4px;" data-en="Certified Florida Home Inspector" data-es="Inspector de Viviendas Certificado en Florida">Certified Florida Home Inspector</div>
-          <div style="font-size: 13px; color: rgba(255,255,255,0.6); margin-top: 4px;" data-en="License # HI18594 &bull; Licensed &amp; Insured" data-es="Licencia # HI18594 &bull; Licenciado y Asegurado">License # HI18594 &bull; Licensed &amp; Insured</div>
-        </div>
-      </div>
-      <div style="position: absolute; top: -16px; right: -16px; background: #fff; border: 1px solid rgba(223,230,238,0.7); border-radius: 14px; padding: 16px 20px; box-shadow: 0 4px 12px rgba(10,22,40,0.06), 0 12px 32px rgba(10,22,40,0.1); text-align: center;">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e8a800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
-        <div style="font-size: 11px; font-weight: 700; color: #1a3a5c; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 6px;">Certified</div>
-        <div style="font-size: 10px; color: var(--body); font-weight: 500;">State of Florida</div>
+    <!-- Right: Checklist card -->
+    <div>
+      <div class="section-tag reveal" data-en="Why Choose Us" data-es="Por Qu&#233; Elegirnos">Why Choose Us</div>
+      <h2 class="reveal reveal-delay-1" style="font-family: 'Libre Baskerville', serif; font-size: clamp(30px, 3.8vw, 44px); color: var(--navy-900); margin-bottom: 24px; line-height: 1.15; letter-spacing: -0.02em;">
+        <span data-en="Why Choose" data-es="Por Qu&#233; Elegir">Why Choose</span> <span style="color: var(--navy-600);" data-en="Sunstate?" data-es="&#191;Sunstate?">Sunstate?</span>
+      </h2>
+
+      <div class="reveal reveal-delay-2" style="background: var(--navy-900); border-radius: 20px; padding: 36px 32px; position: relative; overflow: hidden; box-shadow: 0 8px 24px rgba(10,22,40,0.1), 0 24px 64px rgba(10,22,40,0.16);">
+        <div style="position: absolute; top: -60px; right: -60px; width: 220px; height: 220px; background: radial-gradient(circle, rgba(59,145,204,0.14) 0%, transparent 70%); pointer-events: none;"></div>
+        <div style="position: absolute; bottom: -40px; left: -40px; width: 180px; height: 180px; background: radial-gradient(circle, rgba(212,146,10,0.1) 0%, transparent 70%); pointer-events: none;"></div>
+
+        <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 24px; position: relative;">
+          <li style="display: flex; align-items: flex-start; gap: 16px;">
+            <span style="width: 26px; height: 26px; background: rgba(245,200,66,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f5c842" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <div>
+              <div style="font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4px; letter-spacing: -0.01em;" data-en="People Who Understand What Matters Most" data-es="Personas que Entienden lo M&#225;s Importante">People Who Understand What Matters Most</div>
+              <div style="font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.7;" data-en="Led by Yamir Diaz, a certified and licensed Florida home inspector, bringing professionalism, precision, and care to every inspection." data-es="Dirigido por Yamir Diaz, un inspector de viviendas certificado y licenciado en Florida, aportando profesionalismo, precisi&#243;n y cuidado a cada inspecci&#243;n.">Led by Yamir Diaz, a certified and licensed Florida home inspector, bringing professionalism, precision, and care to every inspection.</div>
+            </div>
+          </li>
+
+          <li style="display: flex; align-items: flex-start; gap: 16px;">
+            <span style="width: 26px; height: 26px; background: rgba(245,200,66,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f5c842" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <div>
+              <div style="font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4px; letter-spacing: -0.01em;" data-en="&quot;Your Home, Our Priority&quot;" data-es="&quot;Su Hogar, Nuestra Prioridad&quot;">"Your Home, Our Priority"</div>
+              <div style="font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.7;" data-en="Not just a tagline &mdash; it's our commitment, whether you're buying your first home or protecting your investment." data-es="No es solo un lema &mdash; es nuestro compromiso, ya sea que est&#233; comprando su primera casa o protegiendo su inversi&#243;n.">Not just a tagline &mdash; it's our commitment, whether you're buying your first home or protecting your investment.</div>
+            </div>
+          </li>
+
+          <li style="display: flex; align-items: flex-start; gap: 16px;">
+            <span style="width: 26px; height: 26px; background: rgba(245,200,66,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f5c842" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <div>
+              <div style="font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4px; letter-spacing: -0.01em;" data-en="Detailed Reports, Informed Decisions" data-es="Informes Detallados, Decisiones Informadas">Detailed Reports, Informed Decisions</div>
+              <div style="font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.7;" data-en="Our detailed reports give you the knowledge and confidence to make informed decisions about your home." data-es="Nuestros informes detallados le brindan el conocimiento y la confianza para tomar decisiones informadas sobre su hogar.">Our detailed reports give you the knowledge and confidence to make informed decisions about your home.</div>
+            </div>
+          </li>
+
+          <li style="display: flex; align-items: flex-start; gap: 16px;">
+            <span style="width: 26px; height: 26px; background: rgba(245,200,66,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f5c842" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <div>
+              <div style="font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4px; letter-spacing: -0.01em;" data-en="24-Hour Report Turnaround" data-es="Entrega de Informes en 24 Horas">24-Hour Report Turnaround</div>
+              <div style="font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.7;" data-en="Fast, digital reports delivered within 24 hours so you can move forward without delay." data-es="Informes digitales r&#225;pidos entregados en 24 horas para que pueda avanzar sin demora.">Fast, digital reports delivered within 24 hours so you can move forward without delay.</div>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
+
   </div>
 </section>
 
